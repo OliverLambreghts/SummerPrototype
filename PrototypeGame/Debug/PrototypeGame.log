@@ -1,0 +1,23 @@
+﻿  pch.cpp
+  Core.cpp
+  Game.cpp
+  GameObject.cpp
+  InputManager.cpp
+  main.cpp
+  Matrix2x3.cpp
+  Scene.cpp
+  SceneManager.cpp
+  SoundEffect.cpp
+  SoundStream.cpp
+  structs.cpp
+  SVGParser.cpp
+  Texture.cpp
+  utils.cpp
+  Vector2f.cpp
+  Generating Code...
+  PrototypeGame.vcxproj -> D:\DAE\c++\Games\PrototypeGame\Debug\PrototypeGame.exe
+  COPY THE DLL FILES
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied

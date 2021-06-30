@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Components">
+      <UniqueIdentifier>{fb5d2e35-c974-4d83-8eb2-b8ec74076fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components">
+      <UniqueIdentifier>{7d57e4ed-41a4-4920-b157-ab05871f95f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Rendering">
+      <UniqueIdentifier>{1045e089-a614-4765-aa89-edeaf330a1a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Singletons">
+      <UniqueIdentifier>{4eba1607-8966-4ac6-89b3-f529dc631d73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Scenes">
+      <UniqueIdentifier>{9978f904-620f-44ec-a21d-d91a98c6bf43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{da331e8a-7fb6-407e-a570-1bdbf83af24a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Singletons">
+      <UniqueIdentifier>{3c024f66-2959-4396-a69c-ace677a7ae87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GameObject">
+      <UniqueIdentifier>{41286800-2477-4784-9184-dfe8f16ae3d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\GameObject">
+      <UniqueIdentifier>{47cf169f-c44b-4932-8fe9-affb35a06dfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Commands">
+      <UniqueIdentifier>{7c290427-bb50-4dd5-bbc0-38c3b5a363c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Movement">
+      <UniqueIdentifier>{a4bb7db2-5dae-4970-81d9-c6c47e95c309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Rendering">
+      <UniqueIdentifier>{8238efda-809a-4ac0-b395-aa33d32ea9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Movement">
+      <UniqueIdentifier>{532f05a4-77e6-4c6a-bbfb-83108189300e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Generation">
+      <UniqueIdentifier>{7daa6863-dce9-48a2-817e-8f4b27abaef9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Generation">
+      <UniqueIdentifier>{971830e7-32e3-4352-bc76-869c1e0c0a5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Collision">
+      <UniqueIdentifier>{fbf1034f-1a0b-448b-848f-cde80f7019b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Collision">
+      <UniqueIdentifier>{f91deb2d-fb82-47bb-abea-6d8afe552cc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commands">
+      <UniqueIdentifier>{9206cb81-0f22-46c5-b6bb-2442b4227f9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Calculation">
+      <UniqueIdentifier>{4d70a4dd-9208-4718-a2b0-916bebf9287d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Calculation">
+      <UniqueIdentifier>{165489e2-7d34-48de-9613-f1b1c12192ce}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="pch.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix2x3.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundStream.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="structs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SVGParser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2f.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Source Files\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteRenderComponent.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="TransformComponent.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMovementComponent.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeComponent.cpp">
+      <Filter>Source Files\Components\Generation</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeRenderComponent.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="DoorCollisionComponent.cpp">
+      <Filter>Source Files\Components\Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateCurrentRoomCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleCollisionCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="GridComponent.cpp">
+      <Filter>Source Files\Components\Calculation</Filter>
+    </ClCompile>
+    <ClCompile Include="MapRenderComponent.cpp">
+      <Filter>Source Files\Components\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="GetAllRoomsCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix2x3.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundStream.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="structs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SVGParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2f.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseRenderComponent.h">
+      <Filter>Header Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Header Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Header Files\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>Header Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Header Files\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Header Files\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteRenderComponent.h">
+      <Filter>Header Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Header Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementComponent.h">
+      <Filter>Header Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovementComponent.h">
+      <Filter>Header Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveUpCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveDownCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveLeftCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMoveRightCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="HaltPlayerXMovementCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="HaltPlayerYMovementCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SetPlayerSpriteIdleCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SetPlayerSpriteLeftCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SetPlayerSpriteRightCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SetPlayerSpriteUpCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SetPlayerSpriteDownCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeComponent.h">
+      <Filter>Header Files\Components\Generation</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeRenderComponent.h">
+      <Filter>Header Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="DoorCollisionComponent.h">
+      <Filter>Header Files\Components\Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateCurrentRoomCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="HandleCollisionCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="GridComponent.h">
+      <Filter>Header Files\Components\Calculation</Filter>
+    </ClInclude>
+    <ClInclude Include="MapRenderComponent.h">
+      <Filter>Header Files\Components\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="GetAllRoomsCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivateMapCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

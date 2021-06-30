@@ -1,0 +1,27 @@
+Todo:
+- Player movement
+- Level generation
+- HUD
+- Think about mechanics
+- Lives
+- Sound
+- Camera
+- Enemies
+- Bosses
+- Loot
+- Map
+
+- Let's start off with movement. Just make a simple movementcomponent which has functionality to move a gameobject in the level.
+
+- We'll call this class the PlayerMovementComponent. It holds a Point2f member var. The player should move through this component. So if the player pushes an arrow key for example, this component's direction should change to the direction corresponding with that key. In the component's update method, the direction should first be checked and based on that the position should be modified. If no keys are pressed the position shouldn't be modified.
+
+- The SpriteRenderComponent should also change the sprite of the player to a different row whenever a different key is pressed. When no keys are pressed, the player should be put in an idle texture of the last active row which is the first col of that row.
+
+- To generate the world randomly, I will use the maze generation algorithm I used for my maze generation program. Each node in this maze represents a room. Each node has 4 node pointers. Through this algorithm each node receives a connection to one or more other nodes until a path is formed from the first node to the last. There is only 1 possible path from the first node to the last.
+
+- World gameobject components:
+	-> MazeComponent: Bevat alle rooms in een 2D array, een 	stack van Room pointers, een bool voor het genereren te 	stoppen en een pointer naar de huidige room.
+
+- Vandaag wil ik eerst regelen dat de world generation gebeurt in de constructor van de maze component. Hier ga ik nog een aparte method voor aanmaken zodat ik de non-blocking versie ook nog kan callen als ik wil. Hierna wil ik een map toevoegen als je op M drukt. Deze toont de lay-out van de wereld en de kamers die je al bezocht hebt. Om de map uit te breiden moet je nieuwe kamers ontdekken.
+
+- 

@@ -1,0 +1,36 @@
+#pragma once
+#include <memory>
+#include <string>
+#include "BaseRenderComponent.h"
+class Sprite;
+class SpriteRenderComponent final : public BaseRenderComponent
+{
+public:
+	enum class Direction
+	{
+		right,
+		down,
+		left,
+		up
+	};
+	
+	SpriteRenderComponent(const std::string& fileName, int nrCols, int nrRows, float frameSec, int colToRender);
+	virtual ~SpriteRenderComponent() override = default;
+	SpriteRenderComponent(const SpriteRenderComponent& other) = delete;
+	SpriteRenderComponent(SpriteRenderComponent&& other) = delete;
+	void operator=(const SpriteRenderComponent& rhs) = delete;
+	void operator=(const SpriteRenderComponent&& rhs) = delete;
+
+	virtual void Update(float elapsedSec, GameObject& obj) override;
+	virtual void Render() const override;
+
+	void ChangeRenderDirection(Direction direction);
+	void Idle();
+	void Move();
+	const Sprite& GetSprite() const;
+private:
+	std::shared_ptr<Sprite> m_pSprite;
+	Point2f m_RenderPos;
+	int m_RowToRender;
+	bool m_IsIdle;
+};

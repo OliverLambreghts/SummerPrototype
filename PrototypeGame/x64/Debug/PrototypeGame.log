@@ -1,0 +1,37 @@
+﻿  pch.cpp
+  Core.cpp
+  DoorCollisionComponent.cpp
+  Game.cpp
+  GameObject.cpp
+  GetAllRoomsCommand.cpp
+  GridComponent.cpp
+  HandleCollisionCommand.cpp
+  InputManager.cpp
+  main.cpp
+  MapRenderComponent.cpp
+  Matrix2x3.cpp
+  MazeRenderComponent.cpp
+  PlayerMovementComponent.cpp
+  Scene.cpp
+  SceneManager.cpp
+  SoundEffect.cpp
+  SoundStream.cpp
+  Sprite.cpp
+  SpriteRenderComponent.cpp
+  structs.cpp
+  Generating Code...
+  Compiling...
+  SVGParser.cpp
+  Texture.cpp
+  TransformComponent.cpp
+  UpdateCurrentRoomCommand.cpp
+  utils.cpp
+  Vector2f.cpp
+  MazeComponent.cpp
+  Generating Code...
+  PrototypeGame.vcxproj -> D:\DAE\c++\Games\SummerPrototype\x64\Debug\PrototypeGame.exe
+  COPY THE DLL FILES
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
+  0 File(s) copied
