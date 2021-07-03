@@ -19,7 +19,7 @@ SpriteRenderComponent::SpriteRenderComponent(const std::string& fileName, int nr
 
 void SpriteRenderComponent::Update(float elapsedSec, GameObject& obj)
 {
-	auto newPos = obj.GetComponent<MovementComponent>()->GetPosition();
+	const auto newPos = obj.GetComponent<MovementComponent>()->GetPosition();
 	if (m_RenderPos.x != newPos.x || m_RenderPos.y != newPos.y)
 		m_RenderPos = newPos;
 
@@ -29,6 +29,7 @@ void SpriteRenderComponent::Update(float elapsedSec, GameObject& obj)
 void SpriteRenderComponent::ChangeRenderDirection(Direction direction)
 {
 	m_RowToRender = static_cast<int>(direction);
+	m_ActiveDirections.push_back(direction);
 }
 
 void SpriteRenderComponent::Render() const
@@ -36,7 +37,6 @@ void SpriteRenderComponent::Render() const
 	Rectf srcRect{};
 	srcRect.width = m_pSprite->GetFrameWidth();
 	srcRect.height = m_pSprite->GetFrameHeight();
-	//srcRect.bottom = (m_pSprite->GetActFrame() / m_pSprite->GetCols()) * srcRect.height;
 	srcRect.bottom = (m_pSprite->GetFrameHeight() * m_pSprite->GetRows()) - (m_pSprite->GetFrameHeight() * m_RowToRender);
 	if (!m_IsIdle)
 		srcRect.left = m_pSprite->GetActFrame() * srcRect.width;

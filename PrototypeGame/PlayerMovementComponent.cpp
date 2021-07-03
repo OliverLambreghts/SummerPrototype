@@ -75,6 +75,11 @@ PlayerMovementComponent::State PlayerMovementComponent::GetState() const
 	return m_State;
 }
 
+std::pair<PlayerMovementComponent::DirectionX, PlayerMovementComponent::DirectionY> PlayerMovementComponent::GetDirections() const
+{
+	return std::pair<DirectionX, DirectionY>(m_DirectionX, m_DirectionY);
+}
+
 void PlayerMovementComponent::SetPosition(const Point2f& pos)
 {
 	m_Position = pos;

@@ -1,6 +1,9 @@
 #pragma once
 #include <memory>
+#include <stack>
 #include <string>
+#include <vector>
+
 #include "BaseRenderComponent.h"
 class Sprite;
 class SpriteRenderComponent final : public BaseRenderComponent
@@ -29,6 +32,7 @@ public:
 	void Move();
 	const Sprite& GetSprite() const;
 private:
+	std::vector<Direction> m_ActiveDirections;
 	std::shared_ptr<Sprite> m_pSprite;
 	Point2f m_RenderPos;
 	int m_RowToRender;

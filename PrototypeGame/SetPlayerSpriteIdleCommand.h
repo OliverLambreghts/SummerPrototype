@@ -23,6 +23,16 @@ public:
 	{
 		if (m_Player->GetComponent<PlayerMovementComponent>()->GetState() == PlayerMovementComponent::State::idle)
 			m_Player->GetComponent<SpriteRenderComponent>()->Idle();
+		else
+		{
+			auto dir = m_Player->GetComponent<PlayerMovementComponent>()->GetDirections();
+			if (dir.first != PlayerMovementComponent::DirectionX::none)
+				m_Player->GetComponent<SpriteRenderComponent>()->ChangeRenderDirection(static_cast<SpriteRenderComponent::Direction>
+					(static_cast<int>(dir.first)));
+			else if (dir.second != PlayerMovementComponent::DirectionY::none)
+				m_Player->GetComponent<SpriteRenderComponent>()->ChangeRenderDirection(static_cast<SpriteRenderComponent::Direction>
+					(static_cast<int>(dir.second)));
+		}
 	}
 private:
 	std::shared_ptr<GameObject> m_Player;

@@ -10,6 +10,8 @@ Todo:
 - Bosses
 - Loot
 - Map
+- Collision with walls
+- Collision with obstacles
 
 - Let's start off with movement. Just make a simple movementcomponent which has functionality to move a gameobject in the level.
 

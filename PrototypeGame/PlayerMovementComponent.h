@@ -7,14 +7,14 @@ class PlayerMovementComponent final : public MovementComponent
 public:
 	enum class DirectionX
 	{
-		left,
-		right,
+		left = 2,
+		right = 0,
 		none
 	};
 	enum class DirectionY
 	{
-		up,
-		down,
+		up = 3,
+		down = 1,
 		none
 	};
 	enum class State
@@ -40,6 +40,7 @@ public:
 	void SetState(State state);
 
 	State GetState() const;
+	std::pair<DirectionX, DirectionY> GetDirections() const;
 private:
 	void HandleXMovement(float elapsedSec);
 	void HandleYMovement(float elapsedSec);
