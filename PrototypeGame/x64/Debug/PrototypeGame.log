@@ -1,6 +1,10 @@
 ﻿  pch.cpp
+  ActivityComponent.cpp
   Core.cpp
+  DebugEnemyComponent.cpp
   DoorCollisionComponent.cpp
+  EnemyManagerComponent.cpp
+  EnemyMovementComponent.cpp
   Game.cpp
   GameObject.cpp
   GetAllRoomsCommand.cpp
@@ -15,12 +19,12 @@
   Scene.cpp
   SceneManager.cpp
   SoundEffect.cpp
+  Generating Code...
+  Compiling...
   SoundStream.cpp
   Sprite.cpp
   SpriteRenderComponent.cpp
   structs.cpp
-  Generating Code...
-  Compiling...
   SVGParser.cpp
   Texture.cpp
   TransformComponent.cpp

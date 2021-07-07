@@ -159,8 +159,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ActivityComponent.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="DebugEnemyComponent.cpp" />
     <ClCompile Include="DoorCollisionComponent.cpp" />
+    <ClCompile Include="EnemyManagerComponent.cpp" />
+    <ClCompile Include="EnemyMovementComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GetAllRoomsCommand.cpp" />
@@ -195,11 +199,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ActivateMapCommand.h" />
+    <ClInclude Include="ActivityComponent.h" />
     <ClInclude Include="BaseRenderComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="DebugEnemyComponent.h" />
     <ClInclude Include="DoorCollisionComponent.h" />
+    <ClInclude Include="EnemyComponent.h" />
+    <ClInclude Include="EnemyManagerComponent.h" />
+    <ClInclude Include="EnemyMovementComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GetAllRoomsCommand.h" />
@@ -228,6 +237,7 @@
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="SoundStream.h" />
+    <ClInclude Include="Spawner.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteRenderComponent.h" />
     <ClInclude Include="structs.h" />

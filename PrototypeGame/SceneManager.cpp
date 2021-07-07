@@ -32,3 +32,8 @@ void SceneManager::ActivateScene(const std::string& name)
 	m_pCurrentActiveScene = m_Scenes[name];
 	m_pCurrentActiveScene->Activate();
 }
+
+std::shared_ptr<Scene> SceneManager::GetCurrentScene() const
+{
+	return m_pCurrentActiveScene;
+}

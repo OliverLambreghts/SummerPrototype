@@ -5,6 +5,7 @@
 
 #include "ActivateMapCommand.h"
 #include "DoorCollisionComponent.h"
+#include "EnemyManagerComponent.h"
 #include "GameObject.h"
 #include "GridComponent.h"
 #include "HaltPlayerXMovementCommand.h"
@@ -28,9 +29,22 @@
 #include "TransformComponent.h"
 #include "vld.h"
 
+float Game::m_WindowDimension{};
+
+float Game::GetWindowDimension()
+{
+	return m_WindowDimension;
+}
+
+void Game::SetWindowDimension(float dimension)
+{
+	m_WindowDimension = dimension;
+}
+
 Game::Game(const Window& window)
 	:m_Window{ window }
 {
+	m_WindowDimension = window.width;
 	Initialize();
 };
 
@@ -78,6 +92,7 @@ void Game::Initialize( )
 
 	// World
 	world->AddComponent(std::make_shared<MazeComponent>());
+	world->AddComponent(std::make_shared<EnemyManagerComponent>());
 	world->AddComponent(std::make_shared<MazeRenderComponent>(m_Window.height));
 	testScene->Add(world);
 

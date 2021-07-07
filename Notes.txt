@@ -26,4 +26,33 @@ Todo:
 
 - Vandaag wil ik eerst regelen dat de world generation gebeurt in de constructor van de maze component. Hier ga ik nog een aparte method voor aanmaken zodat ik de non-blocking versie ook nog kan callen als ik wil. Hierna wil ik een map toevoegen als je op M drukt. Deze toont de lay-out van de wereld en de kamers die je al bezocht hebt. Om de map uit te breiden moet je nieuwe kamers ontdekken.
 
-- 
+--- ENEMIES W/ PROTOTYPE ---
+5/07:
+- Vandaag ga ik experimenteren met random enemies te spawnen in normal rooms. Elke normal room kan 1-4 spawners hebben. Elke spawner spawned 1x een enemy vanaf dat de player de room binnenkomt.
+
+- Aan een Spawner geef je een GameObject mee van een bepaalde enemy. Deze GameObject MOET een bepaalde EnemyComponent hebben, anders kan de Spawner niet werken.
+
+- De Clone method van een EnemyComponent returned een volledig GameObject waar alle nodige components al inzitten voor een complete enemy van dat type.
+
+- De Spawn method van de Spawner called de Clone method van zijn interne prototype.
+
+- Welke components heeft een enemy nodig?
+	-> EnemyComponent (bevat data voor de andere comps)
+	-> SpriteRenderComponent (rendered de enemy)
+	-> EnemyMovementComponent (Zorgt voor AI movement)
+	-> CollisionComponent (Checked voor collision tussen enemy 					en player en omgeving)
+	-> HealthComponent (update de health v/d enemy)
+	-> CombatComponent (handled de attacks v/d enemy tov de 							player)
+
+- In het world GameObject een EnemyManagerComponent steken die voor elke room een random hoeveelheid spawners aanmaakt. Deze checked ook of de player een nieuwe room binnengaat, zo ja worden de spawners van die room geactiveerd. Deze comp houdt dus alle spawners bij voor elke room.
+
+- In deze EnemyManagerComponent zit ook een pCurrentRoom. Hiervan wordt gechecked of deze nog currently active is via zijn bool. Als dit niet zo is, betekent dit dat de player van room veranderd is. In dat geval wordt gechecked of de spawners al gespawned hebben.
+
+- Hierin mss een AddSpawner method toevoegen die een bepaalde spawner toevoegt aan een specifieke room?
+
+- Of deze comp alleen laten werken met de current room? Telkens als er een nieuwe current room is en dus de player van room verandert, dan wordt de nieuwe room toegevoegd aan een map waarvan de keys room pointers zijn en de value is dan een vector van spawners?
+
+- Als de player uit een room gaat, moeten de enemies die bij die room horen gedespawned worden. Dus als de player uit een room gaat, moeten die enemies op inactive gezet worden. Deze inactive flag bepaalt of de enemies gerendered en geupdate moeten worden.
+
+- Het volgende dat ik wil doen is een object achteraan container van gameobjects zetten in de huidige scene zodat de map boven de rest gerendered wordt.
+----------------------------

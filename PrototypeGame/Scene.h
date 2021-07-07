@@ -21,10 +21,12 @@ public:
 
 	void Activate();
 	void Deactivate();
+
+	void MoveObjToBack(std::shared_ptr<GameObject> obj);
 private:
 	explicit Scene(const std::string& name);
 	
-	std::vector<std::shared_ptr<GameObject>> m_Objects;
+	std::vector<std::shared_ptr<GameObject>> m_Objects, m_NewObjects;
 	std::string m_Name;
 	bool m_IsActive;
 };

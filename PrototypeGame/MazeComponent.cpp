@@ -36,12 +36,14 @@ MazeComponent::MazeComponent()
 	m_pCurrentRoom = &m_Rooms[0][0];
 
 	// Generate the world
-	while (!m_HasFinishedGenerating)
-		GenerateWorld();
+	/*while (!m_HasFinishedGenerating)
+		GenerateWorld();*/
 }
 
 void MazeComponent::Update(float /*elapsedSec*/, GameObject& /*obj*/)
 {
+	if (!m_HasFinishedGenerating)
+		GenerateWorld();
 }
 
 void MazeComponent::GenerateWorld()
@@ -53,7 +55,7 @@ void MazeComponent::GenerateWorld()
 
 	m_pCurrentRoom->isVisited = true;
 	const int percentage = (rand() % 101);
-	if (percentage >= 30)
+	if (percentage >= 20)
 		m_pCurrentRoom->type = RoomType::normal;
 	else if (percentage >= 10)
 		m_pCurrentRoom->type = RoomType::treasure;
@@ -104,7 +106,8 @@ void MazeComponent::EndWorldGeneration()
 
 		// First room is a normal room
 		m_pCurrentRoom->type = RoomType::normal;
-
+		m_pCurrentRoom->isBeginRoom = true;
+		
 		std::cout << "World generation finished\n";
 	}
 }

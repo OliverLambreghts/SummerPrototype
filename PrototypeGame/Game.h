@@ -12,9 +12,13 @@ public:
 
 	void Update( float elapsedSec );
 	void Draw( ) const;
+
+	static float GetWindowDimension();
+	static void SetWindowDimension(float dimension);
 private:
 	// DATA MEMBERS
 	const Window m_Window;
+	static float m_WindowDimension;
 
 	// FUNCTIONS
 	void Initialize( );

@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "HandleCollisionCommand.h"
-
-
 #include "DoorCollisionComponent.h"
 #include "MazeRenderComponent.h"
 #include "Sprite.h"

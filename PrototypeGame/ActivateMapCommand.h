@@ -2,6 +2,8 @@
 #include "Command.h"
 #include "GameObject.h"
 #include "MapRenderComponent.h"
+#include "Scene.h"
+#include "SceneManager.h"
 
 class ActivateMapCommand final : public Command
 {
@@ -20,6 +22,8 @@ public:
 
 	virtual void Execute() override
 	{
+		SceneManager::GetInstance().GetCurrentScene()->MoveObjToBack(m_pMap);
+		
 		if (m_pMap->GetComponent<MapRenderComponent>()->IsMapActive())
 			m_pMap->GetComponent<MapRenderComponent>()->DeactivateMap();
 		else

@@ -18,7 +18,8 @@ public:
 	SceneManager& operator=(const SceneManager& other) = delete;
 	SceneManager(SceneManager&& other) = delete;
 	SceneManager& operator=(SceneManager&& other) = delete;
-	
+
+	std::shared_ptr<Scene> GetCurrentScene() const;
 private:
 	friend class Singleton<SceneManager>;
 	SceneManager() = default;

@@ -73,6 +73,27 @@
     <Filter Include="Source Files\Components\Calculation">
       <UniqueIdentifier>{165489e2-7d34-48de-9613-f1b1c12192ce}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Managers">
+      <UniqueIdentifier>{a64c8f43-1a1f-4442-984c-abbf7c30f7aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Prototypes">
+      <UniqueIdentifier>{1966b2ee-2f03-4918-97a3-ac025fbd6be8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Enemies">
+      <UniqueIdentifier>{6f1004b1-6231-443f-b096-589d184c7bbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Enemies">
+      <UniqueIdentifier>{26ce967f-781e-43d3-9e21-ac0d56cf410c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Managers">
+      <UniqueIdentifier>{06b27784-fa44-47fc-a944-62cabf71d437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Activity">
+      <UniqueIdentifier>{57fb6d0a-d70d-4bc3-b2dd-2002313d4690}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Activity">
+      <UniqueIdentifier>{42352d62-b8c8-41d0-a9e5-0a9645862dfb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -158,6 +179,18 @@
     </ClCompile>
     <ClCompile Include="GetAllRoomsCommand.cpp">
       <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyManagerComponent.cpp">
+      <Filter>Source Files\Components\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugEnemyComponent.cpp">
+      <Filter>Source Files\Components\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMovementComponent.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="ActivityComponent.cpp">
+      <Filter>Source Files\Components\Activity</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +325,24 @@
     </ClInclude>
     <ClInclude Include="ActivateMapCommand.h">
       <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyManagerComponent.h">
+      <Filter>Header Files\Components\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Spawner.h">
+      <Filter>Header Files\Prototypes</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyComponent.h">
+      <Filter>Header Files\Components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugEnemyComponent.h">
+      <Filter>Header Files\Components\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMovementComponent.h">
+      <Filter>Header Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="ActivityComponent.h">
+      <Filter>Header Files\Components\Activity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
