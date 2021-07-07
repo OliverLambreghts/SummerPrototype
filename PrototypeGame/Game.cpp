@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "Game.h"
 #include <iostream>
-
-
 #include "ActivateMapCommand.h"
 #include "DoorCollisionComponent.h"
 #include "EnemyManagerComponent.h"
@@ -92,7 +90,7 @@ void Game::Initialize( )
 
 	// World
 	world->AddComponent(std::make_shared<MazeComponent>());
-	world->AddComponent(std::make_shared<EnemyManagerComponent>());
+	world->AddComponent(std::make_shared<EnemyManagerComponent>(testPlayer));
 	world->AddComponent(std::make_shared<MazeRenderComponent>(m_Window.height));
 	testScene->Add(world);
 

@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 #include <string>
+
+#include "GameObject.h"
 #include "SceneManager.h"
 class GameObject;
 class Scene final
@@ -23,6 +25,18 @@ public:
 	void Deactivate();
 
 	void MoveObjToBack(std::shared_ptr<GameObject> obj);
+	std::shared_ptr<GameObject> GetLastObj() const;
+
+	template<typename T>
+	std::shared_ptr<GameObject> GetFirstObjWithComp() const
+	{
+		for(auto& obj : m_Objects)
+		{
+			if (obj->GetComponent<T>())
+				return obj;
+		}
+		return nullptr;
+	}
 private:
 	explicit Scene(const std::string& name);
 	

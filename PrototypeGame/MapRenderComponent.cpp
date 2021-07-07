@@ -2,6 +2,8 @@
 #include "MapRenderComponent.h"
 #include "GameObject.h"
 #include "GridComponent.h"
+#include "Scene.h"
+#include "SceneManager.h"
 #include "utils.h"
 
 MapRenderComponent::MapRenderComponent(std::shared_ptr<GetAllRoomsCommand> roomsCmd)
@@ -16,6 +18,14 @@ void MapRenderComponent::Update(float /*elapsedSec*/, GameObject& obj)
 		m_pGetCells = std::bind(&GridComponent::GetCells, obj.GetComponent<GridComponent>());
 
 	m_pGetRoomsCmd->Execute();
+
+	MoveMapToBackOfScene();
+}
+
+void MapRenderComponent::MoveMapToBackOfScene() const
+{
+	if (!SceneManager::GetInstance().GetCurrentScene()->GetLastObj()->GetComponent<MapRenderComponent>() && m_IsMapActive)
+		SceneManager::GetInstance().GetCurrentScene()->MoveObjToBack(SceneManager::GetInstance().GetCurrentScene()->GetFirstObjWithComp<MapRenderComponent>());
 }
 
 void MapRenderComponent::Render() const

@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "MovementComponent.h"
 #include "Sprite.h"
+#include "utils.h"
 
 SpriteRenderComponent::SpriteRenderComponent(const std::string& fileName, int nrCols, int nrRows, float frameSec, int colToRender)
 	: m_pSprite{ std::make_shared<Sprite>(fileName, nrCols, nrRows, frameSec) },
@@ -45,6 +46,12 @@ void SpriteRenderComponent::Render() const
 
 	m_pSprite->Draw(Rectf{ m_RenderPos.x, m_RenderPos.y, m_pSprite->GetFrameWidth(),m_pSprite->GetFrameWidth() },
 		srcRect);
+
+	// --- DEBUG RENDER HITBOX ---
+	const float width = GetSprite().GetFrameWidth();
+	const float height = GetSprite().GetFrameHeight();
+	utils::DrawRect(m_RenderPos, width, height);
+	// --- DEBUG RENDER HITBOX ---
 }
 
 void SpriteRenderComponent::Idle()

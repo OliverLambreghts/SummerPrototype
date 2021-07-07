@@ -25,6 +25,7 @@ public:
 	bool IsMapActive() const;
 private:
 	void RenderHalls(std::vector<Room> rooms, size_t idx, const Rectf& room) const;
+	void MoveMapToBackOfScene() const;
 	
 	std::function < const std::vector<Rectf>& ()> m_pGetCells = nullptr;
 	std::function<std::vector<Room>()> m_pGetRooms = nullptr;

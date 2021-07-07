@@ -68,3 +68,8 @@ void Scene::MoveObjToBack(std::shared_ptr<GameObject> obj)
 
 	m_Objects.push_back(obj);
 }
+
+std::shared_ptr<GameObject> Scene::GetLastObj() const
+{
+	return m_Objects.back();
+}

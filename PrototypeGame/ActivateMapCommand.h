@@ -22,7 +22,7 @@ public:
 
 	virtual void Execute() override
 	{
-		SceneManager::GetInstance().GetCurrentScene()->MoveObjToBack(m_pMap);
+		//SceneManager::GetInstance().GetCurrentScene()->MoveObjToBack(m_pMap);
 		
 		if (m_pMap->GetComponent<MapRenderComponent>()->IsMapActive())
 			m_pMap->GetComponent<MapRenderComponent>()->DeactivateMap();

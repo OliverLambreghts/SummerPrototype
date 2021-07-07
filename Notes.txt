@@ -55,4 +55,25 @@ Todo:
 - Als de player uit een room gaat, moeten de enemies die bij die room horen gedespawned worden. Dus als de player uit een room gaat, moeten die enemies op inactive gezet worden. Deze inactive flag bepaalt of de enemies gerendered en geupdate moeten worden.
 
 - Het volgende dat ik wil doen is een object achteraan container van gameobjects zetten in de huidige scene zodat de map boven de rest gerendered wordt.
+
+- De map moet eigenlijk achteraan de object container geplaatst worden telkens als de player een nieuwe room binnengaat.
+----------------------------
+7/07:
+- Het volgende dat gedaan moet worden, is dat als de player een room binnengaat, dat de enemies binnen die room op de player aflopen obv hun speed.
+
+- Hun bewegingsgedrag richting de player wordt bepaald door hun MovementComponent.
+
+- Collision wordt bepaald in een aparte CollisionComponent dus dit niet in hun MovementComponent steken!
+
+- De enemies hebben dus de positie van de player nodig als target om naartoe te bewegen.
+
+- Het volgende is denk ik de player en de enemies elks een HealthComponent geven. Daarna ze een CombatComponent geven.
+
+- Als een bepaalde attack key van de player ingedrukt wordt, dan voert de player een attack uit via zijn CombatComponent. Deze CombatComponent gaat de sprite van de player dan tijdelijk veranderen naar een attacking sprite.
+
+- De CombatComponent moet ook checken of er enemies in de range van de player staan. Dus obv de huidige richting van de player moet er gechecked worden of er enemies voor de player staan in een bepaalde range. Als dit het geval is en de player attacked, dan moet de enemy die het dichtst bij de player staat aangevallen worden.
+
+- De CombatComponent moet rechtstreeks kunnen communiceren met het eventuele wapen dat de player vastheeft zodat dit de attackdamage, speed en range aanpast.
+
+- Er moet gechecked worden of het wapen dat de player vastheeft een ranged wapen is of een melee wapen is. Op basis hiervan moet een bijbehorende method gecalled worden die met dat type wapen werkt.
 ----------------------------

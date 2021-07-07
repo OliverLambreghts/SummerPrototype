@@ -8,7 +8,7 @@
 class EnemyManagerComponent final : public Component
 {
 public:
-	EnemyManagerComponent();
+	EnemyManagerComponent(std::shared_ptr<GameObject> player);
 	virtual ~EnemyManagerComponent() override = default;
 	EnemyManagerComponent(const EnemyManagerComponent& other) = delete;
 	EnemyManagerComponent(EnemyManagerComponent&& other) = delete;
@@ -24,4 +24,5 @@ private:
 	std::map<Room*, std::vector<Spawner>> m_Spawners;
 	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_Enemies;
 	Room* m_pCurrentRoom;
+	std::shared_ptr<GameObject> m_pPlayer;
 };

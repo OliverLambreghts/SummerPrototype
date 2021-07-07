@@ -1,37 +1,5 @@
-﻿  pch.cpp
-  ActivityComponent.cpp
-  Core.cpp
-  DebugEnemyComponent.cpp
-  DoorCollisionComponent.cpp
-  EnemyManagerComponent.cpp
-  EnemyMovementComponent.cpp
-  Game.cpp
-  GameObject.cpp
-  GetAllRoomsCommand.cpp
-  GridComponent.cpp
-  HandleCollisionCommand.cpp
-  InputManager.cpp
-  main.cpp
-  MapRenderComponent.cpp
-  Matrix2x3.cpp
-  MazeRenderComponent.cpp
-  PlayerMovementComponent.cpp
-  Scene.cpp
-  SceneManager.cpp
-  SoundEffect.cpp
-  Generating Code...
-  Compiling...
-  SoundStream.cpp
-  Sprite.cpp
+﻿  EnemyMovementComponent.cpp
   SpriteRenderComponent.cpp
-  structs.cpp
-  SVGParser.cpp
-  Texture.cpp
-  TransformComponent.cpp
-  UpdateCurrentRoomCommand.cpp
-  utils.cpp
-  Vector2f.cpp
-  MazeComponent.cpp
   Generating Code...
   PrototypeGame.vcxproj -> D:\DAE\c++\Games\SummerPrototype\x64\Debug\PrototypeGame.exe
   COPY THE DLL FILES

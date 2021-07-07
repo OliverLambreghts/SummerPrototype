@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "EnemyManagerComponent.h"
 #include <iostream>
-
 #include "ActivityComponent.h"
 #include "DebugEnemyComponent.h"
 #include "Game.h"
 #include "Scene.h"
 #include "SceneManager.h"
 
-EnemyManagerComponent::EnemyManagerComponent()
-	: m_pCurrentRoom{ nullptr }
+EnemyManagerComponent::EnemyManagerComponent(std::shared_ptr<GameObject> player)
+	: m_pCurrentRoom{ nullptr },
+	m_pPlayer{ player }
 {
 }
 
@@ -26,11 +26,11 @@ void EnemyManagerComponent::UpdateCurrentRoom(GameObject& obj)
 		return;
 
 	// Despawn enemies when going to another room
-	for(auto& enemy : m_Enemies[m_pCurrentRoom])
+	for (auto& enemy : m_Enemies[m_pCurrentRoom])
 	{
 		enemy->GetComponent<ActivityComponent>()->Deactivate();
 	}
-	
+
 	m_pCurrentRoom = obj.GetComponent<MazeComponent>()->GetCurrentRoom();
 }
 
@@ -52,7 +52,7 @@ void EnemyManagerComponent::AddSpawners(GameObject& obj)
 	{
 		auto pos = Point2f{ static_cast<float>(rand() % (static_cast<int>(Game::GetWindowDimension()) - 100)),
 		static_cast<float>(rand() % (static_cast<int>(Game::GetWindowDimension()) - 100)) };
-		auto prototype = std::make_shared<DebugEnemyComponent>(rand() % 100, rand() % 50, rand() % 50, pos);
+		auto prototype = std::make_shared<DebugEnemyComponent>(rand() % 100, rand() % 50, rand() % 50 + 50, pos, m_pPlayer);
 
 		Spawner spawner{ prototype };
 		spawners.push_back(spawner);
@@ -73,15 +73,15 @@ void EnemyManagerComponent::SpawnEnemies(GameObject& obj)
 		if (m_Enemies.find(m_pCurrentRoom) == m_Enemies.end())
 			return;
 
-		for(auto& enemy : m_Enemies[m_pCurrentRoom])
+		for (auto& enemy : m_Enemies[m_pCurrentRoom])
 		{
 			enemy->GetComponent<ActivityComponent>()->Activate();
 		}
-		
+
 		return;
 	}
-	
-	for(auto& spawner : m_Spawners[m_pCurrentRoom])
+
+	for (auto& spawner : m_Spawners[m_pCurrentRoom])
 	{
 		auto enemy = spawner.Spawn();
 		enemy->GetComponent<ActivityComponent>()->Activate();
