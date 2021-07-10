@@ -48,9 +48,9 @@ void SpriteRenderComponent::Render() const
 		srcRect);
 
 	// --- DEBUG RENDER HITBOX ---
-	const float width = GetSprite().GetFrameWidth();
+	/*const float width = GetSprite().GetFrameWidth();
 	const float height = GetSprite().GetFrameHeight();
-	utils::DrawRect(m_RenderPos, width, height);
+	utils::DrawRect(m_RenderPos, width, height);*/
 	// --- DEBUG RENDER HITBOX ---
 }
 

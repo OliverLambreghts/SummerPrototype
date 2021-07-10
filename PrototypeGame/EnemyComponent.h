@@ -1,6 +1,5 @@
 #pragma once
 #include <memory>
-
 #include "Component.h"
 
 class EnemyComponent : public Component

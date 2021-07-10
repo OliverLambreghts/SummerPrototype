@@ -6,6 +6,8 @@
 #include "Game.h"
 #include "Scene.h"
 #include "SceneManager.h"
+#include <algorithm>
+#include "EnemyMovementComponent.h"
 
 EnemyManagerComponent::EnemyManagerComponent(std::shared_ptr<GameObject> player)
 	: m_pCurrentRoom{ nullptr },
@@ -18,6 +20,25 @@ void EnemyManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
 	UpdateCurrentRoom(obj);
 	AddSpawners(obj);
 	SpawnEnemies(obj);
+	SortEnemiesByPos();
+}
+
+void EnemyManagerComponent::SortEnemiesByPos()
+{
+	auto enemies = m_Enemies[m_pCurrentRoom];
+
+	if (enemies.empty())
+		return;
+
+	std::sort(enemies.begin(), enemies.end(), [](std::shared_ptr<GameObject>& lhs, std::shared_ptr<GameObject>& rhs)
+		{
+			return lhs->GetComponent<EnemyMovementComponent>()->GetPosition().y > rhs->GetComponent<EnemyMovementComponent>()->GetPosition().y;
+		});
+
+	for (auto& enemy : enemies)
+	{
+		SceneManager::GetInstance().GetCurrentScene()->MoveObjToBack(enemy);
+	}
 }
 
 void EnemyManagerComponent::UpdateCurrentRoom(GameObject& obj)
@@ -68,6 +89,7 @@ void EnemyManagerComponent::SpawnEnemies(GameObject& obj)
 	if (!obj.GetComponent<MazeComponent>()->HasFinishedGenerating())
 		return;
 
+	// Als de spawner niet meer in de spawners container zit, betekent dat dat de player al in de kamer geweest is
 	if (m_Spawners.find(m_pCurrentRoom) == m_Spawners.end())
 	{
 		if (m_Enemies.find(m_pCurrentRoom) == m_Enemies.end())

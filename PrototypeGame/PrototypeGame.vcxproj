@@ -165,16 +165,19 @@
     <ClCompile Include="DoorCollisionComponent.cpp" />
     <ClCompile Include="EnemyManagerComponent.cpp" />
     <ClCompile Include="EnemyMovementComponent.cpp" />
+    <ClCompile Include="FireProc.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GetAllRoomsCommand.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="HandleCollisionCommand.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="ItemManagerComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapRenderComponent.cpp" />
     <ClCompile Include="Matrix2x3.cpp" />
     <ClCompile Include="MazeRenderComponent.cpp" />
+    <ClCompile Include="MeleeKeyComponent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -200,6 +203,7 @@
   <ItemGroup>
     <ClInclude Include="ActivateMapCommand.h" />
     <ClInclude Include="ActivityComponent.h" />
+    <ClInclude Include="BaseProc.h" />
     <ClInclude Include="BaseRenderComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
@@ -209,6 +213,7 @@
     <ClInclude Include="EnemyComponent.h" />
     <ClInclude Include="EnemyManagerComponent.h" />
     <ClInclude Include="EnemyMovementComponent.h" />
+    <ClInclude Include="FireProc.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GetAllRoomsCommand.h" />
@@ -217,9 +222,12 @@
     <ClInclude Include="HaltPlayerYMovementCommand.h" />
     <ClInclude Include="HandleCollisionCommand.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="ItemComponent.h" />
+    <ClInclude Include="ItemManagerComponent.h" />
     <ClInclude Include="MapRenderComponent.h" />
     <ClInclude Include="Matrix2x3.h" />
     <ClInclude Include="MazeRenderComponent.h" />
+    <ClInclude Include="MeleeKeyComponent.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerMoveDownCommand.h" />
@@ -248,6 +256,7 @@
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2f.h" />
     <ClInclude Include="MazeComponent.h" />
+    <ClInclude Include="WeaponQuality.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

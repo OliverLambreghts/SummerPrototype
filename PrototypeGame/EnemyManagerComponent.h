@@ -1,6 +1,5 @@
 #pragma once
 #include <map>
-
 #include "Component.h"
 #include "MazeComponent.h"
 #include "Spawner.h"
@@ -20,6 +19,7 @@ private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddSpawners(GameObject& obj);
 	void SpawnEnemies(GameObject& obj);
+	void SortEnemiesByPos();
 	
 	std::map<Room*, std::vector<Spawner>> m_Spawners;
 	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_Enemies;

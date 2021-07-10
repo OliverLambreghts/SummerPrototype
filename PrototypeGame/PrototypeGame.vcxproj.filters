@@ -94,6 +94,21 @@
     <Filter Include="Source Files\Components\Activity">
       <UniqueIdentifier>{42352d62-b8c8-41d0-a9e5-0a9645862dfb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Items">
+      <UniqueIdentifier>{9f78277c-b4ed-4731-a261-130d0451c847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Procs">
+      <UniqueIdentifier>{fa59d346-3322-42f8-aa93-31ac7d9a5d4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Procs">
+      <UniqueIdentifier>{aa167223-ab71-422e-b1d3-bf455f0040b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Weapon qualities">
+      <UniqueIdentifier>{54d7245a-6a78-4390-8950-d7e8059f447a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Items">
+      <UniqueIdentifier>{7bcc3826-5d1d-4f50-b930-095d145789b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -191,6 +206,15 @@
     </ClCompile>
     <ClCompile Include="ActivityComponent.cpp">
       <Filter>Source Files\Components\Activity</Filter>
+    </ClCompile>
+    <ClCompile Include="FireProc.cpp">
+      <Filter>Source Files\Procs</Filter>
+    </ClCompile>
+    <ClCompile Include="MeleeKeyComponent.cpp">
+      <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ItemManagerComponent.cpp">
+      <Filter>Source Files\Components\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -343,6 +367,24 @@
     </ClInclude>
     <ClInclude Include="ActivityComponent.h">
       <Filter>Header Files\Components\Activity</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemComponent.h">
+      <Filter>Header Files\Components\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MeleeKeyComponent.h">
+      <Filter>Header Files\Components\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseProc.h">
+      <Filter>Header Files\Procs</Filter>
+    </ClInclude>
+    <ClInclude Include="FireProc.h">
+      <Filter>Header Files\Procs</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponQuality.h">
+      <Filter>Header Files\Weapon qualities</Filter>
+    </ClInclude>
+    <ClInclude Include="ItemManagerComponent.h">
+      <Filter>Header Files\Components\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

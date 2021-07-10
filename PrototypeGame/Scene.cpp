@@ -14,7 +14,7 @@ Scene::Scene(const std::string& name)
 
 void Scene::Add(const std::shared_ptr<GameObject>& object)
 {
-	if(!m_IsActive)
+	if (!m_IsActive)
 		m_Objects.push_back(object);
 	else
 		m_NewObjects.push_back(object);
@@ -22,20 +22,27 @@ void Scene::Add(const std::shared_ptr<GameObject>& object)
 
 void Scene::Update(float elapsedSec)
 {
-	if(!m_NewObjects.empty())
+	// Check if the next buffer is empty. If not, then current and next buffer are swapped.
+	if (!m_NextBuffer.empty())
 	{
-		for(auto& obj : m_NewObjects)
+		m_Objects = m_NextBuffer;
+		m_NextBuffer.clear();
+	}
+
+	if (!m_NewObjects.empty())
+	{
+		for (auto& obj : m_NewObjects)
 		{
 			m_Objects.push_back(obj);
 		}
 		m_NewObjects.clear();
 	}
-	
+
 	std::for_each(m_Objects.begin(), m_Objects.end(), [elapsedSec](auto e)
 		{
 			if (e->GetComponent<ActivityComponent>() && !e->GetComponent<ActivityComponent>()->GetActivity())
 				return;
-		
+
 			e->Update(elapsedSec);
 		});
 }
@@ -46,7 +53,7 @@ void Scene::Render() const
 		{
 			if (e->GetComponent<ActivityComponent>() && !e->GetComponent<ActivityComponent>()->GetActivity())
 				return;
-		
+
 			e->Render();
 		});
 }
@@ -63,10 +70,14 @@ void Scene::Deactivate()
 
 void Scene::MoveObjToBack(std::shared_ptr<GameObject> obj)
 {
-	auto it = std::find(m_Objects.begin(), m_Objects.end(), obj);
-	m_Objects.erase(it);
+	if (std::find(m_Objects.begin(), m_Objects.end(), obj) == m_Objects.end())
+		return;
 
-	m_Objects.push_back(obj);
+	m_NextBuffer = m_Objects;
+	auto it = std::find(m_NextBuffer.begin(), m_NextBuffer.end(), obj);
+	m_NextBuffer.erase(it);
+
+	m_NextBuffer.push_back(obj);
 }
 
 std::shared_ptr<GameObject> Scene::GetLastObj() const

@@ -35,7 +35,7 @@ MazeComponent::MazeComponent()
 	m_Rooms[0][0].isVisited = true;
 	m_pCurrentRoom = &m_Rooms[0][0];
 
-	// Generate the world
+	// Generate the world at compile time
 	/*while (!m_HasFinishedGenerating)
 		GenerateWorld();*/
 }
@@ -53,14 +53,17 @@ void MazeComponent::GenerateWorld()
 
 	std::vector<Neighbor*> neighbors;
 
-	m_pCurrentRoom->isVisited = true;
-	const int percentage = (rand() % 101);
-	if (percentage >= 20)
-		m_pCurrentRoom->type = RoomType::normal;
-	else if (percentage >= 10)
-		m_pCurrentRoom->type = RoomType::treasure;
-	else
-		m_pCurrentRoom->type = RoomType::boss;
+	if (!m_pCurrentRoom->isVisited)
+	{
+		const int percentage = (rand() % 101);
+		if (percentage >= 20)
+			m_pCurrentRoom->type = RoomType::normal;
+		else if (percentage >= 10)
+			m_pCurrentRoom->type = RoomType::treasure;
+		else
+			m_pCurrentRoom->type = RoomType::boss;
+		m_pCurrentRoom->isVisited = true;
+	}
 
 	AddNeighbors(neighbors);
 

@@ -77,3 +77,113 @@ Todo:
 
 - Er moet gechecked worden of het wapen dat de player vastheeft een ranged wapen is of een melee wapen is. Op basis hiervan moet een bijbehorende method gecalled worden die met dat type wapen werkt.
 ----------------------------
+10/07:
+
+- Het eerste dat ik wil doen vandaag is de enemy die het laagste staat in de wereld moet bovenaan gerendered worden enzovoort. Anders klopt de rendervolgorde niet in-game.
+
+- De enemies in de huidige actieve room sorteren volgens hun y waarde en ze zo in de huidige scene een per een achteraan de obj vector zetten.
+
+- Nu wil ik de combat tussen de enemies toevoegen. Om dit te doen moet ik de enemies en de player elks een eigen HealthComponent geven. Ook, ga ik de player een inventory moeten geven en ga ik weapons moeten toevoegen. Ik ga beginnen met de HealthComponent.
+
+- De HealthComponent houdt de hoeveelheid health van het gameobject bij, heeft de functionaliteit om health af te trekken en toe te voegen. De player heeft een PlayerHealthComponent. Deze gaat het het spel resetten als de player volledig dood is. Enemies hebben een EnemyHealthComponent. Deze gaat de enemy uit de scene verwijderen als diens health op is.
+
+- Denk nog maar eerst wat na over wat er moet gebeuren als de player sterft. Focus u eerst op het killen van enemies en de combat system en inventory en items.
+
+- Je geeft de player een InventoryComponent waar alle items effectief in worden opgeslagen. Een apart HUD gameobject heeft een HUDRenderComponent die de inventory data uit het player gameobject haalt en dat gebruikt om de inventory te renderen als deel van de HUD.
+
+- Als de player op spatie drukt wordt het huidig geselecteerde item geactiveerd. Als dat een wapen is, wordt dat wapen's execute method gecalled die de dichtstbijzijnde enemy gaat zoeken binnen een bepaalde radius en op die enemy een attack gaat uitvoeren op basis van de stats en eventuele ability van het wapen.
+
+- We zullen beginnen met items. Stel uw item system op zodanig dat je op een simpele manier nieuwe items kan toevoegen. Je gaat heel veel randomized wapens willen die je makkelijk toevoegt. 
+
+- We hebben een base Item class nodig. 
+
+- Typed object gaat niet voor items want items zijn geen types en elk item heeft unieke stats en een eventuele unieke ability.
+
+class WeaponQuality
+{
+public:
+	WeaponQuality(std::string name, Color4f color, float 
+		damageMltplr, float cooldownMltplr)
+private:
+	std::string m_Name;
+	Color4f m_Color;
+	float m_DamageMultiplier, m_CooldownMultiplier;
+}
+
+class MeleeKey final : public Item
+{
+public:
+	MeleeKey(std::string name, int damage, float cooldown,
+		BaseProc* proc, WeaponQuality& quality);
+
+	virtual void OnUse() override;
+private:
+	std::string m_Name;
+	int m_Damage;
+	float m_Cooldown;
+	BaseProc* m_pProc;
+	WeaponQuality& m_WeaponQuality;
+}
+
+int main
+{
+	WeaponQuality epic{"Epic", Color4f{1.f, 0.f, 0.f, 1.f},
+	1.01f, 0.9f};
+	// Chance on hit: does dot fire dmg
+	auto fireProc = new FireProc{};
+	// Chance on hit: critical strike
+	auto critProc = new CritProc{};
+	MeleeKey keyOfFire{"Key of Fire", 10, 0.5f, fireProc,
+	epic};
+	MeleeKey keyOfMight{"Key of Might", 12, 0.9f, critProc,
+	epic};
+}
+
+- Nu alles implementeren. Ik geef het world gameobject een ItemManagerComponent. Deze gaat in treasure rooms een item spawnen. Die checked eerst of de current room een treasure room is. Zo ja, dan maakt die een random item aan (meleekey, rangedkey, consumable) met een random naam en bijbehorende stats (deze haalt die uit de bijbehorende text file met namen voor items).
+
+- Bv. als de huidige room een treasure room is:
+
+SpawnRandomItem()
+{
+	ItemType type = static_cast<ItemType>(rand()% 3);
+	std::ifstream file;
+
+	switch(type)
+	{
+		case ItemType::MeleeKey:
+		file.open("../ItemData/MeleeList.txt");
+		std::string line{};
+		std::vector<std::string> lines;
+		while(!file.eof())
+		{
+			std::getline(file, line);
+			lines.push_back(line);
+		}
+
+		std::random_shuffle(lines.begin(), lines.end());
+		const auto weapon = lines.front();
+		std::vector<std::string> weaponData;
+		ParseData(weapon, weaponData);
+		auto meleeKey = new MeleeKeyComponent{weaponData		[0],
+		weaponData[1], weaponData[2], weaponData[3],
+		weaponData[4]};
+		m_Items[m_pCurrentRoom] = meleeKey->Clone();
+	break;
+		case ItemType::RangedKey:
+
+	break;
+		case ItemType::Consumable:
+
+	break;
+	}
+}
+
+- Welke components heeft een melee key nodig?
+	-> SpriteRenderComponent
+	-> MeleeKeyComponent
+	-> ActivityComponent
+
+- De Item generation moet pas gebeuren als de volledige maze gegenerate is.
+
+TODO
+- Enemy render bug fiksen.

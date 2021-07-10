@@ -40,7 +40,7 @@ public:
 private:
 	explicit Scene(const std::string& name);
 	
-	std::vector<std::shared_ptr<GameObject>> m_Objects, m_NewObjects;
+	std::vector<std::shared_ptr<GameObject>> m_Objects, m_NewObjects, m_NextBuffer;
 	std::string m_Name;
 	bool m_IsActive;
 };

@@ -9,6 +9,7 @@
 #include "HaltPlayerXMovementCommand.h"
 #include "HaltPlayerYMovementCommand.h"
 #include "InputManager.h"
+#include "ItemManagerComponent.h"
 #include "MapRenderComponent.h"
 #include "MazeComponent.h"
 #include "MazeRenderComponent.h"
@@ -91,6 +92,7 @@ void Game::Initialize( )
 	// World
 	world->AddComponent(std::make_shared<MazeComponent>());
 	world->AddComponent(std::make_shared<EnemyManagerComponent>(testPlayer));
+	world->AddComponent(std::make_shared<ItemManagerComponent>(testPlayer));
 	world->AddComponent(std::make_shared<MazeRenderComponent>(m_Window.height));
 	testScene->Add(world);
 
