@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "InputManager.h"
+
+#include <iostream>
+
 #include "Command.h"
 
 bool InputManager::ProcessInput() const
@@ -11,13 +14,29 @@ bool InputManager::ProcessInput() const
 	{
 		if (e.type == SDL_QUIT)
 			return true;
-
+		
 		// Handle the polled event
 		for (auto& pair : m_pKeyboardCommands)
 		{
 			if (e.type == pair.second.first)
 			{
 				if (e.key.keysym.sym == pair.first)
+				{
+					pair.second.second->Execute();
+				}
+			}
+		}
+
+		// Handle wheel events
+		for(auto& pair : m_pWheelCommands)
+		{
+			if(e.type == pair.first)
+			{
+				if(pair.second.first > 0 && e.wheel.y > 0)
+				{
+					pair.second.second->Execute();
+				}
+				else if(pair.second.first < 0 && e.wheel.y < 0)
 				{
 					pair.second.second->Execute();
 				}

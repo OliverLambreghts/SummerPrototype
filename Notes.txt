@@ -186,4 +186,25 @@ SpawnRandomItem()
 - De Item generation moet pas gebeuren als de volledige maze gegenerate is.
 
 TODO
-- Enemy render bug fiksen.
+- Enemy render bug fiksen. DONE
+
+16/07:
+- Ik moet verderwerken aan de itemsystem en een inventory toevoegen voor de player.
+
+- Eerst inventory toevoegen zodat je echt al items kan toevoegen zodat je de items correct maakt zodat je ze effectief kan toevoegen aan de inventory.
+
+- Als je dicht bij een item staat, moet je op een key drukken om die item op te kunnen pakken.
+
+- Bv je staat over een meleekey, je drukt op E en die item wordt toegevoegd aan je inventory.
+
+- Als je op E drukt, wordt er een PickUpItemCommand geëxecute. Deze gaat checken of er een item in de hitbox van de player ligt. Zo ja, wordt deze gedeactiveerd en toegevoegd aan de inventory.
+
+- Ik moet een manier vinden zodat als ik op E druk dat gechecked kan worden op de player dichtbij een item staat. Dit gaat niet normaal want de inputmanager neemt enkel commands die maar 1 gameobject hebben en deze zou er 2 moeten hebben voor zowel de player als de world. Dus mss toevoegen dat je commands kan toevoegen aan de inputmanager die 2 gameobjects pakken als argument? DONE
+
+- Nu de InventoryComponent toevoegen. Deze heeft een vector van 10 items.
+
+- De items geraken in de inventory. Nu moet de player de items nog kunnen gebruiken.
+
+- Als je op een number key drukt, dan wordt de activeitem in de inventorycomponent de item dat op die idx in de vector zit.
+
+- Als je op spacebar drukt, wordt de activeitem gebruikt. Elke item heeft dus een OnUse method nodig. Deze wordt gecalled met het player gameobject als argument. Als je op space drukt, wordt de UseItemCommand geëxecute. Deze gaat de OnUse method callen van de InventoryComponent.

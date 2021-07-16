@@ -24,12 +24,16 @@ public:
 	void operator=(const ItemManagerComponent&& rhs) = delete;
 
 	virtual void Update(float elapsedSec, GameObject & obj) override;
+
+	bool IsPlayerCloseToItem();
+	std::shared_ptr<GameObject> GetItemInCurrentRoom();
+	void RemoveItem();
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddItems(GameObject& obj);
 	void ParseData(const std::string& line, std::vector<std::string>& data) const;
 	void SpawnMeleeKey();
-	void SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc> proc) const;
+	void SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const;
 	void SpawnItem(GameObject& obj);
 	
 	Room* m_pCurrentRoom;

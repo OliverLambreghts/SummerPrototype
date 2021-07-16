@@ -73,7 +73,9 @@ void Scene::MoveObjToBack(std::shared_ptr<GameObject> obj)
 	if (std::find(m_Objects.begin(), m_Objects.end(), obj) == m_Objects.end())
 		return;
 
-	m_NextBuffer = m_Objects;
+	if(m_NextBuffer.empty())
+		m_NextBuffer = m_Objects;
+
 	auto it = std::find(m_NextBuffer.begin(), m_NextBuffer.end(), obj);
 	m_NextBuffer.erase(it);
 

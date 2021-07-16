@@ -1,4 +1,15 @@
-﻿  ItemManagerComponent.cpp
+﻿  DoorCollisionComponent.cpp
+  EnemyManagerComponent.cpp
+  Game.cpp
+  GetAllRoomsCommand.cpp
+  HandleCollisionCommand.cpp
+  ItemManagerComponent.cpp
+  MapRenderComponent.cpp
+  MazeComponent.cpp
+  MazeRenderComponent.cpp
+  PickUpItemCommand.cpp
+  UpdateCurrentRoomCommand.cpp
+  Generating Code...
   PrototypeGame.vcxproj -> D:\DAE\c++\Games\SummerPrototype\x64\Debug\PrototypeGame.exe
   COPY THE DLL FILES
   0 File(s) copied

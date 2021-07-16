@@ -10,6 +10,10 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include <sstream>
+#include "PlayerMovementComponent.h"
+#include "Sprite.h"
+#include "SpriteRenderComponent.h"
+#include "TransformComponent.h"
 
 ItemManagerComponent::ItemManagerComponent(std::shared_ptr<GameObject> player)
 	: m_pPlayer{ player },
@@ -24,13 +28,48 @@ void ItemManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
 	SpawnItem(obj);
 }
 
+bool ItemManagerComponent::IsPlayerCloseToItem()
+{
+	if (m_Items.find(m_pCurrentRoom) == m_Items.end() || !m_Items.at(m_pCurrentRoom))
+		return false;
+	
+	const Rectf player{ m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition().x,
+	m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition().y ,
+	m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
+	m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
+
+	const Rectf item{ m_Items[m_pCurrentRoom]->GetComponent<TransformComponent>()->GetPosition().x,
+	m_Items[m_pCurrentRoom]->GetComponent<TransformComponent>()->GetPosition().y,
+	m_Items[m_pCurrentRoom]->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
+	m_Items[m_pCurrentRoom]->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
+
+	if (utils::IsOverlapping(player, item))
+		return true;
+
+	return false;
+}
+
+std::shared_ptr<GameObject> ItemManagerComponent::GetItemInCurrentRoom()
+{
+	if (m_Items.find(m_pCurrentRoom) == m_Items.end())
+		return nullptr;
+
+	return m_Items[m_pCurrentRoom];
+}
+
+void ItemManagerComponent::RemoveItem()
+{
+	m_Items.erase(m_pCurrentRoom);
+	m_Items[m_pCurrentRoom] = nullptr;
+}
+
 void ItemManagerComponent::UpdateCurrentRoom(GameObject& obj)
 {
 	if (m_pCurrentRoom == obj.GetComponent<MazeComponent>()->GetCurrentRoom())
 		return;
 
 	// Despawn item when going to another room
-	if (m_Items.find(m_pCurrentRoom) != m_Items.end())
+	if (m_Items.find(m_pCurrentRoom) != m_Items.end() && m_Items.at(m_pCurrentRoom))
 		m_Items[m_pCurrentRoom]->GetComponent<ActivityComponent>()->Deactivate();
 
 	m_pCurrentRoom = obj.GetComponent<MazeComponent>()->GetCurrentRoom();
@@ -103,7 +142,7 @@ void ItemManagerComponent::SpawnMeleeKey()
 	ParseData(weapon, weaponData);
 	SetProc(weaponData, proc);
 
-	const auto quality = std::make_shared<WeaponQuality>(weaponData[3]);
+	const auto quality = std::make_shared<WeaponQuality>(weaponData[4]);
 
 	auto meleeKey = std::make_shared<MeleeKeyComponent>( weaponData[0],
 	std::stoi(weaponData[1]), std::stof(weaponData[2]), proc,
@@ -115,7 +154,7 @@ void ItemManagerComponent::SpawnMeleeKey()
 	m_Items[m_pCurrentRoom] = item;
 }
 
-void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc> proc) const
+void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const
 {
 	if (data[3] == "fireproc")
 		proc = std::make_shared<FireProc>(static_cast<float>(rand() % 15), m_pPlayer);
@@ -131,7 +170,7 @@ void ItemManagerComponent::SpawnItem(GameObject& obj)
 	if (m_Items.find(m_pCurrentRoom) == m_Items.end())
 		return;
 
-	if (!m_Items[m_pCurrentRoom])
+	if (!m_Items.at(m_pCurrentRoom))
 		return;
 	
 	m_Items[m_pCurrentRoom]->GetComponent<ActivityComponent>()->Activate();

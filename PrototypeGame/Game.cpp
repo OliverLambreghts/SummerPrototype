@@ -9,10 +9,12 @@
 #include "HaltPlayerXMovementCommand.h"
 #include "HaltPlayerYMovementCommand.h"
 #include "InputManager.h"
+#include "InventoryComponent.h"
 #include "ItemManagerComponent.h"
 #include "MapRenderComponent.h"
 #include "MazeComponent.h"
 #include "MazeRenderComponent.h"
+#include "PickUpItemCommand.h"
 #include "PlayerMoveDownCommand.h"
 #include "PlayerMoveLeftCommand.h"
 #include "PlayerMoveRightCommand.h"
@@ -25,8 +27,11 @@
 #include "SetPlayerSpriteRightCommand.h"
 #include "SetPlayerSpriteUpCommand.h"
 #include "SpriteRenderComponent.h"
+#include "SwitchItemDownCommand.h"
+#include "SwitchItemUpCommand.h"
 #include "TransformComponent.h"
 #include "vld.h"
+#include "UseItemCommand.h"
 
 float Game::m_WindowDimension{};
 
@@ -67,8 +72,10 @@ void Game::Initialize( )
 	auto updateRoomCmd = std::make_shared<UpdateCurrentRoomCommand>(testPlayer, world);
 	auto collisionCmd = std::make_shared<HandleCollisionCommand>(testPlayer, world);
 	testPlayer->AddComponent(std::make_shared<DoorCollisionComponent>(updateRoomCmd, collisionCmd));
+	testPlayer->AddComponent(std::make_shared<InventoryComponent>());
 	testScene->Add(testPlayer);
-	
+
+	// Player movement input
 	InputManager::GetInstance().AddCommand<PlayerMoveRightCommand>(SDLK_RIGHT, SDL_KEYDOWN, testPlayer);
 	InputManager::GetInstance().AddCommand<SetPlayerSpriteRightCommand>(SDLK_RIGHT, SDL_KEYDOWN, testPlayer);
 	InputManager::GetInstance().AddCommand<HaltPlayerXMovementCommand>(SDLK_RIGHT, SDL_KEYUP, testPlayer);
@@ -103,7 +110,18 @@ void Game::Initialize( )
 	map->AddComponent(std::make_shared<MapRenderComponent>(getRoomsCmd));
 	testScene->Add(map);
 
+	// Map input
 	InputManager::GetInstance().AddCommand<ActivateMapCommand>(SDLK_m, SDL_KEYUP, map);
+
+	// Pick up items input
+	InputManager::GetInstance().AddCommand<PickUpItemCommand>(SDLK_e, SDL_KEYUP, testPlayer, world);
+
+	// Use item input
+	InputManager::GetInstance().AddCommand<UseItemCommand>(SDLK_SPACE, SDL_KEYUP, testPlayer);
+
+	// Switch item input
+	InputManager::GetInstance().AddWheelCommand<SwitchItemUpCommand>(SDL_MOUSEWHEEL, 1, testPlayer);
+	InputManager::GetInstance().AddWheelCommand<SwitchItemDownCommand>(SDL_MOUSEWHEEL, -1, testPlayer);
 	
 	SceneManager::GetInstance().ActivateScene("Test");
 }

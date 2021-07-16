@@ -172,6 +172,7 @@
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="HandleCollisionCommand.cpp" />
     <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InventoryComponent.cpp" />
     <ClCompile Include="ItemManagerComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapRenderComponent.cpp" />
@@ -184,6 +185,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PickUpItemCommand.cpp" />
     <ClCompile Include="PlayerMovementComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -222,6 +224,7 @@
     <ClInclude Include="HaltPlayerYMovementCommand.h" />
     <ClInclude Include="HandleCollisionCommand.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InventoryComponent.h" />
     <ClInclude Include="ItemComponent.h" />
     <ClInclude Include="ItemManagerComponent.h" />
     <ClInclude Include="MapRenderComponent.h" />
@@ -230,6 +233,7 @@
     <ClInclude Include="MeleeKeyComponent.h" />
     <ClInclude Include="MovementComponent.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PickUpItemCommand.h" />
     <ClInclude Include="PlayerMoveDownCommand.h" />
     <ClInclude Include="PlayerMoveLeftCommand.h" />
     <ClInclude Include="PlayerMovementComponent.h" />
@@ -250,9 +254,12 @@
     <ClInclude Include="SpriteRenderComponent.h" />
     <ClInclude Include="structs.h" />
     <ClInclude Include="SVGParser.h" />
+    <ClInclude Include="SwitchItemDownCommand.h" />
+    <ClInclude Include="SwitchItemUpCommand.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UpdateCurrentRoomCommand.h" />
+    <ClInclude Include="UseItemCommand.h" />
     <ClInclude Include="utils.h" />
     <ClInclude Include="Vector2f.h" />
     <ClInclude Include="MazeComponent.h" />

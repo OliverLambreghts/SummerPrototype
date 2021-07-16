@@ -216,6 +216,12 @@
     <ClCompile Include="ItemManagerComponent.cpp">
       <Filter>Source Files\Components\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="PickUpItemCommand.cpp">
+      <Filter>Source Files\Commands</Filter>
+    </ClCompile>
+    <ClCompile Include="InventoryComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -385,6 +391,21 @@
     </ClInclude>
     <ClInclude Include="ItemManagerComponent.h">
       <Filter>Header Files\Components\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="PickUpItemCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="InventoryComponent.h">
+      <Filter>Header Files\Components\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="UseItemCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchItemUpCommand.h">
+      <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchItemDownCommand.h">
+      <Filter>Header Files\Commands</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

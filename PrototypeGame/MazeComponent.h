@@ -62,7 +62,7 @@ private:
 	void InverseConnectRooms(std::vector<Neighbor*>& neighbors, Room* nextNode) const;
 	void EndWorldGeneration();
 	
-	static const int m_WorldSize = 5;
+	static const int m_WorldSize = 10;
 
 	Room m_Rooms[m_WorldSize][m_WorldSize];
 	std::stack<Room*> m_Stack;

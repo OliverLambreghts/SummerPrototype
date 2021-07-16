@@ -19,10 +19,11 @@ public:
 
 	virtual std::shared_ptr<GameObject> Clone() override;
 	virtual void Update(float elapsedSec, GameObject & obj) override;
+	virtual void OnUse(std::shared_ptr<GameObject> player) override;
 
-	void PrintStats() const
+	virtual void PrintStats() override
 	{
-		std::cout << "This room contains: " << m_Name << ". It does " << m_Damage << " damage and has a " <<
+		std::cout << m_Name << ". It does " << m_Damage << " damage and has a " <<
 			m_Cooldown << " second cooldown.\n";
 	}
 private:

@@ -30,3 +30,10 @@ std::shared_ptr<GameObject> MeleeKeyComponent::Clone()
 void MeleeKeyComponent::Update(float /*elapsedSec*/, GameObject& /*obj*/)
 {
 }
+
+void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> /*player*/)
+{
+	std::cout << "Attacking with " << m_Name << '\n';
+	if (m_pProc->IsProcActive())
+		std::cout << "Proc activates!\n";
+}

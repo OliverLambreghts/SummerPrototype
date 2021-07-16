@@ -2,13 +2,13 @@ d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.pch
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\vc142.pdb
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\vc142.idb
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\pch.obj
-d:\dae\c++\games\summerprototype\prototypegame\x64\debug\playermovementcomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\meleekeycomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\mazerendercomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\matrix2x3.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\maprendercomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\main.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\itemmanagercomponent.obj
+d:\dae\c++\games\summerprototype\prototypegame\x64\debug\inventorycomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\inputmanager.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\handlecollisioncommand.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\gridcomponent.obj
@@ -36,8 +36,10 @@ d:\dae\c++\games\summerprototype\prototypegame\x64\debug\soundstream.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\soundeffect.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\scenemanager.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\scene.obj
-d:\dae\c++\games\summerprototype\x64\debug\prototypegame.exe
+d:\dae\c++\games\summerprototype\prototypegame\x64\debug\playermovementcomponent.obj
+d:\dae\c++\games\summerprototype\prototypegame\x64\debug\pickupitemcommand.obj
 d:\dae\c++\games\summerprototype\x64\debug\prototypegame.ilk
+d:\dae\c++\games\summerprototype\x64\debug\prototypegame.exe
 d:\dae\c++\games\summerprototype\x64\debug\prototypegame.pdb
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\cl.command.1.tlog
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\cl.read.1.tlog
