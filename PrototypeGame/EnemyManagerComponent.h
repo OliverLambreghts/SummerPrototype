@@ -15,6 +15,7 @@ public:
 	void operator=(const EnemyManagerComponent&& rhs) = delete;
 
 	virtual void Update(float elapsedSec, GameObject& obj) override;
+	std::shared_ptr<GameObject> GetClosestEnemy();
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddSpawners(GameObject& obj);

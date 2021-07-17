@@ -5,6 +5,7 @@
 #include "ActivityComponent.h"
 #include "GameObject.h"
 #include "ItemComponent.h"
+#include "MeleeKeyComponent.h"
 
 void InventoryComponent::Update(float /*elapsedSec*/, GameObject& /*obj*/)
 {
@@ -17,6 +18,7 @@ void InventoryComponent::AddItem(std::shared_ptr<GameObject> item)
 
 	item->GetComponent<ActivityComponent>()->Deactivate();
 	m_Items.push_back(item);
+	m_pActiveItem = item;
 }
 
 void InventoryComponent::SwitchItem(int idx)
@@ -38,12 +40,12 @@ void InventoryComponent::SwitchItem(int idx)
 	m_pActiveItem.lock()->GetComponent<ItemComponent>()->PrintStats();
 }
 
-void InventoryComponent::OnUse(std::shared_ptr<GameObject> player) const
+void InventoryComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> enemy) const
 {
 	if (!m_pActiveItem.lock())
 		return;
 
-	m_pActiveItem.lock()->GetComponent<ItemComponent>()->OnUse(player);
+	m_pActiveItem.lock()->GetComponent<ItemComponent>()->OnUse(player, enemy);
 }
 
 size_t InventoryComponent::GetCurrentIdx() const
@@ -56,4 +58,22 @@ size_t InventoryComponent::GetCurrentIdx() const
 		}
 	}
 	return 0;
+}
+
+bool InventoryComponent::CanPickUpItem() const
+{
+	return m_Items.size() != m_MaxCapacity;
+}
+
+InventoryComponent::ItemType InventoryComponent::GetCurrentItemType() const
+{
+	if (!m_pActiveItem.lock())
+		return ItemType::none;
+	
+	if(m_pActiveItem.lock()->GetComponent<MeleeKeyComponent>())
+	{
+		return ItemType::MeleeKey;
+	}
+	// Tijdelijke standaard return value.
+	return ItemType::Consumable;
 }

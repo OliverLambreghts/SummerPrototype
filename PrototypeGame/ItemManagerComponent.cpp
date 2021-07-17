@@ -112,13 +112,16 @@ void ItemManagerComponent::ParseData(const std::string& line, std::vector<std::s
 	std::string proc{};
 	std::getline(ss, proc, ':');
 	std::string quality{};
-	std::getline(ss, quality);
+	std::getline(ss, quality, ':');
+	std::string fileName{};
+	std::getline(ss, fileName);
 
 	data.push_back(name);
 	data.push_back(damage);
 	data.push_back(cooldown);
 	data.push_back(proc);
 	data.push_back(quality);
+	data.push_back(fileName);
 }
 
 void ItemManagerComponent::SpawnMeleeKey()
@@ -146,7 +149,7 @@ void ItemManagerComponent::SpawnMeleeKey()
 
 	auto meleeKey = std::make_shared<MeleeKeyComponent>( weaponData[0],
 	std::stoi(weaponData[1]), std::stof(weaponData[2]), proc,
-	*quality );
+	*quality, weaponData[5] );
 
 	auto item = meleeKey->Clone();
 	item->GetComponent<ActivityComponent>()->Activate();

@@ -6,6 +6,14 @@
 class InventoryComponent final : public Component
 {
 public:
+	enum class ItemType
+	{
+		MeleeKey,
+		RangedKey,
+		Consumable,
+		none
+	};
+	
 	InventoryComponent() = default;
 	virtual ~InventoryComponent() override = default;
 	InventoryComponent(const InventoryComponent& other) = delete;
@@ -17,8 +25,10 @@ public:
 
 	void AddItem(std::shared_ptr<GameObject> item);
 	void SwitchItem(int idx);
-	void OnUse(std::shared_ptr<GameObject> player) const;
+	void OnUse(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> enemy) const;
 	size_t GetCurrentIdx() const;
+	bool CanPickUpItem() const;
+	ItemType GetCurrentItemType() const;
 private:
 	static const int m_MaxCapacity = 10;
 

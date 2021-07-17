@@ -117,7 +117,7 @@ void Game::Initialize( )
 	InputManager::GetInstance().AddCommand<PickUpItemCommand>(SDLK_e, SDL_KEYUP, testPlayer, world);
 
 	// Use item input
-	InputManager::GetInstance().AddCommand<UseItemCommand>(SDLK_SPACE, SDL_KEYUP, testPlayer);
+	InputManager::GetInstance().AddCommand<UseItemCommand>(SDLK_SPACE, SDL_KEYUP, testPlayer, world);
 
 	// Switch item input
 	InputManager::GetInstance().AddWheelCommand<SwitchItemUpCommand>(SDL_MOUSEWHEEL, 1, testPlayer);

@@ -10,7 +10,7 @@ class MeleeKeyComponent final : public ItemComponent
 {
 public:
 	MeleeKeyComponent(const std::string& name, int damage, float cooldown, std::shared_ptr<BaseProc> proc,
-		WeaponQuality& quality);
+		WeaponQuality& quality, const std::string& fileName);
 	virtual ~MeleeKeyComponent() override = default;
 	MeleeKeyComponent(const MeleeKeyComponent& other) = delete;
 	MeleeKeyComponent(MeleeKeyComponent&& other) = delete;
@@ -19,7 +19,7 @@ public:
 
 	virtual std::shared_ptr<GameObject> Clone() override;
 	virtual void Update(float elapsedSec, GameObject & obj) override;
-	virtual void OnUse(std::shared_ptr<GameObject> player) override;
+	virtual void OnUse(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> enemy) override;
 
 	virtual void PrintStats() override
 	{
@@ -32,4 +32,5 @@ private:
 	float m_Cooldown;
 	std::shared_ptr<BaseProc> m_pProc;
 	WeaponQuality& m_WeaponQuality;
+	std::string m_FileName;
 };

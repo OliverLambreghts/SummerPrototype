@@ -8,6 +8,7 @@
 #include "SceneManager.h"
 #include <algorithm>
 #include "EnemyMovementComponent.h"
+#include "PlayerMovementComponent.h"
 
 EnemyManagerComponent::EnemyManagerComponent(std::shared_ptr<GameObject> player)
 	: m_pCurrentRoom{ nullptr },
@@ -21,6 +22,29 @@ void EnemyManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
 	AddSpawners(obj);
 	SpawnEnemies(obj);
 	SortEnemiesByPos();
+}
+
+std::shared_ptr<GameObject> EnemyManagerComponent::GetClosestEnemy()
+{
+	if (m_Enemies.at(m_pCurrentRoom).empty())
+		return nullptr;
+
+	std::shared_ptr<GameObject> closestEnemy = nullptr;
+	const auto playerPos = m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition();
+	Vector2f closestDist{0, 20000};
+	for(auto& enemy : m_Enemies.at(m_pCurrentRoom))
+	{
+		auto enemyPos = enemy->GetComponent<EnemyMovementComponent>()->GetPosition();
+		Vector2f distanceVec{ playerPos, enemyPos };
+
+		if (distanceVec.Length() < closestDist.Length())
+		{
+			closestDist = distanceVec;
+			closestEnemy = enemy;
+		}
+	}
+	
+	return closestEnemy;
 }
 
 void EnemyManagerComponent::SortEnemiesByPos()

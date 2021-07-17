@@ -1,2 +1,2 @@
-Key of Fire:10:0.5:fireproc:epic
-Basic Key:4:0.9:none:basic
+Key of Fire:10:0.5:fireproc:epic:FireKey.png
+Basic Key:4:0.9:none:basic:BasicKey.png

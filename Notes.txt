@@ -208,3 +208,24 @@ TODO
 - Als je op een number key drukt, dan wordt de activeitem in de inventorycomponent de item dat op die idx in de vector zit.
 
 - Als je op spacebar drukt, wordt de activeitem gebruikt. Elke item heeft dus een OnUse method nodig. Deze wordt gecalled met het player gameobject als argument. Als je op space drukt, wordt de UseItemCommand geëxecute. Deze gaat de OnUse method callen van de InventoryComponent.
+
+17/07:
+- Let's improve the inventory some more today. When you reach the max capacity of items in your inventory and you try to pick up another item, it gets removed from the world's item container.
+
+- Eerst wil ik aanpassen dat je ook de filepath naar de texture van een item in de txt file kan steken zodat dat ook geparsed kan worden.
+
+- Nu wil toevoegen dat je met de active key enemies kan attacken.
+
+- Als we dus voor een enemy staan en we drukken op spatie, dan moet een command geëxecute worden dat het actieve weapon gebruikt. Deze method gaat eerst checken wat het type van het actieve item is. Als deze een melee key is dan gaat deze command de OnUse method callen van de actieve item met als argument de dichtstbijzijnde enemy binnen een bepaalde range, als die er is.
+
+NOTES VOOR VOLGENDE KEER:
+- Dus nu als je een enemy attacked met een melee key, dan wordt er een debug method van de closest enemy gecalled dat die debug deactivate. Dit moet je nog aanpassen door de health van de enemy aan te passen obv de weapon met hun HealthComponent (dus in de OnUse method van dat wapen).
+
+- Ook moet je nog nadenken over hoe je de cooldown wilt toevoegen. Dit ook in de useitemcommand steken of eerder in een combatcomponent?
+	-> De cooldown gewoon in de MeleeKeyComponent activaten op 
+	einde van de OnUse method en in de Update method hiervan
+	de cooldown updaten.
+
+- De virtual OnUse method van de items heeft nu 2 argumenten, een player en een enemy. Het enemy argument is enkel voor meleekeys momenteel. Dus als je een consumable gebruikt bv, dan geef je nullptr mee als argument voor die parameter. Als je een rangedKey zou gebruiken, dan moet er een projectile afgeschoten worden dus dat gaat wss op een andere manier werken.
+
+TODO DUS: HealthComponent toevoegen voor zowel enemies als voor player. Combat van player's kant naar enemy verbeteren (Cooldown toevoegen, damage van key toevoegen, proc toevoegen,..), combat van enemies' kant naar player toevoegen (Enemies dus een CombatComponent geven? Wat zou hier dan in moeten?). Nadenken over wat je nog allemaal moet toevoegen hierbij. DENK EERST GOED NA OVER IMPLEMENTATIE!! -> Schrijf alles op, teken alles uit! Denk lang en geduldig na!
