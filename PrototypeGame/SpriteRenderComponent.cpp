@@ -1,9 +1,6 @@
 #include "pch.h"
 #include "SpriteRenderComponent.h"
-
 #include <iostream>
-
-
 #include "GameObject.h"
 #include "MovementComponent.h"
 #include "Sprite.h"
@@ -67,4 +64,9 @@ void SpriteRenderComponent::Move()
 const Sprite& SpriteRenderComponent::GetSprite() const
 {
 	return *m_pSprite;
+}
+
+SpriteRenderComponent::Direction SpriteRenderComponent::GetDirection() const
+{
+	return m_ActiveDirections.back();
 }

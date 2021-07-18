@@ -109,6 +109,12 @@
     <Filter Include="Source Files\Components\Items">
       <UniqueIdentifier>{7bcc3826-5d1d-4f50-b930-095d145789b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Health">
+      <UniqueIdentifier>{3a7608e4-a643-4ad5-a8be-546a44297774}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Health">
+      <UniqueIdentifier>{b7510a25-8042-4e7b-bffb-07b495984c4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -219,8 +225,11 @@
     <ClCompile Include="PickUpItemCommand.cpp">
       <Filter>Source Files\Commands</Filter>
     </ClCompile>
+    <ClCompile Include="HealthComponent.cpp">
+      <Filter>Source Files\Components\Health</Filter>
+    </ClCompile>
     <ClCompile Include="InventoryComponent.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Components\Items</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -406,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="SwitchItemDownCommand.h">
       <Filter>Header Files\Commands</Filter>
+    </ClInclude>
+    <ClInclude Include="HealthComponent.h">
+      <Filter>Header Files\Components\Health</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

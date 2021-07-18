@@ -1,10 +1,6 @@
 #include "pch.h"
 #include "PickUpItemCommand.h"
-
 #include <iostream>
-
-
-
 #include "InventoryComponent.h"
 #include "ItemManagerComponent.h"
 

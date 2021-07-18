@@ -171,6 +171,7 @@
     <ClCompile Include="GetAllRoomsCommand.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="HandleCollisionCommand.cpp" />
+    <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InventoryComponent.cpp" />
     <ClCompile Include="ItemManagerComponent.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="HaltPlayerXMovementCommand.h" />
     <ClInclude Include="HaltPlayerYMovementCommand.h" />
     <ClInclude Include="HandleCollisionCommand.h" />
+    <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="InventoryComponent.h" />
     <ClInclude Include="ItemComponent.h" />

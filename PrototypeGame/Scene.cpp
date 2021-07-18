@@ -4,6 +4,7 @@
 #include <iostream>
 #include "ActivityComponent.h"
 #include "GameObject.h"
+#include "ItemComponent.h"
 
 Scene::Scene(const std::string& name)
 	: m_Name{ name },

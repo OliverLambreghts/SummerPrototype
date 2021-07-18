@@ -229,3 +229,32 @@ NOTES VOOR VOLGENDE KEER:
 - De virtual OnUse method van de items heeft nu 2 argumenten, een player en een enemy. Het enemy argument is enkel voor meleekeys momenteel. Dus als je een consumable gebruikt bv, dan geef je nullptr mee als argument voor die parameter. Als je een rangedKey zou gebruiken, dan moet er een projectile afgeschoten worden dus dat gaat wss op een andere manier werken.
 
 TODO DUS: HealthComponent toevoegen voor zowel enemies als voor player. Combat van player's kant naar enemy verbeteren (Cooldown toevoegen, damage van key toevoegen, proc toevoegen,..), combat van enemies' kant naar player toevoegen (Enemies dus een CombatComponent geven? Wat zou hier dan in moeten?). Nadenken over wat je nog allemaal moet toevoegen hierbij. DENK EERST GOED NA OVER IMPLEMENTATIE!! -> Schrijf alles op, teken alles uit! Denk lang en geduldig na!
+
+18/07:
+- We gaan er eerst voor zorgen dat de enemy die attacked kan worden, de nearest enemy VOOR de player is en niet in alle richtingen.
+
+- Dus op basis van de laatste richting waar de speler zich in bevond, dus de huidige richting waar de speler zich in bevindt, moet de dichtstbijzijnde enemy berekend worden.
+
+- Je zou dus een method moeten hebben die de laatste richting returned waar de player zich in verkeerde. Misschien een extra enum class maken waar je alle richtingen in kan steken en dan een extra data member maken waar je de last direction in bijhoudt? OF gewoon een method in de SpriteRenderComponent steken die de direction returned want die werkt met alle directions in 1 enum.
+
+- Ook heb ik een bug gevonden dat de room linksonderaan geen enemies spawned, waarschijnlijk omdat zogezegd de eerste room is in de grid, ook al is dit niet altijd de starting room.
+
+- Deze bug gebeurt denk ik omdat de eerste current room die aan de enemymanager gegeven wordt degene is na de eerste effectieve room omdat eerst de room gegenerate wordt, dan de volgende room geset wordt als nieuwe current room voor de volgende frame en DAN pas de enemymanager aan beurt is. Dus er zou een manier moeten zijn om de eerste room ook te vullen met enemies. -> Voor nu laat ik dit gewoon zoals het is. De links onderste room is dus nooit gevuld met enemies, we zullen dit voorlopig een feature laten. Uiteindelijk kan ik van deze room ook een vendor room maken dus is het goed dat er geen enemies in deze room zitten.
+
+- Het volgende is de enemies elks een HealthComponent geven. Deze heeft een subtracthealth method en een addhealth method. Ook heeft deze een IsDead method. Als de player een enemy raakt, wordt er health van die enemy afgetrokken. In de EnemyManager wordt gechecked of de IsDead method van een enemy true returned, zo ja wordt deze gedeactiveerd en uit de m_Enemies container gehaald.
+
+- Wat heeft een healthcomponent nodig?
+-> int m_Health.
+-> methods: SubtractHealth, AddHealth, IsDead.
+
+- In de Clone method van de EnemyComponent moet je dus nog een HealthComponent toevoegen met als argument m_Health van de EnemyComponent.
+
+- Als een enemy attacked wordt door een weapon met een bepaalde proc moet die proc getriggered worden als die actief is. Ik was aan het denken om een FireProc de enemy voor een bepaalde duratie in brand te steken. De HealthComponent dus misschien een ptr naar een Proc geven en als de proc actief is die setten op de proc van het type van de weapon voor een bepaalde duratie? En alle procs dus een data member geven dat de duratie van die proc voorstelt. Bv een fireproc een duratie van 4 seconden geven zodat de enemy 4 seconden lang brandt. Een critproc een duratie van 1 seconde geven zodat die proc maar 1 keer wordt toegepast op de enemy's health als die zou activeren.
+
+- Dus stel: Je attacked een enemy en je fireproc activeert. Dan wordt in de OnUse method van je key eerst de health geadd obv de damage van de key en de modifier van de quality. Daarna wordt een method van de HC gecalled dat de proc set. Als de proc binnen de HC dus niet nullptr is, wordt de Trigger method ervan gecalled in de Update method van de HC met als argument de health van de enemy.
+
+- Bug: Als je een key oppakt, wordt zijn Update method niet meer gecalled. DIT IS OMDAT DIE GEDEACTIVATE WORDT ALS JE DIE OPPAKT!!
+
+- Mogelijke fixes: Niet deactivaten, maar niet meer renderen. OF alle items die in de inventory zitten gewoon in de inventorycomponent updaten? Ik heb de tweede optie gekozen. Nu update ik alle items hun itemcomponent polymorfisch in de inventorycomponent. Zo worden ze van zodra ze in de inventory zitten automatisch daar geupdate ipv rechtstreeks in de scene.
+
+- Nu wil ik een knockback toevoegen als je de enemy raakt. Deze mag altijd hetzelfde blijven. Het enige nut hiervan is eigenlijk dat je kan voorkomen dat een enemy je raakt door die zelf eerst te raken. Zo kan de enemy niet in range komen om jou te raken.

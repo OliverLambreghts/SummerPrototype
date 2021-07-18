@@ -16,10 +16,6 @@ public:
 	bool GetActivity() const;
 	void Activate();
 	void Deactivate();
-
-	// --- DIT WEGHALEN VOLGENDE KEER ---
-	void DebugDeactivate();
-	// --- DIT WEGHALEN VOLGENDE KEER ---
 private:
 	bool m_IsActive, m_IsDebugActive;
 };

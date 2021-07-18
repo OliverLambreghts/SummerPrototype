@@ -10,7 +10,10 @@
 
 EnemyMovementComponent::EnemyMovementComponent(float speed, const Point2f& pos)
 	: m_Position{ pos },
-	m_Speed{ speed }
+	m_Speed{ speed },
+	m_IsKnockedBack{ false },
+	m_ActiveKBTimer{},
+	m_KBVelocity{}
 {
 }
 
@@ -24,10 +27,14 @@ void EnemyMovementComponent::Update(float elapsedSec, GameObject& obj)
 
 	float width = obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth();
 	const float height = obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight();
-	
-	if (utils::IsOverlapping( Rectf{ playerPos.x, playerPos.y, 
+
+	// Apply knockback when hit by player
+	if (ApplyKnockBack(elapsedSec))
+		return;
+
+	if (utils::IsOverlapping(Rectf{ playerPos.x, playerPos.y,
 		player->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
-		player->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight()}, 
+		player->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() },
 		Rectf{ m_Position.x, m_Position.y, width, height }))
 	{
 		obj.GetComponent<SpriteRenderComponent>()->Idle();
@@ -35,7 +42,7 @@ void EnemyMovementComponent::Update(float elapsedSec, GameObject& obj)
 	}
 
 	obj.GetComponent<SpriteRenderComponent>()->Move();
-	
+
 	// Calculate desired velocity (for the direction)
 	Vector2f velocity = playerPos - m_Position;
 	velocity = velocity.Normalized();
@@ -83,6 +90,27 @@ void EnemyMovementComponent::DetermineDirection(const Vector2f& velocity, GameOb
 	}
 }
 
+bool EnemyMovementComponent::ApplyKnockBack(float elapsedSec)
+{
+	if (m_IsKnockedBack)
+	{
+		m_ActiveKBTimer += elapsedSec;
+
+		auto KBVel = m_KBVelocity.Normalized();
+		KBVel *= m_KBSpeed;
+
+		m_Position += KBVel * elapsedSec;
+
+		if (m_ActiveKBTimer >= m_KnockBackTimer)
+		{
+			m_ActiveKBTimer = 0.f;
+			m_IsKnockedBack = false;
+		}
+		return true;
+	}
+	return false;
+}
+
 void EnemyMovementComponent::SetPosition(const Point2f& pos)
 {
 	m_Position = pos;
@@ -91,5 +119,12 @@ void EnemyMovementComponent::SetPosition(const Point2f& pos)
 const Point2f& EnemyMovementComponent::GetPosition() const
 {
 	return m_Position;
+}
+
+void EnemyMovementComponent::ActivateKnockBack(const Point2f& playerPos)
+{
+	m_IsKnockedBack = true;
+
+	m_KBVelocity = Vector2f{ playerPos, m_Position };
 }
 

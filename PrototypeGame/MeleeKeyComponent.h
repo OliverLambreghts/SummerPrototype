@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-
 #include "BaseProc.h"
 #include "ItemComponent.h"
 #include <string>
@@ -10,7 +9,7 @@ class MeleeKeyComponent final : public ItemComponent
 {
 public:
 	MeleeKeyComponent(const std::string& name, int damage, float cooldown, std::shared_ptr<BaseProc> proc,
-		WeaponQuality& quality, const std::string& fileName);
+		std::shared_ptr<WeaponQuality> quality, const std::string& fileName);
 	virtual ~MeleeKeyComponent() override = default;
 	MeleeKeyComponent(const MeleeKeyComponent& other) = delete;
 	MeleeKeyComponent(MeleeKeyComponent&& other) = delete;
@@ -29,8 +28,9 @@ public:
 private:
 	std::string m_Name;
 	int m_Damage;
-	float m_Cooldown;
+	float m_Cooldown, m_CDTimer;
 	std::shared_ptr<BaseProc> m_pProc;
-	WeaponQuality& m_WeaponQuality;
+	std::shared_ptr<WeaponQuality> m_pWeaponQuality;
 	std::string m_FileName;
+	bool m_IsCDActive;
 };

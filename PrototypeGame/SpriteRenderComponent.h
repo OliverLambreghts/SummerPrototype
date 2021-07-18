@@ -31,6 +31,7 @@ public:
 	void Idle();
 	void Move();
 	const Sprite& GetSprite() const;
+	Direction GetDirection() const;
 private:
 	std::vector<Direction> m_ActiveDirections;
 	std::shared_ptr<Sprite> m_pSprite;

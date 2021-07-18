@@ -8,14 +8,20 @@ public:
 	WeaponQuality(const std::string& name)
 		: m_Name{ name },
 		m_TextColor{  },
-		m_DamageMultiplier{  },
-		m_CooldownMultiplier{  }
+		m_DamageMultiplier{ 1.f },
+		m_CooldownMultiplier{ 1.f }
 	{
 		if(name == "basic")
 		{
 			m_TextColor = Color4f{ 1.f, 1.f, 1.f, 1.f };
 			m_DamageMultiplier = 1.f;
 			m_CooldownMultiplier = 1.f;
+		}
+		else if(name == "epic")
+		{
+			m_TextColor = Color4f{ 1.f, 0.f, 0.f, 1.f };
+			m_DamageMultiplier = 1.2f;
+			m_CooldownMultiplier = 0.8f;
 		}
 	}
 

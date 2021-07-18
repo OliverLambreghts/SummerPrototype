@@ -16,9 +16,16 @@ public:
 
 	virtual void SetPosition(const Point2f & pos) override;
 	virtual const Point2f& GetPosition() const override;
+
+	void ActivateKnockBack(const Point2f& playerPos);
 private:
 	void DetermineDirection(const Vector2f& velocity, GameObject& obj) const;
+	bool ApplyKnockBack(float elapsedSec);
 	
 	float m_Speed;
 	Point2f m_Position;
+	bool m_IsKnockedBack;
+	const float m_KnockBackTimer = 0.15f, m_KBSpeed = 400.f;
+	float m_ActiveKBTimer;
+	Vector2f m_KBVelocity;
 };

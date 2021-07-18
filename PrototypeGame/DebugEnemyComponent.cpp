@@ -5,6 +5,7 @@
 #include "EnemyMovementComponent.h"
 #include "Game.h"
 #include "GameObject.h"
+#include "HealthComponent.h"
 #include "SpriteRenderComponent.h"
 
 DebugEnemyComponent::DebugEnemyComponent(int health, int power, int speed, const Point2f& pos, std::shared_ptr<GameObject> player)
@@ -22,6 +23,7 @@ std::shared_ptr<GameObject> DebugEnemyComponent::Clone()
 	clone->AddComponent(std::make_shared<SpriteRenderComponent>("../Data/Sprites/TestSheet.png", 9, 4, 1.f / 10.f, 1));
 	clone->GetComponent<SpriteRenderComponent>()->Move();
 	clone->AddComponent(std::make_shared<ActivityComponent>());
+	clone->AddComponent(std::make_shared<HealthComponent>(m_Health));
 	return clone;
 }
 

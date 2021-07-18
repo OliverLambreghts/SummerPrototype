@@ -26,8 +26,3 @@ void ActivityComponent::Deactivate()
 {
 	m_IsActive = false;
 }
-
-void ActivityComponent::DebugDeactivate()
-{
-	m_IsDebugActive = false;
-}

@@ -15,12 +15,13 @@ public:
 	void operator=(const EnemyManagerComponent&& rhs) = delete;
 
 	virtual void Update(float elapsedSec, GameObject& obj) override;
-	std::shared_ptr<GameObject> GetClosestEnemy();
+	std::shared_ptr<GameObject> GetClosestEnemyInFront();
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddSpawners(GameObject& obj);
 	void SpawnEnemies(GameObject& obj);
 	void SortEnemiesByPos();
+	void RemoveDeadEnemies();
 	
 	std::map<Room*, std::vector<Spawner>> m_Spawners;
 	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_Enemies;

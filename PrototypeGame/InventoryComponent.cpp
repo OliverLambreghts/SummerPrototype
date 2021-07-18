@@ -7,8 +7,12 @@
 #include "ItemComponent.h"
 #include "MeleeKeyComponent.h"
 
-void InventoryComponent::Update(float /*elapsedSec*/, GameObject& /*obj*/)
+void InventoryComponent::Update(float elapsedSec, GameObject& obj)
 {
+	for(auto& item : m_Items)
+	{
+		item.lock()->GetComponent<ItemComponent>()->Update(elapsedSec, obj);
+	}
 }
 
 void InventoryComponent::AddItem(std::shared_ptr<GameObject> item)

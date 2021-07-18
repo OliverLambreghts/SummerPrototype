@@ -11,6 +11,7 @@ public:
 	void operator=(const BaseProc&& rhs) = delete;
 
 	virtual bool IsProcActive() = 0;
-	virtual void Trigger() = 0;
+	virtual void Trigger(int& health) = 0;
+	virtual float GetDuration() const = 0;
 private:
 };

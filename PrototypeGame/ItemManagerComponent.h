@@ -5,6 +5,7 @@
 #include "BaseProc.h"
 #include "Component.h"
 #include "MazeComponent.h"
+#include "WeaponQuality.h"
 
 class ItemManagerComponent final : public Component
 {
@@ -39,4 +40,5 @@ private:
 	Room* m_pCurrentRoom;
 	std::map<Room*, std::shared_ptr<GameObject>> m_Items;
 	std::shared_ptr<GameObject> m_pPlayer;
+	std::vector<std::shared_ptr<WeaponQuality>> m_Qualities;
 };

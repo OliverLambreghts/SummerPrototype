@@ -145,11 +145,20 @@ void ItemManagerComponent::SpawnMeleeKey()
 	ParseData(weapon, weaponData);
 	SetProc(weaponData, proc);
 
-	const auto quality = std::make_shared<WeaponQuality>(weaponData[4]);
+	auto quality = std::make_shared<WeaponQuality>(weaponData[4]);
+
+	// Make a copy of a new weapon quality so that each item with that quality uses the same copy (flyweight)
+	if(std::find_if(m_Qualities.begin(), m_Qualities.end(), [quality](std::shared_ptr<WeaponQuality> type)
+	{
+			return type->GetName() == quality->GetName();
+	}) == m_Qualities.end())
+	{
+		m_Qualities.push_back(quality);
+	}
 
 	auto meleeKey = std::make_shared<MeleeKeyComponent>( weaponData[0],
 	std::stoi(weaponData[1]), std::stof(weaponData[2]), proc,
-	*quality, weaponData[5] );
+	quality, weaponData[5] );
 
 	auto item = meleeKey->Clone();
 	item->GetComponent<ActivityComponent>()->Activate();
@@ -160,7 +169,7 @@ void ItemManagerComponent::SpawnMeleeKey()
 void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const
 {
 	if (data[3] == "fireproc")
-		proc = std::make_shared<FireProc>(static_cast<float>(rand() % 15), m_pPlayer);
+		proc = std::make_shared<FireProc>(static_cast<float>(rand() % 10 + 6), m_pPlayer);
 	else if (data[3] == "none")
 		proc = nullptr;
 }
