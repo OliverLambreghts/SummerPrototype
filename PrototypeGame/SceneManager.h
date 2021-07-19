@@ -1,4 +1,6 @@
 #pragma once
+#include <functional>
+
 #include "Singleton.h"
 #include <string>
 #include <map>
@@ -20,11 +22,14 @@ public:
 	SceneManager& operator=(SceneManager&& other) = delete;
 
 	std::shared_ptr<Scene> GetCurrentScene() const;
+	void Reset(std::function<void()> initFcn);
 private:
 	friend class Singleton<SceneManager>;
 	SceneManager() = default;
 	~SceneManager() = default;
+	bool CanResetGame();
 	
 	std::map<std::string, std::shared_ptr<Scene>> m_Scenes;
 	std::shared_ptr<Scene> m_pCurrentActiveScene;
+	std::function<void()> m_pInit = nullptr;
 };

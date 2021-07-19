@@ -170,6 +170,7 @@
     <ClCompile Include="FireProc.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameResetComponent.cpp" />
     <ClCompile Include="GetAllRoomsCommand.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="HandleCollisionCommand.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="FireProc.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameResetComponent.h" />
     <ClInclude Include="GetAllRoomsCommand.h" />
     <ClInclude Include="GridComponent.h" />
     <ClInclude Include="HaltPlayerXMovementCommand.h" />

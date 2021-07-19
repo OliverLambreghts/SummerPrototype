@@ -46,6 +46,12 @@ bool InputManager::ProcessInput() const
 	return false;
 }
 
+void InputManager::ClearInputs()
+{
+	m_pWheelCommands.clear();
+	m_pKeyboardCommands.clear();
+}
+
 void InputManager::ProcessKeyDownEvent(const SDL_KeyboardEvent& /*e*/)
 {
 	//std::cout << "KEYDOWN event: " << e.keysym.sym << std::endl;

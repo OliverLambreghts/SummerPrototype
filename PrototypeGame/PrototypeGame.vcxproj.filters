@@ -121,6 +121,12 @@
     <Filter Include="Source Files\Components\Combat">
       <UniqueIdentifier>{fb8f7dd0-8f32-413c-bd89-758f51548fb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Resetters">
+      <UniqueIdentifier>{e4c59289-a767-4533-b75b-6cb0b047d806}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Resetters">
+      <UniqueIdentifier>{2cf34add-2217-4022-beee-32eb5b3a2d4d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -242,6 +248,9 @@
     </ClCompile>
     <ClCompile Include="CritProc.cpp">
       <Filter>Source Files\Procs</Filter>
+    </ClCompile>
+    <ClCompile Include="GameResetComponent.cpp">
+      <Filter>Source Files\Components\Resetters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -436,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="CritProc.h">
       <Filter>Header Files\Procs</Filter>
+    </ClInclude>
+    <ClInclude Include="GameResetComponent.h">
+      <Filter>Header Files\Components\Resetters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

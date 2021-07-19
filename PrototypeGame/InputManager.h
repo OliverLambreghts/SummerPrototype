@@ -40,7 +40,8 @@ public:
 	InputManager& operator=(const InputManager& other) = delete;
 	InputManager(InputManager&& other) = delete;
 	InputManager& operator=(InputManager&& other) = delete;
-	
+
+	void ClearInputs();
 protected:
 	friend class Singleton<InputManager>;
 	InputManager() = default;

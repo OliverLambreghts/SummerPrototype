@@ -5,6 +5,7 @@
 #include "DoorCollisionComponent.h"
 #include "EnemyManagerComponent.h"
 #include "GameObject.h"
+#include "GameResetComponent.h"
 #include "GridComponent.h"
 #include "HaltPlayerXMovementCommand.h"
 #include "HaltPlayerYMovementCommand.h"
@@ -75,6 +76,8 @@ void Game::Initialize( )
 	testPlayer->AddComponent(std::make_shared<DoorCollisionComponent>(updateRoomCmd, collisionCmd));
 	testPlayer->AddComponent(std::make_shared<InventoryComponent>());
 	testPlayer->AddComponent(std::make_shared<HealthComponent>(100));
+	std::function<void()> initFcn = std::bind(&Game::Initialize, this);
+	testPlayer->AddComponent(std::make_shared<GameResetComponent>(initFcn));
 	testScene->Add(testPlayer);
 
 	// Player movement input

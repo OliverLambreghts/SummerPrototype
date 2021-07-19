@@ -2,6 +2,8 @@
 #include "SceneManager.h"
 #include <algorithm>
 #include <cassert>
+
+#include "InputManager.h"
 #include "Scene.h"
 
 std::shared_ptr<Scene> SceneManager::CreateScene(const std::string& name)
@@ -13,6 +15,9 @@ std::shared_ptr<Scene> SceneManager::CreateScene(const std::string& name)
 
 void SceneManager::Update(float elapsedSec)
 {
+	if (CanResetGame())
+		return;
+	
 	if(m_pCurrentActiveScene)
 		m_pCurrentActiveScene->Update(elapsedSec);
 }
@@ -36,4 +41,23 @@ void SceneManager::ActivateScene(const std::string& name)
 std::shared_ptr<Scene> SceneManager::GetCurrentScene() const
 {
 	return m_pCurrentActiveScene;
+}
+
+void SceneManager::Reset(std::function<void()> initFcn)
+{
+	m_pInit = initFcn;
+}
+
+bool SceneManager::CanResetGame()
+{
+	if (m_pInit)
+	{
+		m_Scenes.clear();
+		m_pCurrentActiveScene.reset();
+		InputManager::GetInstance().ClearInputs();
+		m_pInit();
+		m_pInit = nullptr;
+		return true;
+	}
+	return false;
 }

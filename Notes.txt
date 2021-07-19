@@ -12,6 +12,8 @@ Todo:
 - Map
 - Collision with walls
 - Collision with obstacles
+- Shop met random items uit de txt files
+- Economy: enemies moeten geld droppen
 
 - Let's start off with movement. Just make a simple movementcomponent which has functionality to move a gameobject in the level.
 
@@ -267,3 +269,23 @@ TODO DUS: HealthComponent toevoegen voor zowel enemies als voor player. Combat v
 - We gaan de CombatComponent dus een CheckCollision method geven die checked of de hitboxes overlappen. Als dit het geval is returned die method true, anders false. Als deze true returned, wordt er een Attack method gecalled die health van de HC van de player gaat aftrekken obv de damage die de enemy kan verrichten. Dan gaat er ook een knockback effect op de player toegepast worden.
 
 - Het volgende dat je moet toevoegen is een full game reset als de player doodgaat.
+
+- De player een ResetComponent geven. Deze checked de HC van de player. Als de player dood is, gaat deze een method callen van de SceneManager met als argument een fcn pointer naar de Initialize method van de Game. Deze method in de SceneManager gaat die fcn ptr assignen aan een data member. Aan het begin van de volgende update gaat de SceneManager eerst checken of die fcn ptr niet nullptr is. Als die idd niet nullptr is, haalt die alle scenes leeg en called die die method en zet die fcn ptr dan op nullptr.
+
+- Of met een command doen? Als de player dus dood is, gaat de ResetComponent een resetcommand executen. Deze gaat een method van de SceneManager callen die alle scenes marked for deletion en daarna een method callen die Reset heet en de fcn ptr als argument neemt en in de volgende frame checked de SceneManager dus of die niet nullptr is en als dat idd niet zo is dan called die die method.
+
+TODO:
+- RangedKeys
+- Consumables
+- Shop
+- Economy
+- Collision met muren
+- Collision met obstacles
+- Muren toevoegen
+- Bosses toevoegen
+- Sounds
+- HUD
+- Attack animations
+- Stats: Alle info bijhouden over hoeveelheid kills, bosses defeated, rooms visited, worlds cleared, time alive. Mss een singleton statmanager maken die alle stats bijhoudt en wegschrijft naar file?
+- Meer enemies toevoegen
+- Meer items toevoegen
