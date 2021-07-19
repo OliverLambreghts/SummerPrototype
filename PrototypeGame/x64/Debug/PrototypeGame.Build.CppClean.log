@@ -2,7 +2,6 @@ d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.pch
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\vc142.pdb
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\vc142.idb
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\pch.obj
-d:\dae\c++\games\summerprototype\prototypegame\x64\debug\mazerendercomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\matrix2x3.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\maprendercomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\main.obj
@@ -21,6 +20,7 @@ d:\dae\c++\games\summerprototype\prototypegame\x64\debug\enemymanagercomponent.o
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\doorcollisioncomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\debugenemycomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\core.obj
+d:\dae\c++\games\summerprototype\prototypegame\x64\debug\combatcomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\activitycomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\mazecomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\vector2f.obj
@@ -39,6 +39,8 @@ d:\dae\c++\games\summerprototype\prototypegame\x64\debug\scene.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\playermovementcomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\pickupitemcommand.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\meleekeycomponent.obj
+d:\dae\c++\games\summerprototype\prototypegame\x64\debug\mazerendercomponent.obj
+d:\dae\c++\games\summerprototype\prototypegame\x64\debug\critproc.obj
 d:\dae\c++\games\summerprototype\x64\debug\prototypegame.exe
 d:\dae\c++\games\summerprototype\x64\debug\prototypegame.ilk
 d:\dae\c++\games\summerprototype\x64\debug\prototypegame.pdb

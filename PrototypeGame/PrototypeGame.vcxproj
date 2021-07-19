@@ -160,7 +160,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActivityComponent.cpp" />
+    <ClCompile Include="CombatComponent.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="CritProc.cpp" />
     <ClCompile Include="DebugEnemyComponent.cpp" />
     <ClCompile Include="DoorCollisionComponent.cpp" />
     <ClCompile Include="EnemyManagerComponent.cpp" />
@@ -208,9 +210,11 @@
     <ClInclude Include="ActivityComponent.h" />
     <ClInclude Include="BaseProc.h" />
     <ClInclude Include="BaseRenderComponent.h" />
+    <ClInclude Include="CombatComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="CritProc.h" />
     <ClInclude Include="DebugEnemyComponent.h" />
     <ClInclude Include="DoorCollisionComponent.h" />
     <ClInclude Include="EnemyComponent.h" />

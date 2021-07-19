@@ -115,6 +115,12 @@
     <Filter Include="Source Files\Components\Health">
       <UniqueIdentifier>{b7510a25-8042-4e7b-bffb-07b495984c4c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Combat">
+      <UniqueIdentifier>{5656c0eb-322c-4b48-87ba-0a0f89465440}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Combat">
+      <UniqueIdentifier>{fb8f7dd0-8f32-413c-bd89-758f51548fb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -230,6 +236,12 @@
     </ClCompile>
     <ClCompile Include="InventoryComponent.cpp">
       <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="CombatComponent.cpp">
+      <Filter>Source Files\Components\Combat</Filter>
+    </ClCompile>
+    <ClCompile Include="CritProc.cpp">
+      <Filter>Source Files\Procs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -418,6 +430,12 @@
     </ClInclude>
     <ClInclude Include="HealthComponent.h">
       <Filter>Header Files\Components\Health</Filter>
+    </ClInclude>
+    <ClInclude Include="CombatComponent.h">
+      <Filter>Header Files\Components\Combat</Filter>
+    </ClInclude>
+    <ClInclude Include="CritProc.h">
+      <Filter>Header Files\Procs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

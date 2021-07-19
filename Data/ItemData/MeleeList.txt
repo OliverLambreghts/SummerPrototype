@@ -1,2 +1,3 @@
 Key of Fire:10:0.5:fireproc:epic:FireKey.png
-Basic Key:4:0.9:none:basic:BasicKey.png
+Basic Key:4:0.9:critproc:basic:BasicKey.png
+Key of Power:20:0.6:critproc:epic:BasicKey.png

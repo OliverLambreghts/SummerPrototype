@@ -258,3 +258,12 @@ TODO DUS: HealthComponent toevoegen voor zowel enemies als voor player. Combat v
 - Mogelijke fixes: Niet deactivaten, maar niet meer renderen. OF alle items die in de inventory zitten gewoon in de inventorycomponent updaten? Ik heb de tweede optie gekozen. Nu update ik alle items hun itemcomponent polymorfisch in de inventorycomponent. Zo worden ze van zodra ze in de inventory zitten automatisch daar geupdate ipv rechtstreeks in de scene.
 
 - Nu wil ik een knockback toevoegen als je de enemy raakt. Deze mag altijd hetzelfde blijven. Het enige nut hiervan is eigenlijk dat je kan voorkomen dat een enemy je raakt door die zelf eerst te raken. Zo kan de enemy niet in range komen om jou te raken.
+
+19/07:
+- Vandaag wil ik de combat van de enemy naar de player toevoegen. De enemy kan de player damagen obv zijn m_Power data member. Als de hitbox van de player en de enemy overlappen, kan de enemy attacken en wordt er ook een knockback effect op de player toegepast.
+
+- We moeten de player dus een HealthComponent geven en de enemy een CombatComponent. In deze CombatComponent gaat gechecked worden of hun hitboxes overlappen en zo ja wordt de damage die de enemy kan doen op de player's HealthComponent toegepast.
+
+- We gaan de CombatComponent dus een CheckCollision method geven die checked of de hitboxes overlappen. Als dit het geval is returned die method true, anders false. Als deze true returned, wordt er een Attack method gecalled die health van de HC van de player gaat aftrekken obv de damage die de enemy kan verrichten. Dan gaat er ook een knockback effect op de player toegepast worden.
+
+- Het volgende dat je moet toevoegen is een full game reset als de player doodgaat.

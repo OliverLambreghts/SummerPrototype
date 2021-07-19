@@ -14,5 +14,7 @@ public:
 
 	virtual std::shared_ptr<GameObject> Clone() = 0;
 	virtual void Update(float elapsedSec, GameObject& obj) override = 0;
+	virtual std::shared_ptr<GameObject> GetPlayer() const = 0;
+	virtual int GetPower() const = 0;
 private:
 };

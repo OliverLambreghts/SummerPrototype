@@ -13,5 +13,6 @@ public:
 	virtual bool IsProcActive() = 0;
 	virtual void Trigger(int& health) = 0;
 	virtual float GetDuration() const = 0;
+	virtual float GetChance() const = 0;
 private:
 };

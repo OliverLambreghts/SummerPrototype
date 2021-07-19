@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "PlayerMovementComponent.h"
-
 #include <iostream>
 
 PlayerMovementComponent::PlayerMovementComponent()
@@ -8,13 +7,18 @@ PlayerMovementComponent::PlayerMovementComponent()
 	m_Position{},
 	m_Speed{ 200 },
 	m_DirectionY{ DirectionY::none },
-	m_State{ State::idle }
+	m_State{ State::idle },
+	m_KBVelocity{},
+	m_ActiveKBTimer{},
+	m_IsKnockedBack{ false }
 {
-
 }
 
 void PlayerMovementComponent::Update(float elapsedSec, GameObject& /*obj*/)
 {
+	if (ApplyKnockBack(elapsedSec))
+		return;
+	
 	if (m_State == State::idle)
 		return;
 
@@ -48,6 +52,27 @@ void PlayerMovementComponent::HandleYMovement(float elapsedSec)
 	}
 }
 
+bool PlayerMovementComponent::ApplyKnockBack(float elapsedSec)
+{
+	if (m_IsKnockedBack)
+	{
+		m_ActiveKBTimer += elapsedSec;
+
+		auto KBVel = m_KBVelocity.Normalized();
+		KBVel *= m_KBSpeed;
+
+		m_Position += KBVel * elapsedSec;
+
+		if (m_ActiveKBTimer >= m_KnockBackTimer)
+		{
+			m_ActiveKBTimer = 0.f;
+			m_IsKnockedBack = false;
+		}
+		return true;
+	}
+	return false;
+}
+
 void PlayerMovementComponent::Move(DirectionX* directionX, DirectionY* directionY)
 {
 	m_State = State::moving;
@@ -78,6 +103,13 @@ PlayerMovementComponent::State PlayerMovementComponent::GetState() const
 std::pair<PlayerMovementComponent::DirectionX, PlayerMovementComponent::DirectionY> PlayerMovementComponent::GetDirections() const
 {
 	return std::pair<DirectionX, DirectionY>(m_DirectionX, m_DirectionY);
+}
+
+void PlayerMovementComponent::ActivateKnockBack(const Point2f& enemyPos)
+{
+	m_IsKnockedBack = true;
+
+	m_KBVelocity = Vector2f{ enemyPos, m_Position };
 }
 
 void PlayerMovementComponent::SetPosition(const Point2f& pos)

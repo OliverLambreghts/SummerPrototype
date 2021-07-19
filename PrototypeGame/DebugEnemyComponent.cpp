@@ -2,6 +2,7 @@
 #include "DebugEnemyComponent.h"
 #include <iostream>
 #include "ActivityComponent.h"
+#include "CombatComponent.h"
 #include "EnemyMovementComponent.h"
 #include "Game.h"
 #include "GameObject.h"
@@ -24,6 +25,7 @@ std::shared_ptr<GameObject> DebugEnemyComponent::Clone()
 	clone->GetComponent<SpriteRenderComponent>()->Move();
 	clone->AddComponent(std::make_shared<ActivityComponent>());
 	clone->AddComponent(std::make_shared<HealthComponent>(m_Health));
+	clone->AddComponent(std::make_shared<CombatComponent>());
 	return clone;
 }
 
@@ -34,4 +36,9 @@ void DebugEnemyComponent::Update(float /*elapsedSec*/, GameObject& /*obj*/)
 std::shared_ptr<GameObject> DebugEnemyComponent::GetPlayer() const
 {
 	return m_pPlayer;
+}
+
+int DebugEnemyComponent::GetPower() const
+{
+	return m_Power;
 }

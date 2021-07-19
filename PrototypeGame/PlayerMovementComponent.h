@@ -41,13 +41,20 @@ public:
 
 	State GetState() const;
 	std::pair<DirectionX, DirectionY> GetDirections() const;
+
+	void ActivateKnockBack(const Point2f& enemyPos);
 private:
 	void HandleXMovement(float elapsedSec);
 	void HandleYMovement(float elapsedSec);
+	bool ApplyKnockBack(float elapsedSec);
 	
 	float m_Speed;
 	Point2f m_Position;
 	DirectionX m_DirectionX;
 	DirectionY m_DirectionY;
 	State m_State;
+	const float m_KnockBackTimer = 0.15f, m_KBSpeed = 400.f;
+	float m_ActiveKBTimer;
+	Vector2f m_KBVelocity;
+	bool m_IsKnockedBack;
 };

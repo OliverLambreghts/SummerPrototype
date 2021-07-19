@@ -15,6 +15,8 @@ public:
 	virtual bool IsProcActive() override;
 	virtual void Trigger(int& health) override;
 	virtual float GetDuration() const override;
+
+	virtual float GetChance() const override;
 private:
 	float m_Chance, m_Duration;
 	std::shared_ptr<GameObject> m_pPlayer;

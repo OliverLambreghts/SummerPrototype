@@ -162,7 +162,7 @@ void EnemyManagerComponent::AddSpawners(GameObject& obj)
 	{
 		auto pos = Point2f{ static_cast<float>(rand() % (static_cast<int>(Game::GetWindowDimension()) - 100)),
 		static_cast<float>(rand() % (static_cast<int>(Game::GetWindowDimension()) - 100)) };
-		auto prototype = std::make_shared<DebugEnemyComponent>(rand() % 50 + 50, rand() % 50, rand() % 50 + 50, pos, m_pPlayer);
+		auto prototype = std::make_shared<DebugEnemyComponent>(rand() % 50 + 50, rand() % 20, rand() % 50 + 50, pos, m_pPlayer);
 
 		Spawner spawner{ prototype };
 		spawners.push_back(spawner);

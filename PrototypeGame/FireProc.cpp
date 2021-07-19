@@ -28,3 +28,8 @@ float FireProc::GetDuration() const
 {
 	return m_Duration;
 }
+
+float FireProc::GetChance() const
+{
+	return m_Chance;
+}

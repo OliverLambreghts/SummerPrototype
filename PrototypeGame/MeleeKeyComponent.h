@@ -24,6 +24,11 @@ public:
 	{
 		std::cout << m_Name << ". It does " << m_Damage << " damage and has a " <<
 			m_Cooldown << " second cooldown.\n";
+
+		if (!m_pProc)
+			return;
+
+		std::cout << "It has a " << m_pProc->GetChance() << " chance to proc\n";
 	}
 private:
 	std::string m_Name;

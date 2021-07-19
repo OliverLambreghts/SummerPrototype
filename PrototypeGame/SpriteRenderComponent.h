@@ -3,9 +3,8 @@
 #include <stack>
 #include <string>
 #include <vector>
-
 #include "BaseRenderComponent.h"
-class Sprite;
+#include "Sprite.h"
 class SpriteRenderComponent final : public BaseRenderComponent
 {
 public:

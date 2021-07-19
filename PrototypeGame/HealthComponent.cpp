@@ -36,7 +36,7 @@ void HealthComponent::Update(float elapsedSec, GameObject& /*obj*/)
 void HealthComponent::AddHealth(int health)
 {
 	m_Health += health;
-	std::cout << "Enemy now has " << m_Health << " HP\n";
+	std::cout << "Entity now has " << m_Health << " HP\n";
 }
 
 bool HealthComponent::IsDead() const

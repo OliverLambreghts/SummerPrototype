@@ -8,6 +8,7 @@
 #include "GridComponent.h"
 #include "HaltPlayerXMovementCommand.h"
 #include "HaltPlayerYMovementCommand.h"
+#include "HealthComponent.h"
 #include "InputManager.h"
 #include "InventoryComponent.h"
 #include "ItemManagerComponent.h"
@@ -73,6 +74,7 @@ void Game::Initialize( )
 	auto collisionCmd = std::make_shared<HandleCollisionCommand>(testPlayer, world);
 	testPlayer->AddComponent(std::make_shared<DoorCollisionComponent>(updateRoomCmd, collisionCmd));
 	testPlayer->AddComponent(std::make_shared<InventoryComponent>());
+	testPlayer->AddComponent(std::make_shared<HealthComponent>(100));
 	testScene->Add(testPlayer);
 
 	// Player movement input

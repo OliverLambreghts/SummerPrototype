@@ -10,6 +10,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include <sstream>
+
+#include "CritProc.h"
 #include "PlayerMovementComponent.h"
 #include "Sprite.h"
 #include "SpriteRenderComponent.h"
@@ -170,7 +172,9 @@ void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_p
 {
 	if (data[3] == "fireproc")
 		proc = std::make_shared<FireProc>(static_cast<float>(rand() % 10 + 6), m_pPlayer);
-	else if (data[3] == "none")
+	else if (data[3] == "critproc")
+		proc = std::make_shared<CritProc>(static_cast<float>(rand() % 10 + 6), m_pPlayer);
+	else
 		proc = nullptr;
 }
 
