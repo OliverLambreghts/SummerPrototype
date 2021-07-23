@@ -87,3 +87,15 @@ std::shared_ptr<GameObject> Scene::GetLastObj() const
 {
 	return m_Objects.back();
 }
+
+void Scene::RemoveObj(std::shared_ptr<GameObject> obj)
+{
+	if (std::find(m_Objects.begin(), m_Objects.end(), obj) == m_Objects.end())
+		return;
+
+	if (m_NextBuffer.empty())
+		m_NextBuffer = m_Objects;
+
+	auto it = std::find(m_NextBuffer.begin(), m_NextBuffer.end(), obj);
+	m_NextBuffer.erase(it);
+}

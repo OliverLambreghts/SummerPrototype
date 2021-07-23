@@ -55,7 +55,7 @@ void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_pt
 	if (m_IsCDActive)
 		return;
 	
-	std::cout << "Attacking with " << m_Name << '\n';
+	std::cout << "Attacking with " << m_pWeaponQuality->GetName() << ' ' << m_Name << '\n';
 	if (m_pProc && m_pProc->IsProcActive())
 	{
 		std::cout << "Proc activates!\n";

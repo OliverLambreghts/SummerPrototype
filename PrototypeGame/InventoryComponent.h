@@ -2,6 +2,7 @@
 #include <memory>
 #include <vector>
 #include "Component.h"
+#include "MazeComponent.h"
 
 class InventoryComponent final : public Component
 {
@@ -14,7 +15,7 @@ public:
 		none
 	};
 	
-	InventoryComponent() = default;
+	InventoryComponent(std::shared_ptr<GameObject> world);
 	virtual ~InventoryComponent() override = default;
 	InventoryComponent(const InventoryComponent& other) = delete;
 	InventoryComponent(InventoryComponent&& other) = delete;
@@ -30,8 +31,12 @@ public:
 	bool CanPickUpItem() const;
 	ItemType GetCurrentItemType() const;
 private:
+	void ResetActiveProjectile();
+	
 	static const int m_MaxCapacity = 10;
 
 	std::vector<std::weak_ptr<GameObject>> m_Items;
 	std::weak_ptr<GameObject> m_pActiveItem;
+	Room* m_pCurrentRoom;
+	std::weak_ptr<GameObject> m_pWorld;
 };

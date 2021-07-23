@@ -6,12 +6,35 @@
 #include "GameObject.h"
 #include "ItemComponent.h"
 #include "MeleeKeyComponent.h"
+#include "ProjectileComponent.h"
+#include "RangedKeyComponent.h"
 
-void InventoryComponent::Update(float elapsedSec, GameObject& obj)
+InventoryComponent::InventoryComponent(std::shared_ptr<GameObject> world)
+	: m_pWorld{ std::move(world) },
+	m_pCurrentRoom{ nullptr }
 {
-	for(auto& item : m_Items)
+}
+
+void InventoryComponent::Update(float elapsedSec, GameObject& /*obj*/)
+{
+	for (auto& item : m_Items)
 	{
-		item.lock()->GetComponent<ItemComponent>()->Update(elapsedSec, obj);
+		item.lock()->GetComponent<ItemComponent>()->Update(elapsedSec, *item.lock());
+	}
+
+	// Reset an active projectile when the player changes rooms
+	ResetActiveProjectile();
+}
+
+void InventoryComponent::ResetActiveProjectile()
+{
+	if (m_pCurrentRoom != m_pWorld.lock()->GetComponent<MazeComponent>()->GetCurrentRoom())
+	{
+		m_pCurrentRoom = m_pWorld.lock()->GetComponent<MazeComponent>()->GetCurrentRoom();
+		if (m_pActiveItem.lock() && m_pActiveItem.lock()->GetComponent<RangedKeyComponent>())
+		{
+			m_pActiveItem.lock()->GetComponent<ProjectileComponent>()->ResetProjectile();
+		}
 	}
 }
 
@@ -34,9 +57,9 @@ void InventoryComponent::SwitchItem(int idx)
 
 	if (idx >= m_MaxCapacity)
 		return;
-	
+
 	assert(idx < m_MaxCapacity);
-	
+
 	if (idx >= m_Items.size())
 		return;
 
@@ -56,7 +79,7 @@ size_t InventoryComponent::GetCurrentIdx() const
 {
 	for (size_t i{}; i < m_Items.size(); ++i)
 	{
-		if(m_pActiveItem.lock() == m_Items[i].lock())
+		if (m_pActiveItem.lock() == m_Items[i].lock())
 		{
 			return i;
 		}
@@ -73,11 +96,14 @@ InventoryComponent::ItemType InventoryComponent::GetCurrentItemType() const
 {
 	if (!m_pActiveItem.lock())
 		return ItemType::none;
-	
-	if(m_pActiveItem.lock()->GetComponent<MeleeKeyComponent>())
+
+	if (m_pActiveItem.lock()->GetComponent<MeleeKeyComponent>())
 	{
 		return ItemType::MeleeKey;
 	}
-	// Tijdelijke standaard return value.
+	if (m_pActiveItem.lock()->GetComponent<RangedKeyComponent>())
+	{
+		return ItemType::RangedKey;
+	}
 	return ItemType::Consumable;
 }

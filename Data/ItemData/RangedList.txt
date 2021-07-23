@@ -1,0 +1,1 @@
+Ranged Key of Fire:10:0.5:fireproc:epic:FireKey.png:2

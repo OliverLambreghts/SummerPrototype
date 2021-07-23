@@ -20,7 +20,7 @@ void CritProc::Trigger(int& health)
 {
 	// Applies a fire dot on the enemy target here
 	health -= m_Damage;
-	std::cout << "Did " << m_Damage << " fire damage!\n";
+	std::cout << "Did " << m_Damage << " critical damage!\n";
 }
 
 float CritProc::GetDuration() const

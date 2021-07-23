@@ -191,6 +191,9 @@
     </ClCompile>
     <ClCompile Include="PickUpItemCommand.cpp" />
     <ClCompile Include="PlayerMovementComponent.cpp" />
+    <ClCompile Include="ProjectileComponent.cpp" />
+    <ClCompile Include="ProjectileMovementComponent.cpp" />
+    <ClCompile Include="RangedKeyComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundEffect.cpp" />
@@ -247,6 +250,9 @@
     <ClInclude Include="PlayerMovementComponent.h" />
     <ClInclude Include="PlayerMoveRightCommand.h" />
     <ClInclude Include="PlayerMoveUpCommand.h" />
+    <ClInclude Include="ProjectileComponent.h" />
+    <ClInclude Include="ProjectileMovementComponent.h" />
+    <ClInclude Include="RangedKeyComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SetPlayerSpriteDownCommand.h" />

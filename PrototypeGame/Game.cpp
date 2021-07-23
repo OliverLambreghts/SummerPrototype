@@ -74,7 +74,7 @@ void Game::Initialize( )
 	auto updateRoomCmd = std::make_shared<UpdateCurrentRoomCommand>(testPlayer, world);
 	auto collisionCmd = std::make_shared<HandleCollisionCommand>(testPlayer, world);
 	testPlayer->AddComponent(std::make_shared<DoorCollisionComponent>(updateRoomCmd, collisionCmd));
-	testPlayer->AddComponent(std::make_shared<InventoryComponent>());
+	testPlayer->AddComponent(std::make_shared<InventoryComponent>(world));
 	testPlayer->AddComponent(std::make_shared<HealthComponent>(100));
 	std::function<void()> initFcn = std::bind(&Game::Initialize, this);
 	testPlayer->AddComponent(std::make_shared<GameResetComponent>(initFcn));

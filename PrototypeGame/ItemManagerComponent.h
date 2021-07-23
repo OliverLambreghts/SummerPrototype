@@ -32,8 +32,10 @@ public:
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddItems(GameObject& obj);
-	void ParseData(const std::string& line, std::vector<std::string>& data) const;
+	void ParseMeleeData(const std::string& line, std::vector<std::string>& data) const;
+	void ParseRangedData(const std::string& line, std::vector<std::string>& data) const;
 	void SpawnMeleeKey();
+	void SpawnRangedKey();
 	void SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const;
 	void SpawnItem(GameObject& obj);
 	

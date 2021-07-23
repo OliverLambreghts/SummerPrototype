@@ -252,6 +252,15 @@
     <ClCompile Include="GameResetComponent.cpp">
       <Filter>Source Files\Components\Resetters</Filter>
     </ClCompile>
+    <ClCompile Include="RangedKeyComponent.cpp">
+      <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileComponent.cpp">
+      <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ProjectileMovementComponent.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -448,6 +457,15 @@
     </ClInclude>
     <ClInclude Include="GameResetComponent.h">
       <Filter>Header Files\Components\Resetters</Filter>
+    </ClInclude>
+    <ClInclude Include="RangedKeyComponent.h">
+      <Filter>Header Files\Components\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileComponent.h">
+      <Filter>Header Files\Components\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ProjectileMovementComponent.h">
+      <Filter>Header Files\Components\Movement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

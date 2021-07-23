@@ -26,6 +26,7 @@ public:
 
 	void MoveObjToBack(std::shared_ptr<GameObject> obj);
 	std::shared_ptr<GameObject> GetLastObj() const;
+	void RemoveObj(std::shared_ptr<GameObject> obj);
 
 	template<typename T>
 	std::shared_ptr<GameObject> GetFirstObjWithComp() const

@@ -289,3 +289,27 @@ TODO:
 - Stats: Alle info bijhouden over hoeveelheid kills, bosses defeated, rooms visited, worlds cleared, time alive. Mss een singleton statmanager maken die alle stats bijhoudt en wegschrijft naar file?
 - Meer enemies toevoegen
 - Meer items toevoegen
+
+23/07:
+
+- Waar heb ik vandaag zin in? Ik wil loot toevoegen die dropped van enemies, dus ofwel health voor de player, ofwel centjes voor de vendor. Maar ik wil ook aan de ranged keys beginnen.
+
+- Loot drops staan al ingepland voor andere dagen dus vandaag ga ik de ranged keys toevoegen.
+
+- Ranged key items moeten ook van een file geparsed worden. Dit gebeurt in hetzelfde formaat als de melee keys. De cooldown is dan gewoon de tijd die als pauze dient tussen dat je projectiles kan afschieten zodat je niet kan spammen.
+
+- Het enige verschil tussen melee en ranged keys zijn dus dat je met ranged keys projectiles kan afschieten en that's it. Ranged keys hebben ook damage, cooldown, quality en een eventuele proc.
+
+- Om een ranged key projectiles te laten afschieten, geven we die nog een extra component.
+
+- De ProjectileComponent van een ranged key moet bij het gebruik van die key een projectile aanmaken en afschieten. Als de projectile een enemy aanraakt, moet er damage toegepast worden op de enemy's HealthComponent en moet de projectile verdwijnen.
+
+- De projectile moet wanneer die afgeschoten wordt de positie meekrijgen van de player.
+
+- Ik kan nu maar 1 projectiel afschieten.
+
+- BUG: Als je een projectiel afschiet en je gaat dan naar een andere kamer, dan komt dat projectiel mee. Als je van kamer verandert terwijl er een projectiel actief is, moet dat projectiel verwijderd worden.
+
+- Ik moet dus een manier vinden om in de InventoryComponent te checken of er van room veranderd is zodat ik dat projectiel dan kan verwijderen. DONE. Ik heb het world gameobject meegegeven als argument aan de InventoryComponent van de player. Niet de meest ideale oplossing, maar ik ga deze hier uiteindelijk toch nog nodig hebben om collision tussen enemies en projectiles te checken.
+
+- Het volgende dat ik moet toevoegen is collision tussen enemies en projectiles.

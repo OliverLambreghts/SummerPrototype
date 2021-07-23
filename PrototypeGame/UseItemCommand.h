@@ -23,21 +23,26 @@ public:
 
 	virtual void Execute() override
 	{
-		switch (m_pPlayer->GetComponent<InventoryComponent>()->GetCurrentItemType())
+		const auto type = m_pPlayer->GetComponent<InventoryComponent>()->GetCurrentItemType();
+		
+		if (type == InventoryComponent::ItemType::MeleeKey)
 		{
-		case InventoryComponent::ItemType::MeleeKey:
 			auto enemy = m_pWorld->GetComponent<EnemyManagerComponent>()->GetClosestEnemyInFront();
+
 			if (!enemy)
 				return;
+
 			const auto playerPos = m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition();
 			const auto enemyPos = enemy->GetComponent<EnemyMovementComponent>()->GetPosition();
 			const Vector2f distanceVec{ playerPos, enemyPos };
-
 			const auto attackRange = m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() + m_RangeOffset;
-			
+
 			if (distanceVec.Length() <= attackRange)
 				m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, enemy);
-			break;
+		}
+		else if(type == InventoryComponent::ItemType::RangedKey)
+		{
+			m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, nullptr);
 		}
 	}
 private:
