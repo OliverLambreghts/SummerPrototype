@@ -16,6 +16,7 @@ public:
 
 	virtual void Update(float elapsedSec, GameObject& obj) override;
 	std::shared_ptr<GameObject> GetClosestEnemyInFront();
+	std::vector<std::shared_ptr<GameObject>> GetEnemiesInCurrentRoom() const;
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddSpawners(GameObject& obj);

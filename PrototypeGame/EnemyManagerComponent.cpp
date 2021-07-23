@@ -90,6 +90,11 @@ std::shared_ptr<GameObject> EnemyManagerComponent::GetClosestEnemyInFront()
 	return closestEnemy;
 }
 
+std::vector<std::shared_ptr<GameObject>> EnemyManagerComponent::GetEnemiesInCurrentRoom() const
+{	
+	return m_Enemies.at(m_pCurrentRoom);
+}
+
 void EnemyManagerComponent::SortEnemiesByPos()
 {
 	auto enemies = m_Enemies[m_pCurrentRoom];

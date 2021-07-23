@@ -1,7 +1,6 @@
 #pragma once
 #include <map>
 #include <memory>
-
 #include "BaseProc.h"
 #include "Component.h"
 #include "MazeComponent.h"

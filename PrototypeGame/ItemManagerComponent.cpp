@@ -143,7 +143,9 @@ void ItemManagerComponent::ParseRangedData(const std::string& line, std::vector<
 	std::string fileName{};
 	std::getline(ss, fileName, ':');
 	std::string rangeTime{};
-	std::getline(ss, rangeTime);
+	std::getline(ss, rangeTime, ':');
+	std::string projSpeed{};
+	std::getline(ss, projSpeed);
 
 	data.push_back(name);
 	data.push_back(damage);
@@ -152,6 +154,7 @@ void ItemManagerComponent::ParseRangedData(const std::string& line, std::vector<
 	data.push_back(quality);
 	data.push_back(fileName);
 	data.push_back(rangeTime);
+	data.push_back(projSpeed);
 }
 
 void ItemManagerComponent::SpawnMeleeKey()
@@ -230,7 +233,7 @@ void ItemManagerComponent::SpawnRangedKey()
 
 		auto rangedKey = std::make_shared<RangedKeyComponent>(weaponData[0],
 			std::stoi(weaponData[1]), std::stof(weaponData[2]), proc,
-			quality, weaponData[5], std::stof(weaponData[6]));
+			quality, weaponData[5], std::stof(weaponData[6]), std::stof(weaponData[7]));
 
 		auto item = rangedKey->Clone();
 		item->GetComponent<ActivityComponent>()->Activate();

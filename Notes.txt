@@ -313,3 +313,17 @@ TODO:
 - Ik moet dus een manier vinden om in de InventoryComponent te checken of er van room veranderd is zodat ik dat projectiel dan kan verwijderen. DONE. Ik heb het world gameobject meegegeven als argument aan de InventoryComponent van de player. Niet de meest ideale oplossing, maar ik ga deze hier uiteindelijk toch nog nodig hebben om collision tussen enemies en projectiles te checken.
 
 - Het volgende dat ik moet toevoegen is collision tussen enemies en projectiles.
+
+- Het eerste dat ik nu nog ga doen is een extra argument toevoegen aan de textfile voor ranged keys wat de snelheid van de projectile voorstelt.
+
+- Collision tussen projectile en enemies:
+-> Waar moet dit gebeuren?
+-> Moeten de enemies de collision checken of de projectile zelf?
+
+- Best de projectile zelf gewoon collision laten checken met alle enemies die in de huidige room zitten.
+
+- Waar checken we dit voor de projectile? Misschien in de InventoryComponent aangezien dat die zowel de world als de player heeft?
+
+- Ik zou eigenlijk collision willen checken in de ProjectileComponent, daar houdt dat het meeste steek. Maar om dat te kunnen doen hebben we in de ProjectileComponent alle enemies in de huidige room nodig. Mss een vector van enemies bijhouden en in de shoot method deze meegeven als argument?
+
+- In de RangedKeyComponent hebben we dus ook de enemies nodig van de huidige room om die door te kunnen geven naar de ProjectileComponent. In de OnUse method de world gameobject meegeven ipv de closest enemy?

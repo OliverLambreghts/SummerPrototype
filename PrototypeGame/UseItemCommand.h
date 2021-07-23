@@ -42,7 +42,7 @@ public:
 		}
 		else if(type == InventoryComponent::ItemType::RangedKey)
 		{
-			m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, nullptr);
+			m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, m_pWorld);
 		}
 	}
 private:

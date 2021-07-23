@@ -1,5 +1,7 @@
 #pragma once
+#include <functional>
 #include <memory>
+#include <vector>
 #include "Component.h"
 #include "Vector2f.h"
 
@@ -14,10 +16,13 @@ public:
 	void operator=(const ProjectileComponent&& rhs) = delete;
 
 	virtual void Update(float elapsedSec, GameObject & obj) override;
-	void Shoot(const Point2f& pos, const Vector2f& dir, float rangeTime);
+	void Shoot(const Point2f& pos, const Vector2f& dir, float rangeTime, float projSpeed, std::vector<std::shared_ptr<GameObject>> enemies);
 	void ResetProjectile();
 private:
-	std::shared_ptr<GameObject> m_pActiveProjectile = nullptr;
-	const float m_Speed = 200.f;
-	float m_RangeTime, m_CurrentTime;
+	bool CheckCollision();
+	void HitEnemy(GameObject& obj);
+	
+	std::shared_ptr<GameObject> m_pActiveProjectile = nullptr, m_pHitEnemy = nullptr;
+	float m_RangeTime, m_CurrentTime, m_Speed;
+	std::vector<std::shared_ptr<GameObject>> m_Enemies;
 };
