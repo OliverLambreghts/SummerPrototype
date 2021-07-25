@@ -3,6 +3,7 @@
 #include <iostream>
 #include "ActivityComponent.h"
 #include "DebugEnemyComponent.h"
+#include "Game.h"
 #include "GameObject.h"
 #include "PlayerMovementComponent.h"
 #include "Sprite.h"
@@ -13,7 +14,10 @@ EnemyMovementComponent::EnemyMovementComponent(float speed, const Point2f& pos)
 	m_Speed{ speed },
 	m_IsKnockedBack{ false },
 	m_ActiveKBTimer{},
-	m_KBVelocity{}
+	m_KBVelocity{},
+	m_HasSeenPlayer{ false },
+	m_WanderFwdVector{ 1.f, 0.f },
+	m_WanderAngle{}
 {
 }
 
@@ -25,13 +29,14 @@ void EnemyMovementComponent::Update(float elapsedSec, GameObject& obj)
 	auto player = obj.GetComponent<DebugEnemyComponent>()->GetPlayer();
 	const auto playerPos = obj.GetComponent<DebugEnemyComponent>()->GetPlayer()->GetComponent<PlayerMovementComponent>()->GetPosition();
 
-	float width = obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth();
+	const float width = obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth();
 	const float height = obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight();
 
 	// Apply knockback when hit by player
 	if (ApplyKnockBack(elapsedSec))
 		return;
 
+	// Idle enemy when he reaches the player
 	if (utils::IsOverlapping(Rectf{ playerPos.x, playerPos.y,
 		player->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
 		player->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() },
@@ -43,14 +48,96 @@ void EnemyMovementComponent::Update(float elapsedSec, GameObject& obj)
 
 	obj.GetComponent<SpriteRenderComponent>()->Move();
 
+	const auto velocity = DetermineBehavior(playerPos, elapsedSec, obj);
+
+	DetermineDirection(velocity, obj);
+}
+
+bool EnemyMovementComponent::CanSeePlayer(float range, const Vector2f& velocity, GameObject& /*obj*/)
+{
+	if (velocity.Length() > range && !m_HasSeenPlayer)
+	{
+		//obj.GetComponent<SpriteRenderComponent>()->Idle();
+		return false;
+	}
+	if (!m_HasSeenPlayer)
+		m_HasSeenPlayer = true;
+
+	return true;
+}
+
+Vector2f EnemyMovementComponent::DetermineBehavior(const Point2f& playerPos, float elapsedSec, GameObject& obj)
+{
 	// Calculate desired velocity (for the direction)
 	Vector2f velocity = playerPos - m_Position;
+	const float attentionRange = 250.f;
+
+	// Wander when the enemy hasn't seen the player yet
+	if (!CanSeePlayer(attentionRange, velocity, obj))
+		UpdateWanderBehavior(velocity, elapsedSec, obj);
+	else
+		UpdateSeekBehavior(velocity, elapsedSec);
+
+	return velocity;
+}
+
+void EnemyMovementComponent::UpdateSeekBehavior(Vector2f& velocity, float elapsedSec)
+{
 	velocity = velocity.Normalized();
 	velocity *= m_Speed;
 
 	m_Position += velocity * elapsedSec;
+}
 
-	DetermineDirection(velocity, obj);
+void EnemyMovementComponent::UpdateWanderBehavior(Vector2f& velocity, float elapsedSec, GameObject& obj)
+{
+	// Determine the forward vector for the first time
+	if (m_WanderFwdVector.Length() == 1.f)
+		DetermineForwardVector();
+
+	CalculateRandomVelocity();
+
+	if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension()
+		|| m_Position.x <= 0.f ||
+		m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension() ||
+		m_Position.y <= 0.f)
+		m_WanderFwdVector *= -1;
+
+	m_Position += m_WanderFwdVector * elapsedSec;
+	velocity = m_WanderFwdVector;
+	m_WanderTimer += elapsedSec;
+
+	const float wanderThreshold = 2.f;
+	if (m_WanderTimer >= wanderThreshold)
+	{
+		m_WanderFwdVector = m_WanderFwdVector.Normalized();
+		m_WanderTimer = 0.f;
+	}
+}
+
+void EnemyMovementComponent::DetermineForwardVector()
+{
+	// Determine random forward vector
+	const Point2f toPos = Point2f{ static_cast<float>(rand() % static_cast<int>(Game::GetWindowDimension())),
+		static_cast<float>(rand() % static_cast<int>(Game::GetWindowDimension())) };
+
+	// Adjust to given speed
+	m_WanderFwdVector = Vector2f{ m_Position, toPos };
+	m_WanderFwdVector = m_WanderFwdVector.Normalized();
+	m_WanderFwdVector *= m_Speed;
+}
+
+void EnemyMovementComponent::CalculateRandomVelocity()
+{
+	const auto randAngle = static_cast<float>(rand() % 181);
+	m_WanderAngle += randAngle;
+
+	const auto target = Vector2f{ cos(m_WanderAngle), sin(m_WanderAngle) };
+
+	m_WanderFwdVector += target;
+
+	m_WanderFwdVector = m_WanderFwdVector.Normalized();
+	m_WanderFwdVector *= m_Speed;
 }
 
 void EnemyMovementComponent::DetermineDirection(const Vector2f& velocity, GameObject& obj) const

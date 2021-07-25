@@ -2,6 +2,11 @@
 #include "PlayerMovementComponent.h"
 #include <iostream>
 
+
+#include "Game.h"
+#include "GameObject.h"
+#include "SpriteRenderComponent.h"
+
 PlayerMovementComponent::PlayerMovementComponent()
 	: m_DirectionX{ DirectionX::none },
 	m_Position{},
@@ -14,46 +19,61 @@ PlayerMovementComponent::PlayerMovementComponent()
 {
 }
 
-void PlayerMovementComponent::Update(float elapsedSec, GameObject& /*obj*/)
+void PlayerMovementComponent::Update(float elapsedSec, GameObject& obj)
 {
-	if (ApplyKnockBack(elapsedSec))
+	if (ApplyKnockBack(elapsedSec, obj))
 		return;
 	
 	if (m_State == State::idle)
 		return;
 
-	HandleXMovement(elapsedSec);
-	HandleYMovement(elapsedSec);
+	HandleXMovement(elapsedSec, obj);
+	HandleYMovement(elapsedSec, obj);
 }
 
-void PlayerMovementComponent::HandleXMovement(float elapsedSec)
+void PlayerMovementComponent::HandleXMovement(float elapsedSec, GameObject& obj)
 {
 	switch (m_DirectionX)
 	{
 	case DirectionX::left:
+		if (m_Position.x <= 0.f)
+			return;
+
 		m_Position.x -= m_Speed * elapsedSec;
 		break;
 	case DirectionX::right:
+		if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension())
+			return;
+
 		m_Position.x += m_Speed * elapsedSec;
 		break;
 	}
 }
 
-void PlayerMovementComponent::HandleYMovement(float elapsedSec)
+void PlayerMovementComponent::HandleYMovement(float elapsedSec, GameObject& obj)
 {
 	switch (m_DirectionY)
 	{
 	case DirectionY::down:
+		if (m_Position.y <= 0.f)
+			return;
+
 		m_Position.y -= m_Speed * elapsedSec;
 		break;
 	case DirectionY::up:
+		if (m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension())
+			return;
+
 		m_Position.y += m_Speed * elapsedSec;
 		break;
 	}
 }
 
-bool PlayerMovementComponent::ApplyKnockBack(float elapsedSec)
+bool PlayerMovementComponent::ApplyKnockBack(float elapsedSec, GameObject& obj)
 {
+	if (IsAgainstWall(obj))
+		return false;
+	
 	if (m_IsKnockedBack)
 	{
 		m_ActiveKBTimer += elapsedSec;
@@ -70,6 +90,20 @@ bool PlayerMovementComponent::ApplyKnockBack(float elapsedSec)
 		}
 		return true;
 	}
+	return false;
+}
+
+bool PlayerMovementComponent::IsAgainstWall(GameObject& obj) const
+{
+	if (m_Position.y <= 0.f)
+		return true;
+	if (m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension())
+		return true;
+	if (m_Position.x <= 0.f)
+		return true;
+	if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension())
+		return true;
+
 	return false;
 }
 

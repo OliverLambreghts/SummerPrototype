@@ -261,6 +261,9 @@
     <ClCompile Include="ProjectileMovementComponent.cpp">
       <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="ConsumableComponent.cpp">
+      <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -466,6 +469,9 @@
     </ClInclude>
     <ClInclude Include="ProjectileMovementComponent.h">
       <Filter>Header Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsumableComponent.h">
+      <Filter>Header Files\Components\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

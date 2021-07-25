@@ -21,6 +21,12 @@ public:
 private:
 	void DetermineDirection(const Vector2f& velocity, GameObject& obj) const;
 	bool ApplyKnockBack(float elapsedSec);
+	bool CanSeePlayer(float range, const Vector2f& velocity, GameObject& obj);
+	Vector2f DetermineBehavior(const Point2f& playerPos, float elapsedSec, GameObject& obj);
+	void UpdateWanderBehavior(Vector2f& velocity, float elapsedSec, GameObject& obj);
+	void UpdateSeekBehavior(Vector2f& velocity, float elapsedSec);
+	void DetermineForwardVector();
+	void CalculateRandomVelocity();
 	
 	float m_Speed;
 	Point2f m_Position;
@@ -28,4 +34,10 @@ private:
 	const float m_KnockBackTimer = 0.15f, m_KBSpeed = 400.f;
 	float m_ActiveKBTimer;
 	Vector2f m_KBVelocity;
+	bool m_HasSeenPlayer;
+
+	// WANDER DATA
+	Vector2f m_WanderFwdVector;
+	float m_WanderAngle;
+	float m_WanderTimer = 0.f;
 };

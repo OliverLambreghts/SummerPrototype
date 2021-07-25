@@ -20,12 +20,15 @@ public:
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddSpawners(GameObject& obj);
-	void SpawnEnemies(GameObject& obj);
+	void SpawnEnemies(float elapsedSec, GameObject& obj);
 	void SortEnemiesByPos();
 	void RemoveDeadEnemies();
+	bool UpdateDelayTimer(float elapsedSec);
 	
 	std::map<Room*, std::vector<Spawner>> m_Spawners;
 	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_Enemies;
 	Room* m_pCurrentRoom;
 	std::shared_ptr<GameObject> m_pPlayer;
+	float m_SpawnDelay;
+	bool m_CanStartDelay;
 };

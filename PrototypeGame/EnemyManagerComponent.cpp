@@ -14,15 +14,17 @@
 
 EnemyManagerComponent::EnemyManagerComponent(std::shared_ptr<GameObject> player)
 	: m_pCurrentRoom{ nullptr },
-	m_pPlayer{ player }
+	m_pPlayer{ player },
+	m_SpawnDelay{},
+	m_CanStartDelay{ false }
 {
 }
 
-void EnemyManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
+void EnemyManagerComponent::Update(float elapsedSec, GameObject& obj)
 {
 	UpdateCurrentRoom(obj);
 	AddSpawners(obj);
-	SpawnEnemies(obj);
+	SpawnEnemies(elapsedSec, obj);
 	SortEnemiesByPos();
 	RemoveDeadEnemies();
 }
@@ -33,11 +35,11 @@ std::shared_ptr<GameObject> EnemyManagerComponent::GetClosestEnemyInFront()
 		return nullptr;
 
 	const auto direction = m_pPlayer->GetComponent<SpriteRenderComponent>()->GetDirection();
-	
+
 	std::shared_ptr<GameObject> closestEnemy = nullptr;
 	const auto playerPos = m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition();
-	Vector2f closestDist{0, 20000};
-	for(auto& enemy : m_Enemies.at(m_pCurrentRoom))
+	Vector2f closestDist{ 0, 20000 };
+	for (auto& enemy : m_Enemies.at(m_pCurrentRoom))
 	{
 		auto enemyPos = enemy->GetComponent<EnemyMovementComponent>()->GetPosition();
 		Vector2f distanceVec{ playerPos, enemyPos };
@@ -76,22 +78,22 @@ std::shared_ptr<GameObject> EnemyManagerComponent::GetClosestEnemyInFront()
 				enemyDirection = SpriteRenderComponent::Direction::right;
 			}
 		}
-		
+
 		if (enemyDirection != direction)
 			continue;
-		
+
 		if (distanceVec.Length() < closestDist.Length())
 		{
 			closestDist = distanceVec;
 			closestEnemy = enemy;
 		}
 	}
-	
+
 	return closestEnemy;
 }
 
 std::vector<std::shared_ptr<GameObject>> EnemyManagerComponent::GetEnemiesInCurrentRoom() const
-{	
+{
 	return m_Enemies.at(m_pCurrentRoom);
 }
 
@@ -117,14 +119,14 @@ void EnemyManagerComponent::RemoveDeadEnemies()
 {
 	if (m_Enemies.find(m_pCurrentRoom) == m_Enemies.end())
 		return;
-	
+
 	if (m_Enemies.at(m_pCurrentRoom).empty())
 		return;
 
 	m_Enemies.at(m_pCurrentRoom).erase(std::remove_if(
 		m_Enemies.at(m_pCurrentRoom).begin(), m_Enemies.at(m_pCurrentRoom).end(), [](std::shared_ptr<GameObject> obj)
 		{
-			if(obj->GetComponent<HealthComponent>()->IsDead())
+			if (obj->GetComponent<HealthComponent>()->IsDead())
 			{
 				obj->GetComponent<ActivityComponent>()->Deactivate();
 				std::cout << "Enemy killed!\n";
@@ -147,10 +149,11 @@ void EnemyManagerComponent::UpdateCurrentRoom(GameObject& obj)
 	}
 
 	m_pCurrentRoom = obj.GetComponent<MazeComponent>()->GetCurrentRoom();
+	//m_CanStartDelay = true;
 }
 
 void EnemyManagerComponent::AddSpawners(GameObject& obj)
-{	
+{
 	if (obj.GetComponent<MazeComponent>()->HasFinishedGenerating())
 	{
 		if (m_pCurrentRoom->isBeginRoom && m_Spawners.find(m_pCurrentRoom) != m_Spawners.end())
@@ -178,10 +181,18 @@ void EnemyManagerComponent::AddSpawners(GameObject& obj)
 	// --- DEBUG CODE ---
 }
 
-void EnemyManagerComponent::SpawnEnemies(GameObject& obj)
+void EnemyManagerComponent::SpawnEnemies(float /*elapsedSec*/, GameObject& obj)
 {
 	if (!obj.GetComponent<MazeComponent>()->HasFinishedGenerating())
 		return;
+
+	// --- SPAWN DELAY ---
+	/*if (!m_CanStartDelay)
+		return;
+
+	if (!UpdateDelayTimer(elapsedSec))
+		return;*/
+	// --- SPAWN DELAY ---
 
 	// Als de spawner niet meer in de spawners container zit, betekent dat dat de player al in de kamer geweest is
 	if (m_Spawners.find(m_pCurrentRoom) == m_Spawners.end())
@@ -206,4 +217,19 @@ void EnemyManagerComponent::SpawnEnemies(GameObject& obj)
 	}
 
 	m_Spawners.erase(m_pCurrentRoom);
+}
+
+bool EnemyManagerComponent::UpdateDelayTimer(float elapsedSec)
+{
+	m_SpawnDelay += elapsedSec;
+
+	const float delayThreshold = 0.2f;
+
+	if (m_SpawnDelay < delayThreshold)
+		return false;
+
+	m_CanStartDelay = false;
+	m_SpawnDelay = 0.f;
+
+	return true;
 }

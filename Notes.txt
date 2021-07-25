@@ -289,6 +289,8 @@ TODO:
 - Stats: Alle info bijhouden over hoeveelheid kills, bosses defeated, rooms visited, worlds cleared, time alive. Mss een singleton statmanager maken die alle stats bijhoudt en wegschrijft naar file?
 - Meer enemies toevoegen
 - Meer items toevoegen
+- Weapon levels toevoegen
+- Reforging toevoegen
 
 23/07:
 
@@ -327,3 +329,10 @@ TODO:
 - Ik zou eigenlijk collision willen checken in de ProjectileComponent, daar houdt dat het meeste steek. Maar om dat te kunnen doen hebben we in de ProjectileComponent alle enemies in de huidige room nodig. Mss een vector van enemies bijhouden en in de shoot method deze meegeven als argument?
 
 - In de RangedKeyComponent hebben we dus ook de enemies nodig van de huidige room om die door te kunnen geven naar de ProjectileComponent. In de OnUse method de world gameobject meegeven ipv de closest enemy?
+
+25/07:
+- Ik heb de behavior van de enemy aangepast zodat die eerst wandered totdat de player binnen een bepaalde range van de enemy komt.
+
+- Ik heb ook de movement component van de player aangepast zodat de player niet buiten de window boundaries kan lopen.
+
+- 

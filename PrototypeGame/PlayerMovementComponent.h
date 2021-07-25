@@ -44,9 +44,10 @@ public:
 
 	void ActivateKnockBack(const Point2f& enemyPos);
 private:
-	void HandleXMovement(float elapsedSec);
-	void HandleYMovement(float elapsedSec);
-	bool ApplyKnockBack(float elapsedSec);
+	void HandleXMovement(float elapsedSec, GameObject& obj);
+	void HandleYMovement(float elapsedSec, GameObject& obj);
+	bool ApplyKnockBack(float elapsedSec, GameObject& obj);
+	bool IsAgainstWall(GameObject& obj) const;
 	
 	float m_Speed;
 	Point2f m_Position;

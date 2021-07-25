@@ -1,4 +1,11 @@
-﻿  InventoryComponent.cpp
+﻿  ActivityComponent.cpp
+  ConsumableComponent.cpp
+  Core.cpp
+  ItemManagerComponent.cpp
+  main.cpp
+  TransformComponent.cpp
+  MazeComponent.cpp
+  Generating Code...
   PrototypeGame.vcxproj -> D:\DAE\c++\Games\SummerPrototype\x64\Debug\PrototypeGame.exe
   COPY THE DLL FILES
   0 File(s) copied

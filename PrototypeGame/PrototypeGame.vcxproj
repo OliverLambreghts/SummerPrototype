@@ -161,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="ActivityComponent.cpp" />
     <ClCompile Include="CombatComponent.cpp" />
+    <ClCompile Include="ConsumableComponent.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="CritProc.cpp" />
     <ClCompile Include="DebugEnemyComponent.cpp" />
@@ -217,6 +218,7 @@
     <ClInclude Include="CombatComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ConsumableComponent.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="CritProc.h" />
     <ClInclude Include="DebugEnemyComponent.h" />
