@@ -11,7 +11,8 @@
 
 InventoryComponent::InventoryComponent(std::shared_ptr<GameObject> world)
 	: m_pWorld{ std::move(world) },
-	m_pCurrentRoom{ nullptr }
+	m_pCurrentRoom{ nullptr },
+	m_EffectTimer{}
 {
 }
 
@@ -24,6 +25,22 @@ void InventoryComponent::Update(float elapsedSec, GameObject& /*obj*/)
 
 	// Reset an active projectile when the player changes rooms
 	ResetActiveProjectile();
+
+	UpdateEffectTimer(elapsedSec);
+}
+
+void InventoryComponent::UpdateEffectTimer(float elapsedSec)
+{
+	if (m_pEffect)
+	{
+		m_EffectTimer += elapsedSec;
+
+		if (m_EffectTimer >= m_pEffect->GetDuration())
+		{
+			m_EffectTimer = 0.f;
+			m_pEffect = nullptr;
+		}
+	}
 }
 
 void InventoryComponent::ResetActiveProjectile()
@@ -106,4 +123,30 @@ InventoryComponent::ItemType InventoryComponent::GetCurrentItemType() const
 		return ItemType::RangedKey;
 	}
 	return ItemType::Consumable;
+}
+
+void InventoryComponent::RemoveCurrentItem()
+{
+	m_Items.erase(std::remove_if(m_Items.begin(), m_Items.end(), [this](std::weak_ptr<GameObject> item)
+		{
+			return m_pActiveItem.lock() == item.lock();
+		}), m_Items.end());
+
+	m_pActiveItem.reset();
+
+	if (!m_Items.empty())
+	{
+		m_pActiveItem = m_Items.front();
+		m_pActiveItem.lock()->GetComponent<ItemComponent>()->PrintStats();
+	}
+}
+
+void InventoryComponent::SetEffect(BaseEffect* pEffect)
+{
+	m_pEffect = pEffect;
+}
+
+BaseEffect* InventoryComponent::GetActiveEffect() const
+{
+	return m_pEffect;
 }

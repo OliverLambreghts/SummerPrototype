@@ -335,4 +335,5 @@ TODO:
 
 - Ik heb ook de movement component van de player aangepast zodat de player niet buiten de window boundaries kan lopen.
 
+26/07:
 - 

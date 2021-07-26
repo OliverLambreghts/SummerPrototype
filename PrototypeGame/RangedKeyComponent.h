@@ -3,6 +3,7 @@
 #include "BaseProc.h"
 #include "ItemComponent.h"
 #include <string>
+#include "BaseEffect.h"
 #include "WeaponQuality.h"
 
 class RangedKeyComponent final : public ItemComponent
@@ -35,6 +36,7 @@ public:
 private:
 	void ActivateProjectile(GameObject& obj);
 	void UpdateCDTimer(float elapsedSec);
+	void UpdateEffectTimer(float elapsedSec);
 	
 	std::string m_Name;
 	int m_Damage;
@@ -47,4 +49,6 @@ private:
 	Vector2f m_ProjectileDir;
 	float m_ProjectileSpeed;
 	std::vector<std::shared_ptr<GameObject>> m_Enemies;
+	BaseEffect* m_pEffect = nullptr;
+	float m_EffectTimer;
 };

@@ -164,6 +164,7 @@
     <ClCompile Include="ConsumableComponent.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="CritProc.cpp" />
+    <ClCompile Include="DamageEffect.cpp" />
     <ClCompile Include="DebugEnemyComponent.cpp" />
     <ClCompile Include="DoorCollisionComponent.cpp" />
     <ClCompile Include="EnemyManagerComponent.cpp" />
@@ -175,6 +176,7 @@
     <ClCompile Include="GetAllRoomsCommand.cpp" />
     <ClCompile Include="GridComponent.cpp" />
     <ClCompile Include="HandleCollisionCommand.cpp" />
+    <ClCompile Include="HealEffect.cpp" />
     <ClCompile Include="HealthComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InventoryComponent.cpp" />
@@ -199,6 +201,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SoundEffect.cpp" />
     <ClCompile Include="SoundStream.cpp" />
+    <ClCompile Include="SpeedEffect.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteRenderComponent.cpp" />
     <ClCompile Include="structs.cpp" />
@@ -213,6 +216,7 @@
   <ItemGroup>
     <ClInclude Include="ActivateMapCommand.h" />
     <ClInclude Include="ActivityComponent.h" />
+    <ClInclude Include="BaseEffect.h" />
     <ClInclude Include="BaseProc.h" />
     <ClInclude Include="BaseRenderComponent.h" />
     <ClInclude Include="CombatComponent.h" />
@@ -221,6 +225,7 @@
     <ClInclude Include="ConsumableComponent.h" />
     <ClInclude Include="Core.h" />
     <ClInclude Include="CritProc.h" />
+    <ClInclude Include="DamageEffect.h" />
     <ClInclude Include="DebugEnemyComponent.h" />
     <ClInclude Include="DoorCollisionComponent.h" />
     <ClInclude Include="EnemyComponent.h" />
@@ -235,6 +240,7 @@
     <ClInclude Include="HaltPlayerXMovementCommand.h" />
     <ClInclude Include="HaltPlayerYMovementCommand.h" />
     <ClInclude Include="HandleCollisionCommand.h" />
+    <ClInclude Include="HealEffect.h" />
     <ClInclude Include="HealthComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="InventoryComponent.h" />
@@ -266,6 +272,7 @@
     <ClInclude Include="SoundEffect.h" />
     <ClInclude Include="SoundStream.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="SpeedEffect.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteRenderComponent.h" />
     <ClInclude Include="structs.h" />

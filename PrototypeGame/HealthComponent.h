@@ -19,7 +19,7 @@ public:
 	bool IsDead() const;
 	void SetProc(std::shared_ptr<BaseProc> proc);
 private:
-	int m_Health, m_CurrentProcAmount;
+	int m_Health, m_CurrentProcAmount, m_MaxHealth;
 	std::shared_ptr<BaseProc> m_pProc = nullptr;
 	float m_ProcTimer;
 };

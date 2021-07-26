@@ -1,0 +1,2 @@
+Small Healing Potion:[(healeffect:15:-1)]:RedPotion.png
+Frenzy Potion:[(damageeffect:1.2:10)(speedeffect:2:10)]:RedPotion.png

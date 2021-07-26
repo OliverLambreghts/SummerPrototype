@@ -17,5 +17,5 @@ public:
 	void Activate();
 	void Deactivate();
 private:
-	bool m_IsActive, m_IsDebugActive;
+	bool m_IsActive;
 };

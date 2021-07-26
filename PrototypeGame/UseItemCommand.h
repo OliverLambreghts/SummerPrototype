@@ -44,6 +44,12 @@ public:
 		{
 			m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, m_pWorld);
 		}
+		else if(type == InventoryComponent::ItemType::Consumable)
+		{
+			m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, nullptr);
+			// Remove consumable after using
+			m_pPlayer->GetComponent<InventoryComponent>()->RemoveCurrentItem();
+		}
 	}
 private:
 	std::shared_ptr<GameObject> m_pPlayer, m_pWorld;

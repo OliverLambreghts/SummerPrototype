@@ -7,6 +7,7 @@
 #include "EnemyManagerComponent.h"
 #include "Game.h"
 #include "GameObject.h"
+#include "InventoryComponent.h"
 #include "PlayerMovementComponent.h"
 #include "ProjectileComponent.h"
 #include "SpriteRenderComponent.h"
@@ -24,7 +25,8 @@ RangedKeyComponent::RangedKeyComponent(const std::string& name, int damage, floa
 	m_CDTimer{},
 	m_HasShot{ false },
 	m_RangeTime{ rangeTime },
-	m_ProjectileSpeed{ projSpeed }
+	m_ProjectileSpeed{ projSpeed },
+	m_EffectTimer{}
 {
 }
 
@@ -44,6 +46,9 @@ std::shared_ptr<GameObject> RangedKeyComponent::Clone()
 
 void RangedKeyComponent::Update(float elapsedSec, GameObject& obj)
 {
+	// Update effect based on its duration
+	UpdateEffectTimer(elapsedSec);
+	
 	// Projectiel ook updaten
 	obj.GetComponent<ProjectileComponent>()->Update(elapsedSec, obj);
 
@@ -74,6 +79,20 @@ void RangedKeyComponent::UpdateCDTimer(float elapsedSec)
 		m_CDTimer = 0.f;
 		m_IsCDActive = false;
 		m_HasShot = false;
+	}
+}
+
+void RangedKeyComponent::UpdateEffectTimer(float elapsedSec)
+{
+	if (m_pEffect)
+	{
+		m_EffectTimer += elapsedSec;
+
+		if (m_EffectTimer >= m_pEffect->GetDuration())
+		{
+			m_EffectTimer = 0.f;
+			m_pEffect = nullptr;
+		}
 	}
 }
 
@@ -113,4 +132,10 @@ void RangedKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_p
 	}
 
 	m_Enemies = world->GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom();
+
+	const auto effect = player->GetComponent<InventoryComponent>()->GetActiveEffect();
+	if (effect)
+	{
+		m_pEffect = effect;
+	}
 }

@@ -5,6 +5,7 @@
 #include "Game.h"
 #include "GameObject.h"
 #include "HealthComponent.h"
+#include "InventoryComponent.h"
 #include "PlayerMovementComponent.h"
 #include "SpriteRenderComponent.h"
 #include "TransformComponent.h"
@@ -62,11 +63,14 @@ void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_pt
 		enemy->GetComponent<HealthComponent>()->SetProc(m_pProc);
 	}
 
-	// --- DEBUG COMBAT CODE ---
-	//enemy->GetComponent<ActivityComponent>()->DebugDeactivate();
-	// --- DEBUG COMBAT CODE ---
+  	auto damage = static_cast<float>(m_Damage) * m_pWeaponQuality->GetDmgMultiplier();
 
-	const auto damage = static_cast<float>(m_Damage) * m_pWeaponQuality->GetDmgMultiplier();
+	const auto effect = player->GetComponent<InventoryComponent>()->GetActiveEffect();
+	if (effect)
+	{
+		damage *= effect->GetAmount();
+	}
+	
 	std::cout << "Hitting enemy for " << damage << " damage!\n";
 	enemy->GetComponent<HealthComponent>()->AddHealth(static_cast<int>(-damage));
 

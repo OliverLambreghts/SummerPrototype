@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include <vector>
+
+#include "BaseEffect.h"
 #include "Component.h"
 #include "MazeComponent.h"
 
@@ -30,8 +32,12 @@ public:
 	size_t GetCurrentIdx() const;
 	bool CanPickUpItem() const;
 	ItemType GetCurrentItemType() const;
+	void RemoveCurrentItem();
+	void SetEffect(BaseEffect* pEffect);
+	BaseEffect* GetActiveEffect() const;
 private:
 	void ResetActiveProjectile();
+	void UpdateEffectTimer(float elapsedSec);
 	
 	static const int m_MaxCapacity = 10;
 
@@ -39,4 +45,6 @@ private:
 	std::weak_ptr<GameObject> m_pActiveItem;
 	Room* m_pCurrentRoom;
 	std::weak_ptr<GameObject> m_pWorld;
+	BaseEffect* m_pEffect = nullptr;
+	float m_EffectTimer;
 };

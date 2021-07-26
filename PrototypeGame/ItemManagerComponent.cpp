@@ -10,9 +10,13 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include <sstream>
+#include "ConsumableComponent.h"
 #include "CritProc.h"
+#include "DamageEffect.h"
+#include "HealEffect.h"
 #include "PlayerMovementComponent.h"
 #include "RangedKeyComponent.h"
+#include "SpeedEffect.h"
 #include "Sprite.h"
 #include "SpriteRenderComponent.h"
 #include "TransformComponent.h"
@@ -93,6 +97,7 @@ void ItemManagerComponent::AddItems(GameObject& obj)
 	switch (type)
 	{
 	case ItemType::Consumable:
+		SpawnConsumable();
 		break;
 	case ItemType::MeleeKey:
 		SpawnMeleeKey();
@@ -155,6 +160,24 @@ void ItemManagerComponent::ParseRangedData(const std::string& line, std::vector<
 	data.push_back(fileName);
 	data.push_back(rangeTime);
 	data.push_back(projSpeed);
+}
+
+void ItemManagerComponent::ParseConsumableData(const std::string& line, std::vector<std::string>& data) const
+{
+	std::stringstream ss{ line };
+	std::string name{};
+	std::getline(ss, name, ':');
+
+	std::string effectsArray{};
+	std::getline(ss, effectsArray, ']');
+
+	std::string fileName{};
+	std::getline(ss, fileName);
+	fileName.erase(std::remove(fileName.begin(), fileName.end(), ':'), fileName.end());
+
+	data.push_back(name);
+	data.push_back(effectsArray);
+	data.push_back(fileName);
 }
 
 void ItemManagerComponent::SpawnMeleeKey()
@@ -241,6 +264,37 @@ void ItemManagerComponent::SpawnRangedKey()
 		m_Items[m_pCurrentRoom] = item;
 }
 
+void ItemManagerComponent::SpawnConsumable()
+{
+	std::string line{};
+	std::vector<std::string> lines;
+	std::vector<std::string> consumableData;
+	std::vector<std::shared_ptr<BaseEffect>> effects;
+
+	std::ifstream file{ "../Data/ItemData/ConsumableList.txt" };
+
+	while (!file.eof())
+	{
+		std::getline(file, line);
+		lines.push_back(line);
+	}
+
+	std::random_shuffle(lines.begin(), lines.end());
+	const std::string consumable = lines.front();
+
+	ParseConsumableData(consumable, consumableData);
+
+	SetEffect(consumableData, effects);
+
+	auto consumableItem = std::make_shared<ConsumableComponent>(consumableData[0],
+		effects, consumableData[2]);
+
+	auto item = consumableItem->Clone();
+	item->GetComponent<ActivityComponent>()->Activate();
+	SceneManager::GetInstance().GetCurrentScene()->Add(item);
+	m_Items[m_pCurrentRoom] = item;
+}
+
 void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const
 {
 	if (data[3] == "fireproc")
@@ -249,6 +303,48 @@ void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_p
 		proc = std::make_shared<CritProc>(static_cast<float>(rand() % 10 + 6), m_pPlayer);
 	else
 		proc = nullptr;
+}
+
+void ItemManagerComponent::SetEffect(std::vector<std::string>& data, std::vector<std::shared_ptr<BaseEffect>>& effects) const
+{
+	std::stringstream ss2{ data[1] };
+	std::string effect{};
+
+	while (!ss2.eof())
+	{
+		std::vector<std::string> currentEffect;
+
+		std::getline(ss2, effect, '(');
+		std::getline(ss2, effect, ')');
+		std::stringstream ss3{ effect };
+
+		if (effect == "]" || effect.empty())
+			break;
+
+		std::string effectName{};
+		std::getline(ss3, effectName, ':');
+		std::string effectAmount{};
+		std::getline(ss3, effectAmount, ':');
+		std::string effectDuration{};
+		std::getline(ss3, effectDuration);
+
+		currentEffect.push_back(effectName);
+		currentEffect.push_back(effectAmount);
+		currentEffect.push_back(effectDuration);
+
+		if (effectName == "healeffect")
+		{
+			effects.push_back(std::make_shared<HealEffect>(std::stof(effectAmount)));
+		}
+		else if (effectName == "damageeffect")
+		{
+			effects.push_back(std::make_shared<DamageEffect>(std::stof(effectAmount), std::stof(effectDuration)));
+		}
+		else if (effectName == "speedeffect")
+		{
+			effects.push_back(std::make_shared<SpeedEffect>(std::stof(effectAmount), std::stof(effectDuration)));
+		}
+	}
 }
 
 void ItemManagerComponent::SpawnItem(GameObject& obj)

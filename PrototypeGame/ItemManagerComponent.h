@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <memory>
+#include "BaseEffect.h"
 #include "BaseProc.h"
 #include "Component.h"
 #include "MazeComponent.h"
@@ -33,9 +34,12 @@ private:
 	void AddItems(GameObject& obj);
 	void ParseMeleeData(const std::string& line, std::vector<std::string>& data) const;
 	void ParseRangedData(const std::string& line, std::vector<std::string>& data) const;
+	void ParseConsumableData(const std::string& line, std::vector<std::string>& data) const;
 	void SpawnMeleeKey();
 	void SpawnRangedKey();
+	void SpawnConsumable();
 	void SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const;
+	void SetEffect(std::vector<std::string>& data, std::vector<std::shared_ptr<BaseEffect>>& effects) const;
 	void SpawnItem(GameObject& obj);
 	
 	Room* m_pCurrentRoom;

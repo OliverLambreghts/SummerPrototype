@@ -1,4 +1,5 @@
 #pragma once
+#include "BaseEffect.h"
 #include "MovementComponent.h"
 #include "utils.h"
 
@@ -38,18 +39,22 @@ public:
 	void Move(DirectionX* directionX, DirectionY* directionY);
 	void SetSpeed(float speed);
 	void SetState(State state);
+	float GetSpeed() const;
 
 	State GetState() const;
 	std::pair<DirectionX, DirectionY> GetDirections() const;
 
 	void ActivateKnockBack(const Point2f& enemyPos);
+
+	void SetEffect(BaseEffect* pEffect);
 private:
 	void HandleXMovement(float elapsedSec, GameObject& obj);
 	void HandleYMovement(float elapsedSec, GameObject& obj);
 	bool ApplyKnockBack(float elapsedSec, GameObject& obj);
 	bool IsAgainstWall(GameObject& obj) const;
+	void UpdateEffectTimer(float elapsedSec);
 	
-	float m_Speed;
+	float m_Speed, m_OldSpeed;
 	Point2f m_Position;
 	DirectionX m_DirectionX;
 	DirectionY m_DirectionY;
@@ -58,4 +63,6 @@ private:
 	float m_ActiveKBTimer;
 	Vector2f m_KBVelocity;
 	bool m_IsKnockedBack;
+	BaseEffect* m_pEffect = nullptr;
+	float m_EffectTimer;
 };

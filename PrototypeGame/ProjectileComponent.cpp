@@ -75,7 +75,13 @@ void ProjectileComponent::HitEnemy(GameObject& obj)
 		m_pHitEnemy->GetComponent<HealthComponent>()->SetProc(rangedKeyComp->m_pProc);
 	}
 
-	const auto damage = static_cast<float>(rangedKeyComp->m_Damage) * rangedKeyComp->m_pWeaponQuality->GetDmgMultiplier();
+	auto damage = static_cast<float>(rangedKeyComp->m_Damage) * rangedKeyComp->m_pWeaponQuality->GetDmgMultiplier();
+
+	if(rangedKeyComp->m_pEffect)
+	{
+		damage *= rangedKeyComp->m_pEffect->GetAmount();
+	}
+	
 	std::cout << "Hitting enemy for " << damage << " damage!\n";
 	m_pHitEnemy->GetComponent<HealthComponent>()->AddHealth(static_cast<int>(-damage));
 	

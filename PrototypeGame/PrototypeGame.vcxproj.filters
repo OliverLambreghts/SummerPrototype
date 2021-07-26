@@ -127,6 +127,12 @@
     <Filter Include="Source Files\Components\Resetters">
       <UniqueIdentifier>{2cf34add-2217-4022-beee-32eb5b3a2d4d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Effects">
+      <UniqueIdentifier>{33236a04-231f-4090-be99-d1c0e707fd71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Effects">
+      <UniqueIdentifier>{4c576f2a-f9c4-41af-a8c5-91eb7da8e0a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -263,6 +269,15 @@
     </ClCompile>
     <ClCompile Include="ConsumableComponent.cpp">
       <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="HealEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="DamageEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="SpeedEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +487,18 @@
     </ClInclude>
     <ClInclude Include="ConsumableComponent.h">
       <Filter>Header Files\Components\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="HealEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="DamageEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="SpeedEffect.h">
+      <Filter>Header Files\Effects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

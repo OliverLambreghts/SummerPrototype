@@ -11,19 +11,23 @@ PlayerMovementComponent::PlayerMovementComponent()
 	: m_DirectionX{ DirectionX::none },
 	m_Position{},
 	m_Speed{ 200 },
+	m_OldSpeed{  },
 	m_DirectionY{ DirectionY::none },
 	m_State{ State::idle },
 	m_KBVelocity{},
 	m_ActiveKBTimer{},
-	m_IsKnockedBack{ false }
+	m_IsKnockedBack{ false },
+	m_EffectTimer{}
 {
 }
 
 void PlayerMovementComponent::Update(float elapsedSec, GameObject& obj)
 {
+	UpdateEffectTimer(elapsedSec);
+
 	if (ApplyKnockBack(elapsedSec, obj))
 		return;
-	
+
 	if (m_State == State::idle)
 		return;
 
@@ -73,7 +77,7 @@ bool PlayerMovementComponent::ApplyKnockBack(float elapsedSec, GameObject& obj)
 {
 	if (IsAgainstWall(obj))
 		return false;
-	
+
 	if (m_IsKnockedBack)
 	{
 		m_ActiveKBTimer += elapsedSec;
@@ -91,6 +95,21 @@ bool PlayerMovementComponent::ApplyKnockBack(float elapsedSec, GameObject& obj)
 		return true;
 	}
 	return false;
+}
+
+void PlayerMovementComponent::UpdateEffectTimer(float elapsedSec)
+{
+	if (m_pEffect)
+	{
+		m_EffectTimer += elapsedSec;
+
+		if(m_EffectTimer >= m_pEffect->GetDuration())
+		{
+			m_EffectTimer = 0.f;
+			m_pEffect = nullptr;
+			m_Speed = m_OldSpeed;
+		}
+	}
 }
 
 bool PlayerMovementComponent::IsAgainstWall(GameObject& obj) const
@@ -121,12 +140,18 @@ void PlayerMovementComponent::Move(DirectionX* directionX, DirectionY* direction
 
 void PlayerMovementComponent::SetSpeed(float speed)
 {
+	m_OldSpeed = m_Speed;
 	m_Speed = speed;
 }
 
 void PlayerMovementComponent::SetState(State state)
 {
 	m_State = state;
+}
+
+float PlayerMovementComponent::GetSpeed() const
+{
+	return m_Speed;
 }
 
 PlayerMovementComponent::State PlayerMovementComponent::GetState() const
@@ -144,6 +169,11 @@ void PlayerMovementComponent::ActivateKnockBack(const Point2f& enemyPos)
 	m_IsKnockedBack = true;
 
 	m_KBVelocity = Vector2f{ enemyPos, m_Position };
+}
+
+void PlayerMovementComponent::SetEffect(BaseEffect* pEffect)
+{
+	m_pEffect = pEffect;
 }
 
 void PlayerMovementComponent::SetPosition(const Point2f& pos)

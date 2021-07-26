@@ -6,7 +6,8 @@
 HealthComponent::HealthComponent(int health)
 	: m_Health{ health },
 	m_ProcTimer{},
-	m_CurrentProcAmount{}
+	m_CurrentProcAmount{},
+	m_MaxHealth{ health }
 {
 }
 
@@ -35,7 +36,10 @@ void HealthComponent::Update(float elapsedSec, GameObject& /*obj*/)
 
 void HealthComponent::AddHealth(int health)
 {
-	m_Health += health;
+	if (m_Health + health > m_MaxHealth)
+		m_Health = m_MaxHealth;
+	else
+		m_Health += health;
 	std::cout << "Entity now has " << m_Health << " HP\n";
 }
 
@@ -47,6 +51,6 @@ bool HealthComponent::IsDead() const
 void HealthComponent::SetProc(std::shared_ptr<BaseProc> proc)
 {
 	assert(proc);
-	
+
 	m_pProc = proc;
 }
