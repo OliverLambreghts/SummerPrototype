@@ -23,6 +23,11 @@ public:
 		moving,
 		idle
 	};
+	struct ObstacleCollisionData
+	{
+		DirectionX directionX = DirectionX::none;
+		DirectionY directionY = DirectionY::none;
+	};
 
 	PlayerMovementComponent();
 	virtual ~PlayerMovementComponent() = default;
@@ -47,6 +52,8 @@ public:
 	void ActivateKnockBack(const Point2f& enemyPos);
 
 	void SetEffect(BaseEffect* pEffect);
+
+	void SetObstacleCollisionData(DirectionX directionX, DirectionY directionY);
 private:
 	void HandleXMovement(float elapsedSec, GameObject& obj);
 	void HandleYMovement(float elapsedSec, GameObject& obj);
@@ -65,4 +72,5 @@ private:
 	bool m_IsKnockedBack;
 	BaseEffect* m_pEffect = nullptr;
 	float m_EffectTimer;
+	std::pair<bool, std::vector<ObstacleCollisionData>> m_ObstacleCollisionData;
 };

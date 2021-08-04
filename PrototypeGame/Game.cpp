@@ -16,6 +16,7 @@
 #include "MapRenderComponent.h"
 #include "MazeComponent.h"
 #include "MazeRenderComponent.h"
+#include "ObstacleManagerComponent.h"
 #include "PickUpItemCommand.h"
 #include "PlayerMoveDownCommand.h"
 #include "PlayerMoveLeftCommand.h"
@@ -54,19 +55,19 @@ Game::Game(const Window& window)
 	Initialize();
 };
 
-Game::~Game( )
+Game::~Game()
 {
-	Cleanup( );
+	Cleanup();
 }
 
-void Game::Initialize( )
+void Game::Initialize()
 {
 	auto testScene = SceneManager::GetInstance().CreateScene("Test");
 
 	auto testPlayer = std::make_shared<GameObject>();
 	auto world = std::make_shared<GameObject>();
 	auto map = std::make_shared<GameObject>();
-	
+
 	// Test Player
 	testPlayer->AddComponent(std::make_shared<PlayerMovementComponent>());
 	testPlayer->GetComponent<PlayerMovementComponent>()->SetPosition(Point2f{ m_Window.width / 2.f, m_Window.height / 2.f });
@@ -105,12 +106,13 @@ void Game::Initialize( )
 	world->AddComponent(std::make_shared<MazeComponent>());
 	world->AddComponent(std::make_shared<EnemyManagerComponent>(testPlayer));
 	world->AddComponent(std::make_shared<ItemManagerComponent>(testPlayer));
+	world->AddComponent(std::make_shared<ObstacleManagerComponent>(testPlayer));
 	world->AddComponent(std::make_shared<MazeRenderComponent>(m_Window.height));
 	testScene->Add(world);
 
 	// Map
 	auto getRoomsCmd = std::make_shared<GetAllRoomsCommand>(map, world);
-	map->AddComponent(std::make_shared<GridComponent>(MazeComponent::GetWorldSize(), 
+	map->AddComponent(std::make_shared<GridComponent>(MazeComponent::GetWorldSize(),
 		MazeComponent::GetWorldSize(), m_Window.width, m_Window.height));
 	map->AddComponent(std::make_shared<MapRenderComponent>(getRoomsCmd));
 	testScene->Add(map);
@@ -127,15 +129,15 @@ void Game::Initialize( )
 	// Switch item input
 	InputManager::GetInstance().AddWheelCommand<SwitchItemUpCommand>(SDL_MOUSEWHEEL, 1, testPlayer);
 	InputManager::GetInstance().AddWheelCommand<SwitchItemDownCommand>(SDL_MOUSEWHEEL, -1, testPlayer);
-	
+
 	SceneManager::GetInstance().ActivateScene("Test");
 }
 
-void Game::Cleanup( )
+void Game::Cleanup()
 {
 }
 
-void Game::Update( float elapsedSec )
+void Game::Update(float elapsedSec)
 {
 	// Check keyboard state
 	//const Uint8 *pStates = SDL_GetKeyboardState( nullptr );
@@ -150,14 +152,14 @@ void Game::Update( float elapsedSec )
 	SceneManager::GetInstance().Update(elapsedSec);
 }
 
-void Game::Draw( ) const
+void Game::Draw() const
 {
-	ClearBackground( );
+	ClearBackground();
 	SceneManager::GetInstance().Render();
 }
 
-void Game::ClearBackground( ) const
+void Game::ClearBackground() const
 {
-	glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
-	glClear( GL_COLOR_BUFFER_BIT );
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
 }

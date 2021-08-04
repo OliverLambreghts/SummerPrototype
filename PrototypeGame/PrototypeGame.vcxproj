@@ -186,6 +186,9 @@
     <ClCompile Include="Matrix2x3.cpp" />
     <ClCompile Include="MazeRenderComponent.cpp" />
     <ClCompile Include="MeleeKeyComponent.cpp" />
+    <ClCompile Include="ObstacleComponent.cpp" />
+    <ClCompile Include="ObstacleManagerComponent.cpp" />
+    <ClCompile Include="ObstacleTransformComponent.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -251,6 +254,9 @@
     <ClInclude Include="MazeRenderComponent.h" />
     <ClInclude Include="MeleeKeyComponent.h" />
     <ClInclude Include="MovementComponent.h" />
+    <ClInclude Include="ObstacleComponent.h" />
+    <ClInclude Include="ObstacleManagerComponent.h" />
+    <ClInclude Include="ObstacleTransformComponent.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PickUpItemCommand.h" />
     <ClInclude Include="PlayerMoveDownCommand.h" />

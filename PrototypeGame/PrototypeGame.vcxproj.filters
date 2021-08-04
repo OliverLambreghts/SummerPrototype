@@ -133,6 +133,12 @@
     <Filter Include="Source Files\Effects">
       <UniqueIdentifier>{4c576f2a-f9c4-41af-a8c5-91eb7da8e0a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Components\Obstacles">
+      <UniqueIdentifier>{eb2799b2-e46e-4f0c-bf81-2530b0cc4591}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Components\Obstacles">
+      <UniqueIdentifier>{36ad4130-4e60-4b7d-8726-ce5db5138816}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -278,6 +284,15 @@
     </ClCompile>
     <ClCompile Include="SpeedEffect.cpp">
       <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="ObstacleManagerComponent.cpp">
+      <Filter>Source Files\Components\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="ObstacleComponent.cpp">
+      <Filter>Source Files\Components\Obstacles</Filter>
+    </ClCompile>
+    <ClCompile Include="ObstacleTransformComponent.cpp">
+      <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -499,6 +514,15 @@
     </ClInclude>
     <ClInclude Include="SpeedEffect.h">
       <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="ObstacleManagerComponent.h">
+      <Filter>Header Files\Components\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObstacleComponent.h">
+      <Filter>Header Files\Components\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="ObstacleTransformComponent.h">
+      <Filter>Header Files\Components\Movement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

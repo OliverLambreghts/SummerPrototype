@@ -1,8 +1,6 @@
 #include "pch.h"
 #include "PlayerMovementComponent.h"
 #include <iostream>
-
-
 #include "Game.h"
 #include "GameObject.h"
 #include "SpriteRenderComponent.h"
@@ -17,7 +15,8 @@ PlayerMovementComponent::PlayerMovementComponent()
 	m_KBVelocity{},
 	m_ActiveKBTimer{},
 	m_IsKnockedBack{ false },
-	m_EffectTimer{}
+	m_EffectTimer{},
+	m_ObstacleCollisionData{}
 {
 }
 
@@ -33,6 +32,9 @@ void PlayerMovementComponent::Update(float elapsedSec, GameObject& obj)
 
 	HandleXMovement(elapsedSec, obj);
 	HandleYMovement(elapsedSec, obj);
+
+	m_ObstacleCollisionData.first = false;
+	m_ObstacleCollisionData.second.clear();
 }
 
 void PlayerMovementComponent::HandleXMovement(float elapsedSec, GameObject& obj)
@@ -40,12 +42,30 @@ void PlayerMovementComponent::HandleXMovement(float elapsedSec, GameObject& obj)
 	switch (m_DirectionX)
 	{
 	case DirectionX::left:
+		if (m_ObstacleCollisionData.first)
+		{
+			for(auto& direction : m_ObstacleCollisionData.second)
+			{
+				if (direction.directionX == DirectionX::left)
+					return;
+			}
+		}
+		
 		if (m_Position.x <= 0.f)
 			return;
 
 		m_Position.x -= m_Speed * elapsedSec;
 		break;
 	case DirectionX::right:
+		if (m_ObstacleCollisionData.first)
+		{
+			for (auto& direction : m_ObstacleCollisionData.second)
+			{
+				if (direction.directionX == DirectionX::right)
+					return;
+			}
+		}
+
 		if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension())
 			return;
 
@@ -59,12 +79,30 @@ void PlayerMovementComponent::HandleYMovement(float elapsedSec, GameObject& obj)
 	switch (m_DirectionY)
 	{
 	case DirectionY::down:
+		if (m_ObstacleCollisionData.first)
+		{
+			for (auto& direction : m_ObstacleCollisionData.second)
+			{
+				if (direction.directionY == DirectionY::down)
+					return;
+			}
+		}
+
 		if (m_Position.y <= 0.f)
 			return;
 
 		m_Position.y -= m_Speed * elapsedSec;
 		break;
 	case DirectionY::up:
+		if (m_ObstacleCollisionData.first)
+		{
+			for (auto& direction : m_ObstacleCollisionData.second)
+			{
+				if (direction.directionY == DirectionY::up)
+					return;
+			}
+		}
+
 		if (m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension())
 			return;
 
@@ -110,6 +148,14 @@ void PlayerMovementComponent::UpdateEffectTimer(float elapsedSec)
 			m_Speed = m_OldSpeed;
 		}
 	}
+}
+
+void PlayerMovementComponent::SetObstacleCollisionData(DirectionX directionX, DirectionY directionY)
+{
+	const ObstacleCollisionData directions{ directionX, directionY };
+	
+	m_ObstacleCollisionData.second.push_back(directions);
+	m_ObstacleCollisionData.first = true;
 }
 
 bool PlayerMovementComponent::IsAgainstWall(GameObject& obj) const

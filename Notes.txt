@@ -335,5 +335,55 @@ TODO:
 
 - Ik heb ook de movement component van de player aangepast zodat de player niet buiten de window boundaries kan lopen.
 
-26/07:
-- 
+4/08:
+- Vandaag wil ik obstacles toevoegen.
+
+- Het nut van een obstacle is om de player's weg naar een treasure room te blokkeren en om de rooms wat voller te maken.
+
+- Obstacles kunnen breakable of non-breakable zijn.
+
+- Treasure rooms met maar 1 doorgang moeten geblokkeerd worden door breakable obstacles.
+
+- Breakable obstacles moeten een healthcomponent hebben.
+
+- Breakable obstacles moeten ook een bepaald percentage hebben om geld te droppen.
+
+- Obstacles die de room opvullen moeten in een bepaald patroon gezet worden, bv 4 obstacles in elke hoek van de room of 5 obstacles in een plus vorm in het midden van de room.
+
+- Als je een obstacle breekt met een wapen moet dat wapen kapotgaan en dus uit de inventory van de player verwijderd worden. Op deze manier moet de player de keuze maken of die wel effectief een wapen wilt wasten aan een obstacle om door te geraken.
+
+- Ik wil dus: een obstacle maken, een obstaclemanager maken voor de world die de obstacles plaatst in een bepaald patroon en ook obstacles plaatst voor treasure rooms met maar 1 doorgang.
+
+- Ik ga de obstacles spawnen nadat world generation complete is want pas daarna zijn de types van alle rooms volledig correct. Anders zou ik niet op een correcte manier obstacles voor deuren naar treasure rooms met maar 1 doorgang kunnen zetten.
+
+- Als je een room binnengaat, moeten de neighbors van die room gechecked worden om te zien of die een treasure room is. Als een van de neighbors een treasure room is en maar 1 doorgang heeft, moet de ingang naar deze treasure room geblokkeerd zijn met breakable obstacles.
+
+- Nadat dit is gebeurd moeten er random obstacles in de room geplaatst worden om de rooms op te vullen.
+
+- Voeg obstacles toe aan de wereld op dezelfde manier dat je items toevoegt aan de wereld. Je houdt dus een map bij met als key een Room pointer en als value een vector van shared pointers naar gameobjects wat de obstacles voorstelt.
+
+- Je houdt ook een Room* bij voor de current room.
+
+- Hoe gaan we obstacles toevoegen aan een room: We checken eerst of de maze generation al klaar is. Dan checken we of de huidige room al obstacles heeft in de map of niet. Dan gaan we de neighbors van de huidige room checken om te zien of die een treasure room als neighbor heeft.
+
+- Een obstaclecomponent moet een aantal argumenten hebben in de cstr: bool isDestructible, const Point2f& pos.
+
+- Op basis van de richtingen van de treasure rooms moeten er obstacles geplaatst worden.
+
+- Maak een SpawnTreasureObstacles method. Deze gaat loopen over de m_ObstacleDirections vector en voor elke richting gaat die daar obstacles spawnen.
+
+- De obstacles spawnen nu correct. Nu moet ik er nog collision aan toevoegen. De player en enemies mogen niet door obstacles kunnen lopen. Er moet dus ergens gechecked worden of hun hitboxes overlappen. Dit kan in de playermovementcomponent en enemymovementcomponent.
+
+- Misschien ervoor zorgen dat de player en de enemies een bool flag hebben die aanduidt dat ze ergens tegen staan. Deze activeren als de hitboxes van een obstacle en van de player/enemy overlappen en dan moet gechecked worden.. Maar dit gaat niet lukken want de richting vanwaar ze tegen de obstacle lopen moet ook bekend zijn om te kunnen bepalen naar welke richtingen ze dan WEL kunnen lopen.
+
+- Als de player of een enemy tegen een boulder loopt, misschien dan die entity's positie verplaatsen met zijn negatieve velocity op dat moment? Dan wordt die entity wat naar achter geschoven zodat die eigenlijk niet door de boulder kan lopen.
+
+- Of als een entity tegen een boulder loopt wordt er een bool flag op true gezet en de direction waarin die entity in verkeerde toen die tegen de boulder liep wordt ook opgeslagen. Als die bool dan nog true is en die entity blijft in die richting proberen lopen dan kan die niet meer bewegen. Die entity moet dus van richting veranderen om terug te kunnen bewegen.
+
+- Betere oplossing voor collision met boulders: Als de player's huidige richting in de richting van een boulder is en die overlappen al, dan moet de movement van de player gecancelled worden.
+
+- Nu worden de richtingen in een vector gestoken zodat voor elke obstacle de collisiondata opgeslagen wordt in de player's movementcomp.
+
+TODO:
+- Obstacle een HC geven.
+- Obstacle collision met enemies implementeren
