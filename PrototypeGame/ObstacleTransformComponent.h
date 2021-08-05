@@ -18,6 +18,7 @@ public:
 	virtual const Point2f& GetPosition() const override;
 private:
 	void CheckPlayerCollision(GameObject& obj) const;
+	void CheckEnemyCollision(GameObject& obj) const;
 	
 	Point2f m_Position;
 };

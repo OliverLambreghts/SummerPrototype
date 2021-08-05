@@ -77,6 +77,9 @@ void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_pt
 	// ACTIVATE COOLDOWN HERE
 	m_IsCDActive = true;
 
+	if (!enemy->GetComponent<EnemyMovementComponent>())
+		return;
+	
 	// APPLY KNOCKBACK HERE
 	enemy->GetComponent<EnemyMovementComponent>()->ActivateKnockBack(
 		player->GetComponent<PlayerMovementComponent>()->GetPosition());

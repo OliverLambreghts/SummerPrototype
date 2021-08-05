@@ -18,6 +18,9 @@ public:
 	virtual const Point2f& GetPosition() const override;
 
 	void ActivateKnockBack(const Point2f& playerPos);
+
+	void ActivateInvertVelocityFlag();
+	const Vector2f& GetCurrentVelocity() const;
 private:
 	void DetermineDirection(const Vector2f& velocity, GameObject& obj) const;
 	bool ApplyKnockBack(float elapsedSec);
@@ -27,6 +30,7 @@ private:
 	void UpdateSeekBehavior(Vector2f& velocity, float elapsedSec);
 	void DetermineForwardVector();
 	void CalculateRandomVelocity();
+	void CheckWallCollision(GameObject& obj);
 	
 	float m_Speed;
 	Point2f m_Position;
@@ -35,6 +39,8 @@ private:
 	float m_ActiveKBTimer;
 	Vector2f m_KBVelocity;
 	bool m_HasSeenPlayer;
+	bool m_IsAgainstObstacle;
+	Vector2f m_CurrentVelocity;
 
 	// WANDER DATA
 	Vector2f m_WanderFwdVector;

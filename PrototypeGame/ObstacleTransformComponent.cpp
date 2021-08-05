@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "ObstacleTransformComponent.h"
+#include <iostream>
+#include "EnemyMovementComponent.h"
 #include "GameObject.h"
 #include "ObstacleComponent.h"
 #include "PlayerMovementComponent.h"
@@ -8,6 +10,7 @@
 void ObstacleTransformComponent::Update(float /*elapsedSec*/, GameObject& obj)
 {
 	CheckPlayerCollision(obj);
+	CheckEnemyCollision(obj);
 }
 
 void ObstacleTransformComponent::SetPosition(const Point2f& pos)
@@ -28,7 +31,7 @@ void ObstacleTransformComponent::CheckPlayerCollision(GameObject& obj) const
 	obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
 
 	auto pPlayer = obj.GetComponent<ObstacleComponent>()->GetPlayer();
-	
+
 	const auto playerHitbox = Rectf{ pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition().x,
 	pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition().y,
 	pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
@@ -43,7 +46,7 @@ void ObstacleTransformComponent::CheckPlayerCollision(GameObject& obj) const
 
 		auto directionX = PlayerMovementComponent::DirectionX::none;
 		auto directionY = PlayerMovementComponent::DirectionY::none;
-		
+
 		if (angle > 0)
 		{
 			if (angle > 45 && angle < 135)
@@ -75,5 +78,36 @@ void ObstacleTransformComponent::CheckPlayerCollision(GameObject& obj) const
 			}
 		}
 		pPlayer->GetComponent<PlayerMovementComponent>()->SetObstacleCollisionData(directionX, directionY);
+	}
+}
+
+void ObstacleTransformComponent::CheckEnemyCollision(GameObject& obj) const
+{
+	for (auto& enemy : obj.GetComponent<ObstacleComponent>()->GetEnemies())
+	{
+		const auto obstacleHitbox = Rectf{ m_Position.x,
+		m_Position.y,
+		obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
+		obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
+
+		const auto enemyHitbox = Rectf{ enemy->GetComponent<EnemyMovementComponent>()->GetPosition().x,
+		enemy->GetComponent<EnemyMovementComponent>()->GetPosition().y,
+		enemy->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
+		enemy->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
+
+		if (utils::IsOverlapping(obstacleHitbox, enemyHitbox))
+		{
+			const auto directionVector = Vector2f{ enemy->GetComponent<EnemyMovementComponent>()->GetPosition(), m_Position };
+			const auto enemyVelocity = enemy->GetComponent<EnemyMovementComponent>()->GetCurrentVelocity();
+
+			// Angle between vectors acquired through dot product
+			const auto angle = acos((directionVector.x * enemyVelocity.x + directionVector.y * enemyVelocity.y)/
+				(directionVector.Length() * enemyVelocity.Length()));
+
+			std::cout << angle << '\n';
+
+			if(angle < 1.57f)
+				enemy->GetComponent<EnemyMovementComponent>()->ActivateInvertVelocityFlag();
+		}
 	}
 }

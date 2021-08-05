@@ -1,18 +1,4 @@
-﻿  CombatComponent.cpp
-  DoorCollisionComponent.cpp
-  EnemyManagerComponent.cpp
-  EnemyMovementComponent.cpp
-  Game.cpp
-  HandleCollisionCommand.cpp
-  ItemManagerComponent.cpp
-  MeleeKeyComponent.cpp
-  ObstacleComponent.cpp
-  ObstacleTransformComponent.cpp
-  PlayerMovementComponent.cpp
-  ProjectileComponent.cpp
-  RangedKeyComponent.cpp
-  SpeedEffect.cpp
-  Generating Code...
+﻿  Game.cpp
   PrototypeGame.vcxproj -> D:\DAE\c++\Games\SummerPrototype\x64\Debug\PrototypeGame.exe
   COPY THE DLL FILES
   0 File(s) copied

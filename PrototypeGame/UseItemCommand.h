@@ -3,6 +3,7 @@
 #include "EnemyMovementComponent.h"
 #include "GameObject.h"
 #include "InventoryComponent.h"
+#include "ObstacleTransformComponent.h"
 #include "Sprite.h"
 
 class UseItemCommand final : public Command
@@ -28,7 +29,23 @@ public:
 		if (type == InventoryComponent::ItemType::MeleeKey)
 		{
 			auto enemy = m_pWorld->GetComponent<EnemyManagerComponent>()->GetClosestEnemyInFront();
+			auto obstacle = m_pWorld->GetComponent<ObstacleManagerComponent>()->GetClosestObstacleInFront();
 
+			if(obstacle)
+			{
+				const auto playerPos = m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition();
+				const auto obstaclePos = obstacle->GetComponent<ObstacleTransformComponent>()->GetPosition();
+				const Vector2f distanceVec{ playerPos, obstaclePos };
+				const auto attackRange = m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() + m_RangeOffset;
+
+				if (distanceVec.Length() <= attackRange)
+				{
+					m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, obstacle);
+					m_pPlayer->GetComponent<InventoryComponent>()->RemoveCurrentItem();
+				}
+				return;
+			}
+			
 			if (!enemy)
 				return;
 

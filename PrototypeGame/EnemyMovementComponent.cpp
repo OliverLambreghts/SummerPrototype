@@ -17,7 +17,9 @@ EnemyMovementComponent::EnemyMovementComponent(float speed, const Point2f& pos)
 	m_KBVelocity{},
 	m_HasSeenPlayer{ false },
 	m_WanderFwdVector{ 1.f, 0.f },
-	m_WanderAngle{}
+	m_WanderAngle{},
+	m_IsAgainstObstacle{ false },
+	m_CurrentVelocity{}
 {
 }
 
@@ -78,6 +80,8 @@ Vector2f EnemyMovementComponent::DetermineBehavior(const Point2f& playerPos, flo
 	else
 		UpdateSeekBehavior(velocity, elapsedSec);
 
+	m_CurrentVelocity = velocity;
+	
 	return velocity;
 }
 
@@ -85,6 +89,12 @@ void EnemyMovementComponent::UpdateSeekBehavior(Vector2f& velocity, float elapse
 {
 	velocity = velocity.Normalized();
 	velocity *= m_Speed;
+
+	if (m_IsAgainstObstacle)
+	{
+		m_IsAgainstObstacle = false;
+		return;
+	}
 
 	m_Position += velocity * elapsedSec;
 }
@@ -96,13 +106,14 @@ void EnemyMovementComponent::UpdateWanderBehavior(Vector2f& velocity, float elap
 		DetermineForwardVector();
 
 	CalculateRandomVelocity();
-
-	if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension()
-		|| m_Position.x <= 0.f ||
-		m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension() ||
-		m_Position.y <= 0.f)
-		m_WanderFwdVector *= -1;
-
+	CheckWallCollision(obj);
+	
+	if (m_IsAgainstObstacle)
+	{
+		m_IsAgainstObstacle = false;
+		return;
+	}
+	
 	m_Position += m_WanderFwdVector * elapsedSec;
 	velocity = m_WanderFwdVector;
 	m_WanderTimer += elapsedSec;
@@ -138,6 +149,15 @@ void EnemyMovementComponent::CalculateRandomVelocity()
 
 	m_WanderFwdVector = m_WanderFwdVector.Normalized();
 	m_WanderFwdVector *= m_Speed;
+}
+
+void EnemyMovementComponent::CheckWallCollision(GameObject& obj)
+{
+	if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension()
+		|| m_Position.x <= 0.f ||
+		m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension() ||
+		m_Position.y <= 0.f)
+		m_WanderFwdVector *= -1;
 }
 
 void EnemyMovementComponent::DetermineDirection(const Vector2f& velocity, GameObject& obj) const
@@ -213,5 +233,15 @@ void EnemyMovementComponent::ActivateKnockBack(const Point2f& playerPos)
 	m_IsKnockedBack = true;
 
 	m_KBVelocity = Vector2f{ playerPos, m_Position };
+}
+
+void EnemyMovementComponent::ActivateInvertVelocityFlag()
+{
+	m_IsAgainstObstacle = true;
+}
+
+const Vector2f& EnemyMovementComponent::GetCurrentVelocity() const
+{
+	return m_CurrentVelocity;
 }
 

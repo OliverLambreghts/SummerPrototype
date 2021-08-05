@@ -56,7 +56,7 @@ void MazeComponent::GenerateWorld()
 	if (!m_pCurrentRoom->isVisited)
 	{
 		const int percentage = (rand() % 101);
-		if (percentage >= 30)
+		if (percentage >= 90)
 			m_pCurrentRoom->type = RoomType::normal;
 		else if (percentage >= 10)
 			m_pCurrentRoom->type = RoomType::treasure;

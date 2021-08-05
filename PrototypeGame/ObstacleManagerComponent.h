@@ -25,17 +25,20 @@ public:
 	void operator=(const ObstacleManagerComponent&& rhs) = delete;
 
 	virtual void Update(float elapsedSec, GameObject& obj) override;
+
+	std::shared_ptr<GameObject> GetClosestObstacleInFront();
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddObstacles(GameObject& obj);
 	void CheckNeighbors();
-	void SpawnTreasureObstacles();
+	void SpawnTreasureObstacles(GameObject& obj);
 	void ActivateObstacles(GameObject& obj);
+	void RemoveBrokenObstacles();
 	
-	void SpawnLeftTreasureObstacles();
-	void SpawnRightTreasureObstacles();
-	void SpawnUpTreasureObstacles();
-	void SpawnDownTreasureObstacles();
+	void SpawnLeftTreasureObstacles(GameObject& obj);
+	void SpawnRightTreasureObstacles(GameObject& obj);
+	void SpawnUpTreasureObstacles(GameObject& obj);
+	void SpawnDownTreasureObstacles(GameObject& obj);
 	
 	Room* m_pCurrentRoom;
 	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_pObstacles;

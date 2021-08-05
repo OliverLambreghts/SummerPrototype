@@ -1,12 +1,17 @@
 #include "pch.h"
 #include "ObstacleManagerComponent.h"
 #include <algorithm>
+#include <iostream>
+
 #include "GameObject.h"
 #include "ActivityComponent.h"
+#include "EnemyManagerComponent.h"
 #include "Game.h"
+#include "HealthComponent.h"
 #include "MazeComponent.h"
 #include "ObstacleComponent.h"
 #include "ObstacleTransformComponent.h"
+#include "PlayerMovementComponent.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "SpriteRenderComponent.h"
@@ -24,6 +29,73 @@ void ObstacleManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
 	UpdateCurrentRoom(obj);
 	AddObstacles(obj);
 	ActivateObstacles(obj);
+	RemoveBrokenObstacles();
+}
+
+std::shared_ptr<GameObject> ObstacleManagerComponent::GetClosestObstacleInFront()
+{
+	if (m_pObstacles.find(m_pCurrentRoom) == m_pObstacles.end())
+		return nullptr;
+	
+	if (m_pObstacles.at(m_pCurrentRoom).empty())
+		return nullptr;
+
+	const auto direction = m_pPlayer->GetComponent<SpriteRenderComponent>()->GetDirection();
+
+	std::shared_ptr<GameObject> closestObstacle = nullptr;
+	const auto playerPos = m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition();
+	Vector2f closestDist{ 0, 20000 };
+	for (auto& obstacle : m_pObstacles.at(m_pCurrentRoom))
+	{
+		auto obstaclePos = obstacle->GetComponent<ObstacleTransformComponent>()->GetPosition();
+		Vector2f distanceVec{ playerPos, obstaclePos };
+
+		double obstacleAngle = atan2(distanceVec.y, distanceVec.x);
+		obstacleAngle = obstacleAngle * 180 / M_PI;
+		SpriteRenderComponent::Direction enemyDirection{};
+
+		if (obstacleAngle > 0)
+		{
+			if (obstacleAngle > 45 && obstacleAngle < 135)
+			{
+				enemyDirection = SpriteRenderComponent::Direction::up;
+			}
+			else if (obstacleAngle > 135)
+			{
+				enemyDirection = SpriteRenderComponent::Direction::left;
+			}
+			else if (obstacleAngle < 45)
+			{
+				enemyDirection = SpriteRenderComponent::Direction::right;
+			}
+		}
+		else
+		{
+			if (obstacleAngle < -45 && obstacleAngle > -135)
+			{
+				enemyDirection = SpriteRenderComponent::Direction::down;
+			}
+			else if (obstacleAngle < -135)
+			{
+				enemyDirection = SpriteRenderComponent::Direction::left;
+			}
+			else if (obstacleAngle > -45)
+			{
+				enemyDirection = SpriteRenderComponent::Direction::right;
+			}
+		}
+
+		if (enemyDirection != direction)
+			continue;
+
+		if (distanceVec.Length() < closestDist.Length())
+		{
+			closestDist = distanceVec;
+			closestObstacle = obstacle;
+		}
+	}
+
+	return closestObstacle;
 }
 
 void ObstacleManagerComponent::UpdateCurrentRoom(GameObject& obj)
@@ -39,7 +111,6 @@ void ObstacleManagerComponent::UpdateCurrentRoom(GameObject& obj)
 			{
 				obstacle->GetComponent<ActivityComponent>()->Deactivate();
 			});
-		//return;
 	}
 
 	m_pCurrentRoom = obj.GetComponent<MazeComponent>()->GetCurrentRoom();
@@ -56,7 +127,7 @@ void ObstacleManagerComponent::AddObstacles(GameObject& obj)
 		return;
 
 	CheckNeighbors();
-	SpawnTreasureObstacles();
+	SpawnTreasureObstacles(obj);
 }
 
 void ObstacleManagerComponent::CheckNeighbors()
@@ -76,23 +147,23 @@ void ObstacleManagerComponent::CheckNeighbors()
 		m_ObstacleDirections.push_back(Direction::right);
 }
 
-void ObstacleManagerComponent::SpawnTreasureObstacles()
+void ObstacleManagerComponent::SpawnTreasureObstacles(GameObject& obj)
 {
 	for (auto direction : m_ObstacleDirections)
 	{
 		switch (direction)
 		{
 		case Direction::down:
-			SpawnDownTreasureObstacles();
+			SpawnDownTreasureObstacles(obj);
 			break;
 		case Direction::left:
-			SpawnLeftTreasureObstacles();
+			SpawnLeftTreasureObstacles(obj);
 			break;
 		case Direction::right:
-			SpawnRightTreasureObstacles();
+			SpawnRightTreasureObstacles(obj);
 			break;
 		case Direction::up:
-			SpawnUpTreasureObstacles();
+			SpawnUpTreasureObstacles(obj);
 			break;
 		}
 	}
@@ -115,13 +186,36 @@ void ObstacleManagerComponent::ActivateObstacles(GameObject& obj)
 	}
 }
 
-void ObstacleManagerComponent::SpawnLeftTreasureObstacles()
+void ObstacleManagerComponent::RemoveBrokenObstacles()
+{
+	if (m_pObstacles.find(m_pCurrentRoom) == m_pObstacles.end())
+		return;
+
+	if (m_pObstacles.at(m_pCurrentRoom).empty())
+		return;
+
+	m_pObstacles.at(m_pCurrentRoom).erase(std::remove_if(
+		m_pObstacles.at(m_pCurrentRoom).begin(), m_pObstacles.at(m_pCurrentRoom).end(), [](std::shared_ptr<GameObject> obj)
+		{
+			if (obj->GetComponent<HealthComponent>()->IsDead())
+			{
+				obj->GetComponent<ActivityComponent>()->Deactivate();
+				std::cout << "Enemy killed!\n";
+				return true;
+			}
+			return false;
+		}
+	), m_pObstacles.at(m_pCurrentRoom).end());
+}
+
+void ObstacleManagerComponent::SpawnLeftTreasureObstacles(GameObject& obj)
 {
 	Point2f pos{ 25.f, Game::GetWindowDimension() / 2.f - 10.f };
 
 	for (int i{}; i < 4; ++i)
 	{
-		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer);
+		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer, 
+			obj.GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom());
 
 		auto boulder = obstacle->Clone();
 
@@ -146,13 +240,14 @@ void ObstacleManagerComponent::SpawnLeftTreasureObstacles()
 	}
 }
 
-void ObstacleManagerComponent::SpawnRightTreasureObstacles()
+void ObstacleManagerComponent::SpawnRightTreasureObstacles(GameObject& obj)
 {
 	Point2f pos{ 0.f, Game::GetWindowDimension() / 2.f - 10.f };
 
 	for (int i{}; i < 4; ++i)
 	{
-		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer);
+		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer,
+			obj.GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom());
 
 		auto boulder = obstacle->Clone();
 
@@ -177,13 +272,14 @@ void ObstacleManagerComponent::SpawnRightTreasureObstacles()
 	}
 }
 
-void ObstacleManagerComponent::SpawnUpTreasureObstacles()
+void ObstacleManagerComponent::SpawnUpTreasureObstacles(GameObject& obj)
 {
 	Point2f pos{ Game::GetWindowDimension() / 2.f - 10.f, 0.f };
 
 	for (int i{}; i < 4; ++i)
 	{
-		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer);
+		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer,
+			obj.GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom());
 
 		auto boulder = obstacle->Clone();
 
@@ -208,13 +304,14 @@ void ObstacleManagerComponent::SpawnUpTreasureObstacles()
 	}
 }
 
-void ObstacleManagerComponent::SpawnDownTreasureObstacles()
+void ObstacleManagerComponent::SpawnDownTreasureObstacles(GameObject& obj)
 {
 	Point2f pos{ Game::GetWindowDimension() / 2.f - 10.f, 0.f };
 
 	for (int i{}; i < 4; ++i)
 	{
-		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer);
+		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer,
+			obj.GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom());
 
 		auto boulder = obstacle->Clone();
 
