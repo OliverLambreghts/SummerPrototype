@@ -385,5 +385,16 @@ TODO:
 - Nu worden de richtingen in een vector gestoken zodat voor elke obstacle de collisiondata opgeslagen wordt in de player's movementcomp.
 
 TODO:
-- Obstacle een HC geven.
-- Obstacle collision met enemies implementeren
+- Obstacle een HC geven. DONE
+- Obstacle collision met enemies implementeren. DONE
+- Deuren aflsuiten totdat alle enemies in die room dood zijn.
+- Bosses toevoegen.
+
+11/08:
+- Vandaag ga ik aan de eerste boss beginnen van de game.
+
+- Eerst moet ik ervoor zorgen dat als de player een room ingaat, de deuren van deze room gesloten blijven tot dat alle enemies dood zijn.
+
+- Voordat ik dat kan doen moet ik ervoor zorgen dat er een random melee of ranged item spawned in de starter room zodat de player altijd een wapen heeft om mee te vechten.
+
+- BUG: Als je van een treasure room die geblocked was met boulders terug naar de andere room wilt gaan, dan wordt je soms automatisch teruggeduwd in de treasure room.

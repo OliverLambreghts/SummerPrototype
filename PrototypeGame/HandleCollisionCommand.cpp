@@ -33,25 +33,27 @@ void HandleCollisionCommand::Execute()
 				//left
 			case 0:
 				newPos = Point2f{ m_pMaze.lock()->GetComponent<MazeRenderComponent>()->GetWindowDimension()
-					- m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() - door.second.width ,
+					- (m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth()) - door.second.width ,
 					door.second.bottom + (doors[door.first].height / 2) };
 				break;
 				//right
 			case 1:
-				newPos = Point2f{ m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() + door.second.width,
+				newPos = Point2f{ m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() + door.second.width + 
+					m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
 					door.second.bottom + (door.second.height / 2) };
 				break;
 				//up
 			case 2:
 				newPos = Point2f{ door.second.left + (door.second.width / 2),
-					m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() + door.second.height };
+					m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() + door.second.height +
+				m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
 				break;
 				//down
 			case 3:
 				newPos = Point2f{ door.second.left + (door.second.width / 2),
 					m_pMaze.lock()->GetComponent<MazeRenderComponent>()->GetWindowDimension()
 					- m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight()
-				- door.second.height };
+				- door.second.height - m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
 				break;
 			}
 

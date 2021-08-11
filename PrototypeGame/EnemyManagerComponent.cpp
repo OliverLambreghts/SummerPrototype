@@ -156,7 +156,9 @@ void EnemyManagerComponent::AddSpawners(GameObject& obj)
 {
 	if (obj.GetComponent<MazeComponent>()->HasFinishedGenerating())
 	{
-		if (m_pCurrentRoom->isBeginRoom && m_Spawners.find(m_pCurrentRoom) != m_Spawners.end())
+		if ((m_pCurrentRoom->isBeginRoom || 
+			m_pCurrentRoom->type == RoomType::boss) &&
+			m_Spawners.find(m_pCurrentRoom) != m_Spawners.end())
 			m_Spawners.erase(m_pCurrentRoom);
 		return;
 	}

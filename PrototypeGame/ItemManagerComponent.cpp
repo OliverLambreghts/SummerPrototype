@@ -86,8 +86,29 @@ void ItemManagerComponent::AddItems(GameObject& obj)
 	if (!obj.GetComponent<MazeComponent>()->HasFinishedGenerating())
 		return;
 
+	// If the room isn't a treasure room, return out. If the room is the starter room, spawn a melee or ranged weapon.
 	if (m_pCurrentRoom->type != RoomType::treasure)
+	{
+		if (m_pCurrentRoom->type != RoomType::starter)
+			return;
+
+		if (m_Items.find(m_pCurrentRoom) != m_Items.end())
+			return;
+
+		const auto type = static_cast<ItemType>(rand() % 2);
+
+		switch (type)
+		{
+		case ItemType::MeleeKey:
+			SpawnMeleeKey();
+			break;
+		case ItemType::RangedKey:
+			SpawnRangedKey();
+			break;
+		}
+		
 		return;
+	}
 
 	if (m_Items.find(m_pCurrentRoom) != m_Items.end())
 		return;

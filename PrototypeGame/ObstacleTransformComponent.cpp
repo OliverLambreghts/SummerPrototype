@@ -104,8 +104,6 @@ void ObstacleTransformComponent::CheckEnemyCollision(GameObject& obj) const
 			const auto angle = acos((directionVector.x * enemyVelocity.x + directionVector.y * enemyVelocity.y)/
 				(directionVector.Length() * enemyVelocity.Length()));
 
-			std::cout << angle << '\n';
-
 			if(angle < 1.57f)
 				enemy->GetComponent<EnemyMovementComponent>()->ActivateInvertVelocityFlag();
 		}

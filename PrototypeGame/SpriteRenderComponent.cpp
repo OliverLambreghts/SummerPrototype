@@ -68,5 +68,8 @@ const Sprite& SpriteRenderComponent::GetSprite() const
 
 SpriteRenderComponent::Direction SpriteRenderComponent::GetDirection() const
 {
+	if (m_ActiveDirections.empty())
+		return Direction::down;
+	
 	return m_ActiveDirections.back();
 }
