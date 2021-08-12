@@ -181,6 +181,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="InventoryComponent.cpp" />
     <ClCompile Include="ItemManagerComponent.cpp" />
+    <ClCompile Include="LootComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapRenderComponent.cpp" />
     <ClCompile Include="Matrix2x3.cpp" />
@@ -249,6 +250,7 @@
     <ClInclude Include="InventoryComponent.h" />
     <ClInclude Include="ItemComponent.h" />
     <ClInclude Include="ItemManagerComponent.h" />
+    <ClInclude Include="LootComponent.h" />
     <ClInclude Include="MapRenderComponent.h" />
     <ClInclude Include="Matrix2x3.h" />
     <ClInclude Include="MazeRenderComponent.h" />

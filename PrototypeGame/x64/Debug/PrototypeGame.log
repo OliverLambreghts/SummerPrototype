@@ -1,4 +1,60 @@
-﻿  EnemyManagerComponent.cpp
+﻿  pch.cpp
+  ActivityComponent.cpp
+  CombatComponent.cpp
+  ConsumableComponent.cpp
+  Core.cpp
+  CritProc.cpp
+  DamageEffect.cpp
+  DebugEnemyComponent.cpp
+  DoorCollisionComponent.cpp
+  EnemyManagerComponent.cpp
+  EnemyMovementComponent.cpp
+  FireProc.cpp
+  Game.cpp
+  GameObject.cpp
+  GameResetComponent.cpp
+  GetAllRoomsCommand.cpp
+  GridComponent.cpp
+  HandleCollisionCommand.cpp
+  HealEffect.cpp
+  HealthComponent.cpp
+  InputManager.cpp
+  Generating Code...
+  Compiling...
+  InventoryComponent.cpp
+  ItemManagerComponent.cpp
+  LootComponent.cpp
+  main.cpp
+  MapRenderComponent.cpp
+  Matrix2x3.cpp
+  MazeRenderComponent.cpp
+  MeleeKeyComponent.cpp
+  ObstacleComponent.cpp
+  ObstacleManagerComponent.cpp
+  ObstacleTransformComponent.cpp
+  PickUpItemCommand.cpp
+  PlayerMovementComponent.cpp
+  ProjectileComponent.cpp
+  ProjectileMovementComponent.cpp
+  RangedKeyComponent.cpp
+  Scene.cpp
+  SceneManager.cpp
+  SoundEffect.cpp
+  SoundStream.cpp
+  Generating Code...
+  Compiling...
+  SpeedEffect.cpp
+  Sprite.cpp
+  SpriteRenderComponent.cpp
+  structs.cpp
+  SVGParser.cpp
+  Texture.cpp
+  TransformComponent.cpp
+  UpdateCurrentRoomCommand.cpp
+  utils.cpp
+  Vector2f.cpp
+  MazeComponent.cpp
+  Generating Code...
   PrototypeGame.vcxproj -> D:\DAE\c++\Games\SummerPrototype\x64\Debug\PrototypeGame.exe
   COPY THE DLL FILES
   0 File(s) copied

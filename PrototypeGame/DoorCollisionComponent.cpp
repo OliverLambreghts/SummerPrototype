@@ -17,6 +17,7 @@ void DoorCollisionComponent::Update(float /*elapsedSec*/, GameObject& /*obj*/)
 {
 	m_UpdateRoomCommand->Execute();
 
+	
 	HandleCollision();
 }
 

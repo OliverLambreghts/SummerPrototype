@@ -397,4 +397,45 @@ TODO:
 
 - Voordat ik dat kan doen moet ik ervoor zorgen dat er een random melee of ranged item spawned in de starter room zodat de player altijd een wapen heeft om mee te vechten.
 
-- BUG: Als je van een treasure room die geblocked was met boulders terug naar de andere room wilt gaan, dan wordt je soms automatisch teruggeduwd in de treasure room.
+- BUG: Als je van een treasure room die geblocked was met boulders terug naar de andere room wilt gaan, dan wordt je soms automatisch teruggeduwd in de treasure room. Gefikst door de positie van de player aan te passen als die in een kamer komt.
+
+- Nu wil ik eerst een LootComponent toevoegen. Deze kan ik aan enemies en bosses geven. Hier geef je een lijst items mee met het droppercentage. Bv voor gewone enemies 20% geld, 20% health potion, 60% niks.
+
+- Je killed dus een enemy en de kan ofwel geld, een health potion, of niks droppen. Als een enemy sterft, gaat de LootComponent eerst een random percentage berekenen. Dan gaat die zien in welke range dit percentage valt om het item dat erbij hoort te kiezen. Bv, 20% kans op geld, 20% kans op health potion en 60% kans op niks. De eerste 0-19 is dus geld, 20-39 is health potion en 40-100 is niks.
+
+Update(...)
+{
+	if(!obj.GetComponent<HealthComponent>()->IsDead())
+		return;
+
+	m_SpawnPos = obj.GetComponent<MovementComponent>()
+		->GetPosition();
+
+	randNr = rand() % 101;
+	DetermineItem(randNr);
+}
+
+DetermineItem(int randNr)
+{
+	for(auto& loot : m_Loot)
+	{
+		if(randNr <= loot.first)
+		{
+			m_pSpawnedItem = loot.second
+				->GetComponent
+				<ItemComponent>()->Clone();
+			break;
+		}
+	}
+	m_pSpawnedItem->GetComponent<TransformComponent>()
+		->SetPosition(m_SpawnPos);
+}
+
+void AddItem(int dropRate, std::shared_ptr<ItemComponent> item)
+{
+	m_Loot.push_back(std::make_pair(dropRate, item));
+}
+
+- PROBLEEM: Er kan momenteel niet meer dan 1 item gespawned worden per room omdat de ItemManagerComponent een map van een Room* als key en als value een shared ptr naar het item bijhoudt en geen container van items per room. Dus ofwel ga ik alle code aanpassen hiervan, ofwel ga ik ervoor zorgen dat enemies enkel items kunnen droppen als er geen andere items in de room zijn.
+
+- 

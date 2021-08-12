@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "HandleCollisionCommand.h"
 #include "DoorCollisionComponent.h"
+#include "EnemyManagerComponent.h"
 #include "MazeRenderComponent.h"
 #include "Sprite.h"
 #include "PlayerMovementComponent.h"
@@ -14,6 +15,11 @@ HandleCollisionCommand::HandleCollisionCommand(std::shared_ptr<GameObject> playe
 
 void HandleCollisionCommand::Execute()
 {
+	const auto enemies = m_pMaze.lock()->GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom();
+
+	if (!enemies.empty())
+		return;
+	
 	const auto playerSprite = Rectf{ m_pPlayer.lock()->GetComponent<PlayerMovementComponent>()->GetPosition().x,
 	m_pPlayer.lock()->GetComponent<PlayerMovementComponent>()->GetPosition().y,
 		m_pPlayer.lock()->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),

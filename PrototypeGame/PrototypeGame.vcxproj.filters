@@ -294,6 +294,9 @@
     <ClCompile Include="ObstacleTransformComponent.cpp">
       <Filter>Source Files\Components\Movement</Filter>
     </ClCompile>
+    <ClCompile Include="LootComponent.cpp">
+      <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -523,6 +526,9 @@
     </ClInclude>
     <ClInclude Include="ObstacleTransformComponent.h">
       <Filter>Header Files\Components\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="LootComponent.h">
+      <Filter>Header Files\Components\Items</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

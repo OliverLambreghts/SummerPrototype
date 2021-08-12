@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-
 #include "BaseEffect.h"
 #include "ItemComponent.h"
 
