@@ -12,7 +12,7 @@ PickUpItemCommand::PickUpItemCommand(std::shared_ptr<GameObject> player, std::sh
 
 void PickUpItemCommand::Execute()
 {
-	if (!m_pWorld.lock()->GetComponent<ItemManagerComponent>()->IsPlayerCloseToItem() || 
+	if (!m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetClosestItemInCurrentRoom() || 
 		!m_pPlayer.lock()->GetComponent<InventoryComponent>()->CanPickUpItem())
 	{
 		std::cout << "Can't pick up item\n";
@@ -21,8 +21,8 @@ void PickUpItemCommand::Execute()
 
 	std::cout << "Can pick up item\n";
 	
-	auto item = m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetItemInCurrentRoom();
-	m_pWorld.lock()->GetComponent<ItemManagerComponent>()->RemoveItem();
+	auto item = m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetClosestItemInCurrentRoom();
+	m_pWorld.lock()->GetComponent<ItemManagerComponent>()->RemoveItem(item);
 	m_pPlayer.lock()->GetComponent<InventoryComponent>()->AddItem(
 		item);
 }

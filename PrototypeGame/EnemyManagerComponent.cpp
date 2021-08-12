@@ -9,6 +9,7 @@
 #include <algorithm>
 #include "EnemyMovementComponent.h"
 #include "HealthComponent.h"
+#include "LootComponent.h"
 #include "PlayerMovementComponent.h"
 #include "SpriteRenderComponent.h"
 
@@ -126,7 +127,7 @@ void EnemyManagerComponent::RemoveDeadEnemies()
 	m_Enemies.at(m_pCurrentRoom).erase(std::remove_if(
 		m_Enemies.at(m_pCurrentRoom).begin(), m_Enemies.at(m_pCurrentRoom).end(), [](std::shared_ptr<GameObject> obj)
 		{
-			if (obj->GetComponent<HealthComponent>()->IsDead())
+			if (obj->GetComponent<HealthComponent>()->IsDead() && obj->GetComponent<LootComponent>()->HasSpawnedItem())
 			{
 				obj->GetComponent<ActivityComponent>()->Deactivate();
 				std::cout << "Enemy killed!\n";

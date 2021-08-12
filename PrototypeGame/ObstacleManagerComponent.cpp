@@ -2,7 +2,6 @@
 #include "ObstacleManagerComponent.h"
 #include <algorithm>
 #include <iostream>
-
 #include "GameObject.h"
 #include "ActivityComponent.h"
 #include "EnemyManagerComponent.h"

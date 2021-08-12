@@ -3,10 +3,13 @@
 #include <iostream>
 #include "ActivityComponent.h"
 #include "CombatComponent.h"
+#include "ConsumableComponent.h"
 #include "EnemyMovementComponent.h"
 #include "Game.h"
 #include "GameObject.h"
+#include "HealEffect.h"
 #include "HealthComponent.h"
+#include "LootComponent.h"
 #include "SpriteRenderComponent.h"
 
 DebugEnemyComponent::DebugEnemyComponent(int health, int power, int speed, const Point2f& pos, std::shared_ptr<GameObject> player)
@@ -26,6 +29,15 @@ std::shared_ptr<GameObject> DebugEnemyComponent::Clone()
 	clone->AddComponent(std::make_shared<ActivityComponent>());
 	clone->AddComponent(std::make_shared<HealthComponent>(m_Health));
 	clone->AddComponent(std::make_shared<CombatComponent>());
+
+	// --- LOOT ---
+	clone->AddComponent(std::make_shared<LootComponent>());
+	std::vector<std::shared_ptr<BaseEffect>> effects;
+	effects.push_back(std::make_shared<HealEffect>(15.f));
+	const auto healthPot = std::make_shared<ConsumableComponent>("Small Healing Potion", effects, "RedPotion.png");
+	clone->GetComponent<LootComponent>()->AddItem(20, healthPot);
+	// --- LOOT ---
+	
 	return clone;
 }
 

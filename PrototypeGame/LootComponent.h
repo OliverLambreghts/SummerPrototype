@@ -18,10 +18,14 @@ public:
 	virtual void Update(float elapsedSec, GameObject & obj) override;
 
 	void AddItem(int dropRate, std::shared_ptr<ItemComponent> item);
+
+	bool HasSpawnedItem() const;
+	void SetFlag();
 private:
 	void DetermineItem(int randNr);
 	
 	std::map<int, std::shared_ptr<ItemComponent>> m_Loot;
 	Point2f m_SpawnPos;
 	std::shared_ptr<GameObject> m_pSpawnedItem = nullptr;
+	bool m_HasSpawnedItem = false;
 };

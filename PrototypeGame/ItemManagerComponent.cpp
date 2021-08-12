@@ -21,6 +21,8 @@
 #include "SpriteRenderComponent.h"
 #include "TransformComponent.h"
 
+std::shared_ptr<GameObject> ItemManagerComponent::m_pItemToAdd = nullptr;
+
 ItemManagerComponent::ItemManagerComponent(std::shared_ptr<GameObject> player)
 	: m_pPlayer{ player },
 	m_pCurrentRoom{ nullptr }
@@ -29,6 +31,13 @@ ItemManagerComponent::ItemManagerComponent(std::shared_ptr<GameObject> player)
 
 void ItemManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
 {
+	// When an item gets added from outside the class, add it first to the current room and then continue
+	if (m_pItemToAdd)
+	{
+		m_Items[m_pCurrentRoom].push_back(m_pItemToAdd);
+		m_pItemToAdd = nullptr;
+	}
+	
 	UpdateCurrentRoom(obj);
 	AddItems(obj);
 	SpawnItem(obj);
@@ -36,7 +45,7 @@ void ItemManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
 
 bool ItemManagerComponent::IsPlayerCloseToItem()
 {
-	if (m_Items.find(m_pCurrentRoom) == m_Items.end() || !m_Items.at(m_pCurrentRoom))
+	if (m_Items.find(m_pCurrentRoom) == m_Items.end() || m_Items.empty())
 		return false;
 
 	const Rectf player{ m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition().x,
@@ -44,29 +53,53 @@ bool ItemManagerComponent::IsPlayerCloseToItem()
 	m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
 	m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
 
-	const Rectf item{ m_Items[m_pCurrentRoom]->GetComponent<TransformComponent>()->GetPosition().x,
-	m_Items[m_pCurrentRoom]->GetComponent<TransformComponent>()->GetPosition().y,
-	m_Items[m_pCurrentRoom]->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
-	m_Items[m_pCurrentRoom]->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
+	for (auto item : m_Items.at(m_pCurrentRoom))
+	{
+		const Rectf itemRect{ item->GetComponent<TransformComponent>()->GetPosition().x,
+		item->GetComponent<TransformComponent>()->GetPosition().y,
+		item->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
+		item->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
 
-	if (utils::IsOverlapping(player, item))
-		return true;
+		if (utils::IsOverlapping(player, itemRect))
+			return true;
+	}
 
 	return false;
 }
 
-std::shared_ptr<GameObject> ItemManagerComponent::GetItemInCurrentRoom()
+std::shared_ptr<GameObject> ItemManagerComponent::GetClosestItemInCurrentRoom()
 {
-	if (m_Items.find(m_pCurrentRoom) == m_Items.end())
+	if (m_Items.find(m_pCurrentRoom) == m_Items.end() || m_Items.empty())
 		return nullptr;
 
-	return m_Items[m_pCurrentRoom];
+	const Rectf player{ m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition().x,
+	m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition().y ,
+	m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
+	m_pPlayer->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
+
+	for (auto item : m_Items.at(m_pCurrentRoom))
+	{
+		const Rectf itemRect{ item->GetComponent<TransformComponent>()->GetPosition().x,
+		item->GetComponent<TransformComponent>()->GetPosition().y,
+		item->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth(),
+		item->GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() };
+
+		if (utils::IsOverlapping(player, itemRect))
+			return item;
+	}
+
+	return nullptr;
 }
 
-void ItemManagerComponent::RemoveItem()
+void ItemManagerComponent::RemoveItem(std::shared_ptr<GameObject> item)
 {
-	m_Items.erase(m_pCurrentRoom);
-	m_Items[m_pCurrentRoom] = nullptr;
+	m_Items.at(m_pCurrentRoom).erase(std::remove(m_Items.at(m_pCurrentRoom).begin(),
+		m_Items.at(m_pCurrentRoom).end(), item), m_Items.at(m_pCurrentRoom).end());
+}
+
+void ItemManagerComponent::AddNewItem(std::shared_ptr<GameObject> newItem)
+{
+	m_pItemToAdd = newItem;
 }
 
 void ItemManagerComponent::UpdateCurrentRoom(GameObject& obj)
@@ -74,9 +107,12 @@ void ItemManagerComponent::UpdateCurrentRoom(GameObject& obj)
 	if (m_pCurrentRoom == obj.GetComponent<MazeComponent>()->GetCurrentRoom())
 		return;
 
-	// Despawn item when going to another room
-	if (m_Items.find(m_pCurrentRoom) != m_Items.end() && m_Items.at(m_pCurrentRoom))
-		m_Items[m_pCurrentRoom]->GetComponent<ActivityComponent>()->Deactivate();
+	// Despawn items when going to another room
+	if (m_Items.find(m_pCurrentRoom) != m_Items.end() && !m_Items.at(m_pCurrentRoom).empty())
+	{
+		for(auto& item : m_Items.at(m_pCurrentRoom))
+			item->GetComponent<ActivityComponent>()->Deactivate();
+	}
 
 	m_pCurrentRoom = obj.GetComponent<MazeComponent>()->GetCurrentRoom();
 }
@@ -240,7 +276,7 @@ void ItemManagerComponent::SpawnMeleeKey()
 		auto item = meleeKey->Clone();
 		item->GetComponent<ActivityComponent>()->Activate();
 		SceneManager::GetInstance().GetCurrentScene()->Add(item);
-		m_Items[m_pCurrentRoom] = item;
+		m_Items[m_pCurrentRoom].push_back(item);
 }
 
 void ItemManagerComponent::SpawnRangedKey()
@@ -282,7 +318,7 @@ void ItemManagerComponent::SpawnRangedKey()
 		auto item = rangedKey->Clone();
 		item->GetComponent<ActivityComponent>()->Activate();
 		SceneManager::GetInstance().GetCurrentScene()->Add(item);
-		m_Items[m_pCurrentRoom] = item;
+		m_Items[m_pCurrentRoom].push_back(item);
 }
 
 void ItemManagerComponent::SpawnConsumable()
@@ -313,7 +349,7 @@ void ItemManagerComponent::SpawnConsumable()
 	auto item = consumableItem->Clone();
 	item->GetComponent<ActivityComponent>()->Activate();
 	SceneManager::GetInstance().GetCurrentScene()->Add(item);
-	m_Items[m_pCurrentRoom] = item;
+	m_Items[m_pCurrentRoom].push_back(item);
 }
 
 void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const
@@ -376,8 +412,9 @@ void ItemManagerComponent::SpawnItem(GameObject& obj)
 	if (m_Items.find(m_pCurrentRoom) == m_Items.end())
 		return;
 
-	if (!m_Items.at(m_pCurrentRoom))
+	if (m_Items.at(m_pCurrentRoom).empty())
 		return;
 
-	m_Items[m_pCurrentRoom]->GetComponent<ActivityComponent>()->Activate();
+	for(auto& item : m_Items.at(m_pCurrentRoom))
+		item->GetComponent<ActivityComponent>()->Activate();
 }

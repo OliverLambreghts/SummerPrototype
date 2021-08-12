@@ -27,8 +27,10 @@ public:
 	virtual void Update(float elapsedSec, GameObject & obj) override;
 
 	bool IsPlayerCloseToItem();
-	std::shared_ptr<GameObject> GetItemInCurrentRoom();
-	void RemoveItem();
+	std::shared_ptr<GameObject> GetClosestItemInCurrentRoom();
+	void RemoveItem(std::shared_ptr<GameObject> item);
+
+	static void AddNewItem(std::shared_ptr<GameObject> newItem);
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddItems(GameObject& obj);
@@ -43,7 +45,9 @@ private:
 	void SpawnItem(GameObject& obj);
 	
 	Room* m_pCurrentRoom;
-	std::map<Room*, std::shared_ptr<GameObject>> m_Items;
+	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_Items;
 	std::shared_ptr<GameObject> m_pPlayer;
 	std::vector<std::shared_ptr<WeaponQuality>> m_Qualities;
+
+	static std::shared_ptr<GameObject> m_pItemToAdd;
 };
