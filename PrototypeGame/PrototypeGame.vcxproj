@@ -160,6 +160,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ActivityComponent.cpp" />
+    <ClCompile Include="CoinComponent.cpp" />
     <ClCompile Include="CombatComponent.cpp" />
     <ClCompile Include="ConsumableComponent.cpp" />
     <ClCompile Include="Core.cpp" />
@@ -223,6 +224,7 @@
     <ClInclude Include="BaseEffect.h" />
     <ClInclude Include="BaseProc.h" />
     <ClInclude Include="BaseRenderComponent.h" />
+    <ClInclude Include="CoinComponent.h" />
     <ClInclude Include="CombatComponent.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Component.h" />

@@ -12,7 +12,9 @@
 InventoryComponent::InventoryComponent(std::shared_ptr<GameObject> world)
 	: m_pWorld{ std::move(world) },
 	m_pCurrentRoom{ nullptr },
-	m_EffectTimer{}
+	m_EffectTimer{},
+	m_pActiveItem{},
+	m_Coins{}
 {
 }
 
@@ -60,7 +62,7 @@ void InventoryComponent::AddItem(std::shared_ptr<GameObject> item)
 	if (m_Items.size() == m_MaxCapacity)
 		return;
 
-	item->GetComponent<ActivityComponent>()->Deactivate();
+	//item->GetComponent<ActivityComponent>()->Deactivate();
 	m_Items.push_back(item);
 	m_pActiveItem = item;
 }
@@ -149,4 +151,10 @@ void InventoryComponent::SetEffect(BaseEffect* pEffect)
 BaseEffect* InventoryComponent::GetActiveEffect() const
 {
 	return m_pEffect;
+}
+
+void InventoryComponent::AddCoin()
+{
+	++m_Coins;
+	std::cout << "You now have " << m_Coins << " coins\n";
 }

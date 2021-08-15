@@ -438,4 +438,14 @@ void AddItem(int dropRate, std::shared_ptr<ItemComponent> item)
 
 - PROBLEEM: Er kan momenteel niet meer dan 1 item gespawned worden per room omdat de ItemManagerComponent een map van een Room* als key en als value een shared ptr naar het item bijhoudt en geen container van items per room. Dus ofwel ga ik alle code aanpassen hiervan, ofwel ga ik ervoor zorgen dat enemies enkel items kunnen droppen als er geen andere items in de room zijn.
 
-- 
+14/08:
+- Nieuwe "item" toevoegen om een economy te kunnen voorzien. Wat voor item moet dit zijn: coin, banknote, gold, silver, soul, scrap, gold nugget, ..
+
+15/08:
+- Je moet dus aan de LootComponent een coin meegeven zodat een enemy 20% kans heeft om een coin te droppen.
+
+- Waar moeten de coins worden bijgehouden? In de InventoryComponent? In principe moet er gewoon een int value bijgehouden worden. Dus als een coin opgepakt wordt, moet dat niet aan de inventory zelf toegevoegd worden als concrete item, maar er moet gewoon een int value geïncrementeerd worden.
+
+- Een CoinComponent maken? Deze inherit van ItemComponent. De OnUse method ervan moet leeg zijn want je kan een coin niet rechtstreeks gebruiken. De Clone method wordt gebruikt zoals de andere items om de coin te spawnen in de wereld. Als de player de coin dan oppakt dan moet er in de PickUpItemCommand's Execute method gechecked worden of het item een Coin is of niet. Zo ja, dan wordt er via de InventoryComponent een method gecalled om de hoeveelheid currency te adden en dan wordt de coin removed uit de ItemManagerComponent.
+
+- BUG: Je kan enemies nog uit de map attacken.

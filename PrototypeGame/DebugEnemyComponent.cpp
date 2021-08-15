@@ -2,6 +2,7 @@
 #include "DebugEnemyComponent.h"
 #include <iostream>
 #include "ActivityComponent.h"
+#include "CoinComponent.h"
 #include "CombatComponent.h"
 #include "ConsumableComponent.h"
 #include "EnemyMovementComponent.h"
@@ -31,11 +32,19 @@ std::shared_ptr<GameObject> DebugEnemyComponent::Clone()
 	clone->AddComponent(std::make_shared<CombatComponent>());
 
 	// --- LOOT ---
+	// Je zet de loot in de volgorde van laagste droprate naar hoogste droprate. Als je als eerste item 20 meegeeft en voor
+	// de tweede 40, dan hebben beiden 20% droprate want de LootComponent checked eerst de eerste item of de rate <= 20 en zo niet
+	// gaat die voor de tweede checken als die <= 40 wat betekent dat beide items 20% kans hebben om te spawnen.
+	// Health potion 20%
 	clone->AddComponent(std::make_shared<LootComponent>());
 	std::vector<std::shared_ptr<BaseEffect>> effects;
 	effects.push_back(std::make_shared<HealEffect>(15.f));
 	const auto healthPot = std::make_shared<ConsumableComponent>("Small Healing Potion", effects, "RedPotion.png");
 	clone->GetComponent<LootComponent>()->AddItem(20, healthPot);
+
+	// Coin 20%
+	const auto coin = std::make_shared<CoinComponent>("Coin.png");
+	clone->GetComponent<LootComponent>()->AddItem(40, coin);
 	// --- LOOT ---
 	
 	return clone;

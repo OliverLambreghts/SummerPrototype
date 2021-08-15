@@ -35,6 +35,7 @@ public:
 	void RemoveCurrentItem();
 	void SetEffect(BaseEffect* pEffect);
 	BaseEffect* GetActiveEffect() const;
+	void AddCoin();
 private:
 	void ResetActiveProjectile();
 	void UpdateEffectTimer(float elapsedSec);
@@ -47,4 +48,6 @@ private:
 	std::weak_ptr<GameObject> m_pWorld;
 	BaseEffect* m_pEffect = nullptr;
 	float m_EffectTimer;
+
+	int m_Coins;
 };
