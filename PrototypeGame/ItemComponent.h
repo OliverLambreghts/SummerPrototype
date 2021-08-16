@@ -16,5 +16,6 @@ public:
 	virtual void Update(float elapsedSec, GameObject & obj) override = 0;
 	virtual void OnUse(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> enemy) = 0;
 	virtual void PrintStats() = 0;
+	virtual int GetPrice() const = 0;
 private:
 };

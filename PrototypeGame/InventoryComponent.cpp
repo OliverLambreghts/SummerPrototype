@@ -158,3 +158,13 @@ void InventoryComponent::AddCoin()
 	++m_Coins;
 	std::cout << "You now have " << m_Coins << " coins\n";
 }
+
+int InventoryComponent::GetBalance() const
+{
+	return m_Coins;
+}
+
+void InventoryComponent::AddCoinAmount(int amount)
+{
+	m_Coins += amount;
+}

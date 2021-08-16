@@ -35,7 +35,7 @@ void EnemyMovementComponent::Update(float elapsedSec, GameObject& obj)
 	const float height = obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight();
 
 	// Apply knockback when hit by player
-	if (ApplyKnockBack(elapsedSec))
+	if (ApplyKnockBack(elapsedSec, obj))
 		return;
 
 	// Idle enemy when he reaches the player
@@ -72,7 +72,7 @@ Vector2f EnemyMovementComponent::DetermineBehavior(const Point2f& playerPos, flo
 {
 	// Calculate desired velocity (for the direction)
 	Vector2f velocity = playerPos - m_Position;
-	const float attentionRange = 250.f;
+	constexpr float attentionRange = 250.f;
 
 	// Wander when the enemy hasn't seen the player yet
 	if (!CanSeePlayer(attentionRange, velocity, obj))
@@ -160,6 +160,14 @@ void EnemyMovementComponent::CheckWallCollision(GameObject& obj)
 		m_WanderFwdVector *= -1;
 }
 
+bool EnemyMovementComponent::IsAgainstWall(GameObject& obj) const
+{
+	return (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension()
+		|| m_Position.x <= 0.f ||
+		m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension() ||
+		m_Position.y <= 0.f);
+}
+
 void EnemyMovementComponent::DetermineDirection(const Vector2f& velocity, GameObject& obj) const
 {
 	double angle = atan2(velocity.y, velocity.x);
@@ -197,15 +205,21 @@ void EnemyMovementComponent::DetermineDirection(const Vector2f& velocity, GameOb
 	}
 }
 
-bool EnemyMovementComponent::ApplyKnockBack(float elapsedSec)
+bool EnemyMovementComponent::ApplyKnockBack(float elapsedSec, GameObject& obj)
 {
+	if (IsAgainstWall(obj) || m_IsAgainstObstacle)
+	{
+		m_IsAgainstObstacle = false;
+		return false;
+	}
+	
 	if (m_IsKnockedBack)
 	{
 		m_ActiveKBTimer += elapsedSec;
 
 		auto KBVel = m_KBVelocity.Normalized();
 		KBVel *= m_KBSpeed;
-
+		
 		m_Position += KBVel * elapsedSec;
 
 		if (m_ActiveKBTimer >= m_KnockBackTimer)

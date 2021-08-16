@@ -10,7 +10,8 @@ enum class RoomType
 	normal,
 	treasure,
 	boss,
-	starter
+	starter,
+	vendor
 };
 struct Neighbor
 {

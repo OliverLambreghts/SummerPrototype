@@ -449,3 +449,20 @@ void AddItem(int dropRate, std::shared_ptr<ItemComponent> item)
 - Een CoinComponent maken? Deze inherit van ItemComponent. De OnUse method ervan moet leeg zijn want je kan een coin niet rechtstreeks gebruiken. De Clone method wordt gebruikt zoals de andere items om de coin te spawnen in de wereld. Als de player de coin dan oppakt dan moet er in de PickUpItemCommand's Execute method gechecked worden of het item een Coin is of niet. Zo ja, dan wordt er via de InventoryComponent een method gecalled om de hoeveelheid currency te adden en dan wordt de coin removed uit de ItemManagerComponent.
 
 - BUG: Je kan enemies nog uit de map attacken.
+
+16/08:
+- Bug fiksen dat je enemies niet meer door muren/obstacles kan duwen.
+
+- Vendor room + vendor toevoegen.
+
+- Maak van een random room in de wereld een vendor room. Deze vendor room moet een vendor bevatten die 3 random items verkoopt aan prijzen die relatief zijn aan het item en de item kwaliteit.
+
+- Visual bug fiksen: ALLE sprites sorteren obv hun y-waarde. Dus hetzelfde zoals bij de enemies, maar dan met letterlijk ALLE sprites. DONE
+
+- In een vendor room moeten 3 random items liggen met de prijs in coins eronder aangeduidt. Jij kan dan, als je het geld hebt, die items kopen. Je komt een vendor room binnen en als je daar een item oppakt, dan wordt de prijs van dat item van jouw hoeveelheid coins afgetrokken.
+
+- Deze items op de juiste plaats laten zetten in de ItemManager? Items ook als data m_Price geven zodat je kan checken of de player genoeg coins heeft om te kopen? En voor items die normaal spawnen dan de prijs 0 maken?
+
+- Ok dus nu worden items al gechecked obv hun prijs als ze in een vendor room liggen. Nu wil ik dat er 3 random items spawnen in een vendor room en dat die naast elkaar liggen.
+
+- BUG: Vanaf dat er meer dan 1 doorgang is naar een treasure room met maar 1 doorgang, wordt er maar 1 treasure room geblocked met obstacles, de rest dus niet.

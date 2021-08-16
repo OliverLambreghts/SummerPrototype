@@ -38,6 +38,7 @@ void MapRenderComponent::Render() const
 
 	for (size_t i{}; i < cells.size(); ++i)
 	{
+		// Comment this for debug rendering the map
 		if (rooms[i].isVisitedByPlayer)
 			utils::SetColor(Color4f{ 1.f, 1.f, 1.f, 100.f / 255.f });
 		else
@@ -48,6 +49,17 @@ void MapRenderComponent::Render() const
 
 		Rectf room = Rectf{ cells[i].left + 2.f, cells[i].bottom + 2.f, cells[i].width - 4.f,
 		cells[i].height - 4.f };
+
+		// -- DEBUG RENDERING FOR ALL TYPES OF ROOMS --
+		/*if (rooms[i].type == RoomType::treasure)
+			utils::SetColor(Color4f{ 0.f, 1.f, 0.f, 100.f / 255.f });
+		else if(rooms[i].type == RoomType::boss)
+			utils::SetColor(Color4f{ 1.f, 0.f, 0.f, 100.f / 255.f });
+		else if (rooms[i].type == RoomType::vendor)
+			utils::SetColor(Color4f{ 0.f, 0.f, 1.f, 100.f / 255.f });
+		else if (rooms[i].type == RoomType::normal)
+			utils::SetColor(Color4f{ 1.f, 1.f, 0.f, 100.f / 255.f });*/
+		// -- DEBUG RENDERING FOR ALL TYPES OF ROOMS --
 		
 		utils::FillRect(room);
 

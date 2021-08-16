@@ -37,7 +37,7 @@ void ItemManagerComponent::Update(float /*elapsedSec*/, GameObject& obj)
 		m_Items[m_pCurrentRoom].push_back(m_pItemToAdd);
 		m_pItemToAdd = nullptr;
 	}
-	
+
 	UpdateCurrentRoom(obj);
 	AddItems(obj);
 	SpawnItem(obj);
@@ -110,7 +110,7 @@ void ItemManagerComponent::UpdateCurrentRoom(GameObject& obj)
 	// Despawn items when going to another room
 	if (m_Items.find(m_pCurrentRoom) != m_Items.end() && !m_Items.at(m_pCurrentRoom).empty())
 	{
-		for(auto& item : m_Items.at(m_pCurrentRoom))
+		for (auto& item : m_Items.at(m_pCurrentRoom))
 			item->GetComponent<ActivityComponent>()->Deactivate();
 	}
 
@@ -121,6 +121,12 @@ void ItemManagerComponent::AddItems(GameObject& obj)
 {
 	if (!obj.GetComponent<MazeComponent>()->HasFinishedGenerating())
 		return;
+
+	if (m_pCurrentRoom->type == RoomType::vendor)
+	{
+		AddVendorItems(obj);
+		return;
+	}
 
 	// If the room isn't a treasure room, return out. If the room is the starter room, spawn a melee or ranged weapon.
 	if (m_pCurrentRoom->type != RoomType::treasure)
@@ -136,13 +142,13 @@ void ItemManagerComponent::AddItems(GameObject& obj)
 		switch (type)
 		{
 		case ItemType::MeleeKey:
-			SpawnMeleeKey();
+			SpawnMeleeKey(-1);
 			break;
 		case ItemType::RangedKey:
-			SpawnRangedKey();
+			SpawnRangedKey(-1);
 			break;
 		}
-		
+
 		return;
 	}
 
@@ -154,14 +160,41 @@ void ItemManagerComponent::AddItems(GameObject& obj)
 	switch (type)
 	{
 	case ItemType::Consumable:
-		SpawnConsumable();
+		SpawnConsumable(-1);
 		break;
 	case ItemType::MeleeKey:
-		SpawnMeleeKey();
+		SpawnMeleeKey(-1);
 		break;
 	case ItemType::RangedKey:
-		SpawnRangedKey();
+		SpawnRangedKey(-1);
 		break;
+	}
+}
+
+void ItemManagerComponent::AddVendorItems(GameObject& /*obj*/)
+{
+	if (m_Items.find(m_pCurrentRoom) != m_Items.end())
+		return;
+
+	// Hier nu 3 random items spawnen die naast elkaar liggen in een vendor room
+
+	// Dit is testcode om te zien of de items effectief werken volgens hun prijs
+	for (int i{}; i < 3; ++i)
+	{
+		const auto type = static_cast<ItemType>(rand() % 3);
+
+		switch (type)
+		{
+		case ItemType::Consumable:
+			SpawnConsumable(i);
+			break;
+		case ItemType::MeleeKey:
+			SpawnMeleeKey(i);
+			break;
+		case ItemType::RangedKey:
+			SpawnRangedKey(i);
+			break;
+		}
 	}
 }
 
@@ -237,7 +270,7 @@ void ItemManagerComponent::ParseConsumableData(const std::string& line, std::vec
 	data.push_back(fileName);
 }
 
-void ItemManagerComponent::SpawnMeleeKey()
+void ItemManagerComponent::SpawnMeleeKey(int idx)
 {
 	std::string line{};
 	std::vector<std::string> lines;
@@ -277,9 +310,12 @@ void ItemManagerComponent::SpawnMeleeKey()
 		item->GetComponent<ActivityComponent>()->Activate();
 		SceneManager::GetInstance().GetCurrentScene()->Add(item);
 		m_Items[m_pCurrentRoom].push_back(item);
+
+	// Adjust item's position when idx != -1 which means that the item is in a vendor room
+	AdjustVendorItemPos(idx, item);
 }
 
-void ItemManagerComponent::SpawnRangedKey()
+void ItemManagerComponent::SpawnRangedKey(int idx)
 {
 	std::string line{};
 	std::vector<std::string> lines;
@@ -319,9 +355,12 @@ void ItemManagerComponent::SpawnRangedKey()
 		item->GetComponent<ActivityComponent>()->Activate();
 		SceneManager::GetInstance().GetCurrentScene()->Add(item);
 		m_Items[m_pCurrentRoom].push_back(item);
+
+		// Adjust item's position when idx != -1 which means that the item is in a vendor room
+		AdjustVendorItemPos(idx, item);
 }
 
-void ItemManagerComponent::SpawnConsumable()
+void ItemManagerComponent::SpawnConsumable(int idx)
 {
 	std::string line{};
 	std::vector<std::string> lines;
@@ -350,6 +389,9 @@ void ItemManagerComponent::SpawnConsumable()
 	item->GetComponent<ActivityComponent>()->Activate();
 	SceneManager::GetInstance().GetCurrentScene()->Add(item);
 	m_Items[m_pCurrentRoom].push_back(item);
+
+	// Adjust item's position when idx != -1 which means that the item is in a vendor room
+	AdjustVendorItemPos(idx, item);
 }
 
 void ItemManagerComponent::SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const
@@ -415,6 +457,21 @@ void ItemManagerComponent::SpawnItem(GameObject& obj)
 	if (m_Items.at(m_pCurrentRoom).empty())
 		return;
 
-	for(auto& item : m_Items.at(m_pCurrentRoom))
+	for (auto& item : m_Items.at(m_pCurrentRoom))
 		item->GetComponent<ActivityComponent>()->Activate();
+}
+
+void ItemManagerComponent::AdjustVendorItemPos(int idx, std::shared_ptr<GameObject> item)
+{
+	switch (idx)
+	{
+	case 0:
+		item->GetComponent<TransformComponent>()->SetPosition(Point2f{ item->GetComponent<TransformComponent>()->GetPosition().x - 100.f,
+			item->GetComponent<TransformComponent>()->GetPosition().y });
+		break;
+	case 2:
+		item->GetComponent<TransformComponent>()->SetPosition(Point2f{ item->GetComponent<TransformComponent>()->GetPosition().x + 100.f,
+			item->GetComponent<TransformComponent>()->GetPosition().y });
+		break;
+	}
 }

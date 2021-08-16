@@ -7,10 +7,11 @@
 #include "TransformComponent.h"
 
 ConsumableComponent::ConsumableComponent(const std::string& name, std::vector<std::shared_ptr<BaseEffect>>& effects,
-                                         const std::string& fileName)
+	const std::string& fileName)
 	: m_Name{ name },
 	m_pEffects{ effects },
-	m_FileName{ fileName }
+	m_FileName{ fileName },
+	m_Price{ 10 }
 {
 }
 
@@ -32,7 +33,7 @@ void ConsumableComponent::Update(float /*elapsedSec*/, GameObject& /*obj*/)
 
 void ConsumableComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> /*enemy*/)
 {
-	for(auto& effect : m_pEffects)
+	for (auto& effect : m_pEffects)
 	{
 		effect->ApplyEffect(player);
 		std::cout << "Activating consumable " << m_Name << '\n';
@@ -42,4 +43,9 @@ void ConsumableComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_
 void ConsumableComponent::PrintStats()
 {
 	std::cout << m_Name << '\n';
+}
+
+int ConsumableComponent::GetPrice() const
+{
+	return m_Price;
 }

@@ -20,7 +20,8 @@ MeleeKeyComponent::MeleeKeyComponent(const std::string& name, int damage, float 
 	m_pWeaponQuality{ quality },
 	m_FileName{ fileName },
 	m_IsCDActive{ false },
-	m_CDTimer{}
+	m_CDTimer{},
+	m_Price{ static_cast<int>(static_cast<float>(damage) * quality->GetDmgMultiplier()) }
 {
 }
 
@@ -44,7 +45,7 @@ void MeleeKeyComponent::Update(float elapsedSec, GameObject& /*obj*/)
 	// Cooldown
 	m_CDTimer += elapsedSec;
 
-	if(m_CDTimer >= m_Cooldown)
+	if (m_CDTimer >= m_Cooldown)
 	{
 		m_CDTimer = 0.f;
 		m_IsCDActive = false;
@@ -55,7 +56,7 @@ void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_pt
 {
 	if (m_IsCDActive)
 		return;
-	
+
 	std::cout << "Attacking with " << m_pWeaponQuality->GetName() << ' ' << m_Name << '\n';
 	if (m_pProc && m_pProc->IsProcActive())
 	{
@@ -63,14 +64,14 @@ void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_pt
 		enemy->GetComponent<HealthComponent>()->SetProc(m_pProc);
 	}
 
-  	auto damage = static_cast<float>(m_Damage) * m_pWeaponQuality->GetDmgMultiplier();
+	auto damage = static_cast<float>(m_Damage) * m_pWeaponQuality->GetDmgMultiplier();
 
 	const auto effect = player->GetComponent<InventoryComponent>()->GetActiveEffect();
 	if (effect)
 	{
 		damage *= effect->GetAmount();
 	}
-	
+
 	std::cout << "Hitting enemy for " << damage << " damage!\n";
 	enemy->GetComponent<HealthComponent>()->AddHealth(static_cast<int>(-damage));
 
@@ -79,8 +80,13 @@ void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_pt
 
 	if (!enemy->GetComponent<EnemyMovementComponent>())
 		return;
-	
+
 	// APPLY KNOCKBACK HERE
 	enemy->GetComponent<EnemyMovementComponent>()->ActivateKnockBack(
 		player->GetComponent<PlayerMovementComponent>()->GetPosition());
+}
+
+int MeleeKeyComponent::GetPrice() const
+{
+	return m_Price;
 }

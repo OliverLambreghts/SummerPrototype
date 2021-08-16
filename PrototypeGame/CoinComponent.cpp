@@ -34,3 +34,8 @@ void CoinComponent::OnUse(std::shared_ptr<GameObject> /*player*/, std::shared_pt
 void CoinComponent::PrintStats()
 {
 }
+
+int CoinComponent::GetPrice() const
+{
+	return 0;
+}

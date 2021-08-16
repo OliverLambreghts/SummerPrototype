@@ -23,7 +23,7 @@ public:
 	const Vector2f& GetCurrentVelocity() const;
 private:
 	void DetermineDirection(const Vector2f& velocity, GameObject& obj) const;
-	bool ApplyKnockBack(float elapsedSec);
+	bool ApplyKnockBack(float elapsedSec, GameObject& obj);
 	bool CanSeePlayer(float range, const Vector2f& velocity, GameObject& obj);
 	Vector2f DetermineBehavior(const Point2f& playerPos, float elapsedSec, GameObject& obj);
 	void UpdateWanderBehavior(Vector2f& velocity, float elapsedSec, GameObject& obj);
@@ -31,6 +31,7 @@ private:
 	void DetermineForwardVector();
 	void CalculateRandomVelocity();
 	void CheckWallCollision(GameObject& obj);
+	bool IsAgainstWall(GameObject& obj) const;
 	
 	float m_Speed;
 	Point2f m_Position;

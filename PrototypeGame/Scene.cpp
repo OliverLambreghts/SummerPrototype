@@ -5,6 +5,8 @@
 #include "ActivityComponent.h"
 #include "GameObject.h"
 #include "ItemComponent.h"
+#include "MovementComponent.h"
+#include "SpriteRenderComponent.h"
 
 Scene::Scene(const std::string& name)
 	: m_Name{ name },
@@ -45,6 +47,18 @@ void Scene::Update(float elapsedSec)
 				return;
 
 			e->Update(elapsedSec);
+		});
+
+	// Sort all objects based on their y pos
+	std::sort(m_Objects.begin(), m_Objects.end(), [](std::shared_ptr<GameObject>& lhs, std::shared_ptr<GameObject>& rhs)
+		{
+			if (lhs->GetComponent<SpriteRenderComponent>() && !rhs->GetComponent<SpriteRenderComponent>())
+				return true;
+
+			if (!lhs->GetComponent<SpriteRenderComponent>())
+				return false;
+		
+			return lhs->GetComponent<MovementComponent>()->GetPosition().y > rhs->GetComponent<MovementComponent>()->GetPosition().y;
 		});
 }
 

@@ -26,7 +26,8 @@ RangedKeyComponent::RangedKeyComponent(const std::string& name, int damage, floa
 	m_HasShot{ false },
 	m_RangeTime{ rangeTime },
 	m_ProjectileSpeed{ projSpeed },
-	m_EffectTimer{}
+	m_EffectTimer{},
+	m_Price{ static_cast<int>(static_cast<float>(damage) * quality->GetDmgMultiplier()) }
 {
 }
 
@@ -138,4 +139,9 @@ void RangedKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_p
 	{
 		m_pEffect = effect;
 	}
+}
+
+int RangedKeyComponent::GetPrice() const
+{
+	return m_Price;
 }

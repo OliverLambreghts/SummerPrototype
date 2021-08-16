@@ -1,3 +1,5 @@
 Ranged Key of Fire:10:0.5:fireproc:epic:FireKey.png:1:500
+Ranged Key of Fire:10:0.5:fireproc:basic:FireKey.png:1:500
 Basic Ranged Key:4:0.9:critproc:basic:BasicKey.png:0.3:250
-Ranged Key of Power:20:0.6:critproc:epic:BasicKey.png:1:500
+Ranged Key of Power:20:0.6:critproc:epic:KeyOfPower.png:1:500
+Ranged Key of Power:20:0.6:critproc:Basic:KeyOfPower.png:1:500

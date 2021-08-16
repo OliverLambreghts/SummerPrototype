@@ -15,6 +15,7 @@ public:
 	virtual void Update(float elapsedSec, GameObject & obj) override;
 	virtual void OnUse(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> enemy) override;
 	virtual void PrintStats() override;
+	virtual int GetPrice() const override;
 private:
 	std::string m_FileName;
 };

@@ -34,15 +34,17 @@ public:
 private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddItems(GameObject& obj);
+	void AddVendorItems(GameObject& obj);
 	void ParseMeleeData(const std::string& line, std::vector<std::string>& data) const;
 	void ParseRangedData(const std::string& line, std::vector<std::string>& data) const;
 	void ParseConsumableData(const std::string& line, std::vector<std::string>& data) const;
-	void SpawnMeleeKey();
-	void SpawnRangedKey();
-	void SpawnConsumable();
+	void SpawnMeleeKey(int idx);
+	void SpawnRangedKey(int idx);
+	void SpawnConsumable(int idx);
 	void SetProc(std::vector<std::string>& data, std::shared_ptr<BaseProc>& proc) const;
 	void SetEffect(std::vector<std::string>& data, std::vector<std::shared_ptr<BaseEffect>>& effects) const;
 	void SpawnItem(GameObject& obj);
+	void AdjustVendorItemPos(int idx, std::shared_ptr<GameObject> item);
 	
 	Room* m_pCurrentRoom;
 	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_Items;

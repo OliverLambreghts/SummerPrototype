@@ -22,6 +22,7 @@ public:
 	virtual std::shared_ptr<GameObject> Clone() override;
 	virtual void Update(float elapsedSec, GameObject& obj) override;
 	virtual void OnUse(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> world) override;
+	virtual int GetPrice() const override;
 
 	virtual void PrintStats() override
 	{
@@ -51,4 +52,6 @@ private:
 	std::vector<std::shared_ptr<GameObject>> m_Enemies;
 	BaseEffect* m_pEffect = nullptr;
 	float m_EffectTimer;
+
+	int m_Price;
 };

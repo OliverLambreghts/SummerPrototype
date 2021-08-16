@@ -26,13 +26,12 @@ void EnemyManagerComponent::Update(float elapsedSec, GameObject& obj)
 	UpdateCurrentRoom(obj);
 	AddSpawners(obj);
 	SpawnEnemies(elapsedSec, obj);
-	SortEnemiesByPos();
 	RemoveDeadEnemies();
 }
 
 std::shared_ptr<GameObject> EnemyManagerComponent::GetClosestEnemyInFront()
 {
-	if (m_Enemies.at(m_pCurrentRoom).empty())
+	if (m_Enemies.find(m_pCurrentRoom) == m_Enemies.end() || m_Enemies.at(m_pCurrentRoom).empty())
 		return nullptr;
 
 	const auto direction = m_pPlayer->GetComponent<SpriteRenderComponent>()->GetDirection();
@@ -95,25 +94,10 @@ std::shared_ptr<GameObject> EnemyManagerComponent::GetClosestEnemyInFront()
 
 std::vector<std::shared_ptr<GameObject>> EnemyManagerComponent::GetEnemiesInCurrentRoom() const
 {
+	if (m_Enemies.find(m_pCurrentRoom) == m_Enemies.end())
+		return std::vector<std::shared_ptr<GameObject>>{};
+	
 	return m_Enemies.at(m_pCurrentRoom);
-}
-
-void EnemyManagerComponent::SortEnemiesByPos()
-{
-	auto enemies = m_Enemies[m_pCurrentRoom];
-
-	if (enemies.empty())
-		return;
-
-	std::sort(enemies.begin(), enemies.end(), [](std::shared_ptr<GameObject>& lhs, std::shared_ptr<GameObject>& rhs)
-		{
-			return lhs->GetComponent<EnemyMovementComponent>()->GetPosition().y > rhs->GetComponent<EnemyMovementComponent>()->GetPosition().y;
-		});
-
-	for (auto& enemy : enemies)
-	{
-		SceneManager::GetInstance().GetCurrentScene()->MoveObjToBack(enemy);
-	}
 }
 
 void EnemyManagerComponent::RemoveDeadEnemies()
@@ -158,7 +142,8 @@ void EnemyManagerComponent::AddSpawners(GameObject& obj)
 	if (obj.GetComponent<MazeComponent>()->HasFinishedGenerating())
 	{
 		if ((m_pCurrentRoom->isBeginRoom || 
-			m_pCurrentRoom->type == RoomType::boss) &&
+			m_pCurrentRoom->type == RoomType::boss) ||
+			m_pCurrentRoom->type == RoomType::vendor &&
 			m_Spawners.find(m_pCurrentRoom) != m_Spawners.end())
 			m_Spawners.erase(m_pCurrentRoom);
 		return;

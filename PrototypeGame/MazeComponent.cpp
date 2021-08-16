@@ -55,13 +55,16 @@ void MazeComponent::GenerateWorld()
 
 	if (!m_pCurrentRoom->isVisited)
 	{
+		// 70% chance for a normal room, 15% chance for a treasure room, 10% for a boss room and 5% for a vendor room
 		const int percentage = (rand() % 101);
 		if (percentage >= 30)
 			m_pCurrentRoom->type = RoomType::normal;
-		else if (percentage >= 10)
+		else if (percentage >= 15)
 			m_pCurrentRoom->type = RoomType::treasure;
-		else
+		else if(percentage >= 5)
 			m_pCurrentRoom->type = RoomType::boss;
+		else
+			m_pCurrentRoom->type = RoomType::vendor;
 		m_pCurrentRoom->isVisited = true;
 	}
 
@@ -210,6 +213,9 @@ void MazeComponent::ChangeCurrentRoom(int direction)
 		break;
 	case RoomType::starter:
 		std::cout << "starter ";
+		break;
+	case RoomType::vendor:
+		std::cout << "vendor ";
 		break;
 	}
 	std::cout << "room\n";

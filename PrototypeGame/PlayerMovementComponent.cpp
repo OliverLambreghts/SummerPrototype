@@ -113,7 +113,7 @@ void PlayerMovementComponent::HandleYMovement(float elapsedSec, GameObject& obj)
 
 bool PlayerMovementComponent::ApplyKnockBack(float elapsedSec, GameObject& obj)
 {
-	if (IsAgainstWall(obj))
+	if (IsAgainstWall(obj) || m_ObstacleCollisionData.first)
 		return false;
 
 	if (m_IsKnockedBack)

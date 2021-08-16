@@ -21,7 +21,6 @@ private:
 	void UpdateCurrentRoom(GameObject& obj);
 	void AddSpawners(GameObject& obj);
 	void SpawnEnemies(float elapsedSec, GameObject& obj);
-	void SortEnemiesByPos();
 	void RemoveDeadEnemies();
 	bool UpdateDelayTimer(float elapsedSec);
 	

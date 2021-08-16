@@ -36,6 +36,8 @@ public:
 	void SetEffect(BaseEffect* pEffect);
 	BaseEffect* GetActiveEffect() const;
 	void AddCoin();
+	void AddCoinAmount(int amount);
+	int GetBalance() const;
 private:
 	void ResetActiveProjectile();
 	void UpdateEffectTimer(float elapsedSec);
