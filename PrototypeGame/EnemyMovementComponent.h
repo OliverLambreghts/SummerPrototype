@@ -32,6 +32,7 @@ private:
 	void CalculateRandomVelocity();
 	void CheckWallCollision(GameObject& obj);
 	bool IsAgainstWall(GameObject& obj) const;
+	void UpdateObstacleEscape(float elapsedSec);
 	
 	float m_Speed;
 	Point2f m_Position;
@@ -41,7 +42,9 @@ private:
 	Vector2f m_KBVelocity;
 	bool m_HasSeenPlayer;
 	bool m_IsAgainstObstacle;
+	bool m_IsEscapingObstacle;
 	Vector2f m_CurrentVelocity;
+	float m_ObstacleCollisionTimer;
 
 	// WANDER DATA
 	Vector2f m_WanderFwdVector;

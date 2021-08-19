@@ -19,7 +19,9 @@ EnemyMovementComponent::EnemyMovementComponent(float speed, const Point2f& pos)
 	m_WanderFwdVector{ 1.f, 0.f },
 	m_WanderAngle{},
 	m_IsAgainstObstacle{ false },
-	m_CurrentVelocity{}
+	m_CurrentVelocity{},
+	m_ObstacleCollisionTimer{},
+	m_IsEscapingObstacle{ false }
 {
 }
 
@@ -70,18 +72,21 @@ bool EnemyMovementComponent::CanSeePlayer(float range, const Vector2f& velocity,
 
 Vector2f EnemyMovementComponent::DetermineBehavior(const Point2f& playerPos, float elapsedSec, GameObject& obj)
 {
+	// When enemy runs into an obstacle while chasing the player, its behavior is switched back to a wander for 0.5 seconds.
+	UpdateObstacleEscape(elapsedSec);
+
 	// Calculate desired velocity (for the direction)
 	Vector2f velocity = playerPos - m_Position;
 	constexpr float attentionRange = 250.f;
 
 	// Wander when the enemy hasn't seen the player yet
-	if (!CanSeePlayer(attentionRange, velocity, obj))
+	if (m_IsEscapingObstacle || !CanSeePlayer(attentionRange, velocity, obj))
 		UpdateWanderBehavior(velocity, elapsedSec, obj);
 	else
 		UpdateSeekBehavior(velocity, elapsedSec);
 
 	m_CurrentVelocity = velocity;
-	
+
 	return velocity;
 }
 
@@ -92,7 +97,9 @@ void EnemyMovementComponent::UpdateSeekBehavior(Vector2f& velocity, float elapse
 
 	if (m_IsAgainstObstacle)
 	{
-		m_IsAgainstObstacle = false;
+		m_HasSeenPlayer = false;
+		m_IsEscapingObstacle = true;
+
 		return;
 	}
 
@@ -107,13 +114,14 @@ void EnemyMovementComponent::UpdateWanderBehavior(Vector2f& velocity, float elap
 
 	CalculateRandomVelocity();
 	CheckWallCollision(obj);
-	
+
+	// Check obstacle collision
 	if (m_IsAgainstObstacle)
 	{
 		m_IsAgainstObstacle = false;
-		return;
+		m_WanderFwdVector *= -1;
 	}
-	
+
 	m_Position += m_WanderFwdVector * elapsedSec;
 	velocity = m_WanderFwdVector;
 	m_WanderTimer += elapsedSec;
@@ -151,13 +159,25 @@ void EnemyMovementComponent::CalculateRandomVelocity()
 	m_WanderFwdVector *= m_Speed;
 }
 
-void EnemyMovementComponent::CheckWallCollision(GameObject& obj)
+void EnemyMovementComponent::CheckWallCollision(GameObject& /*obj*/)
 {
-	if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension()
+	if ((m_Position + m_WanderFwdVector).x >= Game::GetWindowDimension() ||
+		(m_Position + m_WanderFwdVector).x <= 0.f ||
+		(m_Position + m_WanderFwdVector).y >= Game::GetWindowDimension() ||
+		(m_Position + m_WanderFwdVector).y <= 0.f)
+	{
+		m_WanderFwdVector *= -1;
+	}
+
+	// Hier ook nog checken of de enemy naar de muur gericht is en dus zijn forward vector
+	// overlapped met een muur
+	/*if (m_Position.x + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameWidth() >= Game::GetWindowDimension()
 		|| m_Position.x <= 0.f ||
 		m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension() ||
 		m_Position.y <= 0.f)
-		m_WanderFwdVector *= -1;
+	{
+
+	}*/
 }
 
 bool EnemyMovementComponent::IsAgainstWall(GameObject& obj) const
@@ -166,6 +186,20 @@ bool EnemyMovementComponent::IsAgainstWall(GameObject& obj) const
 		|| m_Position.x <= 0.f ||
 		m_Position.y + obj.GetComponent<SpriteRenderComponent>()->GetSprite().GetFrameHeight() >= Game::GetWindowDimension() ||
 		m_Position.y <= 0.f);
+}
+
+void EnemyMovementComponent::UpdateObstacleEscape(float elapsedSec)
+{
+	if (m_IsEscapingObstacle)
+		m_ObstacleCollisionTimer += elapsedSec;
+
+	if (m_ObstacleCollisionTimer >= 0.5f)
+	{
+		m_ObstacleCollisionTimer = 0.f;
+		m_IsAgainstObstacle = false;
+		m_HasSeenPlayer = true;
+		m_IsEscapingObstacle = false;
+	}
 }
 
 void EnemyMovementComponent::DetermineDirection(const Vector2f& velocity, GameObject& obj) const
@@ -207,19 +241,20 @@ void EnemyMovementComponent::DetermineDirection(const Vector2f& velocity, GameOb
 
 bool EnemyMovementComponent::ApplyKnockBack(float elapsedSec, GameObject& obj)
 {
-	if (IsAgainstWall(obj) || m_IsAgainstObstacle)
-	{
-		m_IsAgainstObstacle = false;
-		return false;
-	}
-	
 	if (m_IsKnockedBack)
 	{
+		if (IsAgainstWall(obj) || m_IsAgainstObstacle)
+		{
+			m_IsAgainstObstacle = false;
+			m_IsKnockedBack = false;
+			return false;
+		}
+
 		m_ActiveKBTimer += elapsedSec;
 
 		auto KBVel = m_KBVelocity.Normalized();
 		KBVel *= m_KBSpeed;
-		
+
 		m_Position += KBVel * elapsedSec;
 
 		if (m_ActiveKBTimer >= m_KnockBackTimer)

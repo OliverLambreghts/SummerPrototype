@@ -466,3 +466,33 @@ void AddItem(int dropRate, std::shared_ptr<ItemComponent> item)
 - Ok dus nu worden items al gechecked obv hun prijs als ze in een vendor room liggen. Nu wil ik dat er 3 random items spawnen in een vendor room en dat die naast elkaar liggen.
 
 - BUG: Vanaf dat er meer dan 1 doorgang is naar een treasure room met maar 1 doorgang, wordt er maar 1 treasure room geblocked met obstacles, de rest dus niet.
+
+19/08:
+- BUG: Enemies kunnen nog door obstacles lopen.
+
+- Ik wil dat als een enemy tegen een obstacle loopt, dat diens velocity vector aangepast wordt door wrijving door de obstacle. Dus dat de enemy eigenlijk rond de obstacle loopt om de player te bereiken.
+
+- Dus als een enemy tegen een obstacle loopt, dan moet ofwel zijn x- ofwel zijn y-waarde op 0 gezet worden zodat die nog maar in 1 richting eigenlijk "sleept" tegen de obstacle, zo geraakt die errond. Hoe berekenen we welke waarde we op 0 moeten zetten? Als de obstacle rechts of links van hem is, moet die op of neer gaan, dus x wordt op 0 gezet. Als de obstacle onder of boven hem is, moet die links of rechts gaan, dus y wordt op 0 gezet.
+
+if(atan2(velocity.y, velocity.x) < 0.78 &&
+atan2(velocity.y, velocity.x) > -0.78) => Op of neer gaan
+{
+	velocity.x = 0.f;
+{
+else if(atan2(velocity.y, velocity.x) > 2.35 &&
+atan2(velocity.y, velocity.x) < -2.35) => Op of neer gaan
+{
+	velocity.x = 0.f;
+{
+else if(atan2(velocity.y, velocity.x) > 0.78 &&
+atan2(velocity.y, velocity.x) < 2.35) => Links of rechts gaan
+{
+	velocity.y = 0.f;
+}
+else if(atan2(velocity.y, velocity.x) > -2.35 &&
+atan2(velocity.y, velocity.x) < -0.78) => Links of rechts gaan
+{
+	velocity.y = 0.f;
+}
+
+- Misschien een soort van evade toevoegen? Zodat als een enemy een obstacle ziet, dat die errond beweegt.

@@ -35,7 +35,7 @@ std::shared_ptr<GameObject> ObstacleManagerComponent::GetClosestObstacleInFront(
 {
 	if (m_pObstacles.find(m_pCurrentRoom) == m_pObstacles.end())
 		return nullptr;
-	
+
 	if (m_pObstacles.at(m_pCurrentRoom).empty())
 		return nullptr;
 
@@ -113,6 +113,7 @@ void ObstacleManagerComponent::UpdateCurrentRoom(GameObject& obj)
 	}
 
 	m_pCurrentRoom = obj.GetComponent<MazeComponent>()->GetCurrentRoom();
+	m_HasSpawnedRandomObstacle = false;
 }
 
 void ObstacleManagerComponent::AddObstacles(GameObject& obj)
@@ -127,6 +128,16 @@ void ObstacleManagerComponent::AddObstacles(GameObject& obj)
 
 	CheckNeighbors();
 	SpawnTreasureObstacles(obj);
+
+	if (m_pCurrentRoom->isBeginRoom || m_pCurrentRoom->type == RoomType::treasure)
+		return;
+
+	if (m_HasSpawnedRandomObstacle)
+		return;
+	
+	const auto randNr = rand() % 101;
+	if (randNr <= 20)
+		SpawnRandomObstacle(obj);
 }
 
 void ObstacleManagerComponent::CheckNeighbors()
@@ -213,7 +224,7 @@ void ObstacleManagerComponent::SpawnLeftTreasureObstacles(GameObject& obj)
 
 	for (int i{}; i < 4; ++i)
 	{
-		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer, 
+		auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", pos, m_pPlayer,
 			obj.GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom());
 
 		auto boulder = obstacle->Clone();
@@ -333,4 +344,16 @@ void ObstacleManagerComponent::SpawnDownTreasureObstacles(GameObject& obj)
 
 		pos.x -= width;
 	}
+}
+
+void ObstacleManagerComponent::SpawnRandomObstacle(GameObject& obj)
+{
+	auto obstacle = std::make_shared<ObstacleComponent>(true, "Boulder.png", Point2f{ Game::GetWindowDimension() / 2.f,
+	Game::GetWindowDimension() / 2.f }, m_pPlayer,
+		obj.GetComponent<EnemyManagerComponent>()->GetEnemiesInCurrentRoom());
+	auto boulder = obstacle->Clone();
+	boulder->GetComponent<ActivityComponent>()->Activate();
+	SceneManager::GetInstance().GetCurrentScene()->Add(boulder);
+	m_pObstacles[m_pCurrentRoom].push_back(boulder);
+	m_HasSpawnedRandomObstacle = true;
 }

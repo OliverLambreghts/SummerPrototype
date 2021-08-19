@@ -39,9 +39,13 @@ private:
 	void SpawnRightTreasureObstacles(GameObject& obj);
 	void SpawnUpTreasureObstacles(GameObject& obj);
 	void SpawnDownTreasureObstacles(GameObject& obj);
+
+	void SpawnRandomObstacle(GameObject& obj);
 	
 	Room* m_pCurrentRoom;
 	std::map<Room*, std::vector<std::shared_ptr<GameObject>>> m_pObstacles;
 	std::vector<Direction> m_ObstacleDirections;
 	std::shared_ptr<GameObject> m_pPlayer;
+
+	bool m_HasSpawnedRandomObstacle = false;
 };
