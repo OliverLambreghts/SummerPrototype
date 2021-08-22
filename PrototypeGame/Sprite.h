@@ -18,9 +18,9 @@ public:
 	void Draw(const Rectf& destRect, const Rectf& srcRect) const;
 	float GetFrameWidth() const;
 	float GetFrameHeight() const;
-	int GetActFrame();
-	int GetRows();
-	int GetCols();
+	int GetActFrame() const;
+	int GetRows() const;
+	int GetCols() const;
 	void SetFrameSec(float frameSec);
 	void ResetSprite();
 private:

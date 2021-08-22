@@ -138,6 +138,8 @@ void ObstacleManagerComponent::AddObstacles(GameObject& obj)
 	const auto randNr = rand() % 101;
 	if (randNr <= 20)
 		SpawnRandomObstacle(obj);
+
+	m_HasSpawnedRandomObstacle = true;
 }
 
 void ObstacleManagerComponent::CheckNeighbors()
@@ -355,5 +357,4 @@ void ObstacleManagerComponent::SpawnRandomObstacle(GameObject& obj)
 	boulder->GetComponent<ActivityComponent>()->Activate();
 	SceneManager::GetInstance().GetCurrentScene()->Add(boulder);
 	m_pObstacles[m_pCurrentRoom].push_back(boulder);
-	m_HasSpawnedRandomObstacle = true;
 }

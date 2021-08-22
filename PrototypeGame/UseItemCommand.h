@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "InventoryComponent.h"
 #include "ObstacleTransformComponent.h"
+#include "PlayerParticleEffectsComponent.h"
 #include "Sprite.h"
 
 class UseItemCommand final : public Command
@@ -25,13 +26,17 @@ public:
 	virtual void Execute() override
 	{
 		const auto type = m_pPlayer->GetComponent<InventoryComponent>()->GetCurrentItemType();
-		
+
 		if (type == InventoryComponent::ItemType::MeleeKey)
 		{
 			auto enemy = m_pWorld->GetComponent<EnemyManagerComponent>()->GetClosestEnemyInFront();
 			auto obstacle = m_pWorld->GetComponent<ObstacleManagerComponent>()->GetClosestObstacleInFront();
 
-			if(obstacle)
+			// Activate particle effect
+			m_pPlayer->GetComponent<PlayerParticleEffectsComponent>()->
+				SetParticleEffect("../Data/Sprites/Slash.png", 5, 2, 1.f / 20.f, 1);
+
+			if (obstacle)
 			{
 				const auto playerPos = m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition();
 				const auto obstaclePos = obstacle->GetComponent<ObstacleTransformComponent>()->GetPosition();
@@ -45,7 +50,7 @@ public:
 				}
 				return;
 			}
-			
+
 			if (!enemy)
 				return;
 
@@ -57,11 +62,11 @@ public:
 			if (distanceVec.Length() <= attackRange)
 				m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, enemy);
 		}
-		else if(type == InventoryComponent::ItemType::RangedKey)
+		else if (type == InventoryComponent::ItemType::RangedKey)
 		{
 			m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, m_pWorld);
 		}
-		else if(type == InventoryComponent::ItemType::Consumable)
+		else if (type == InventoryComponent::ItemType::Consumable)
 		{
 			m_pPlayer->GetComponent<InventoryComponent>()->OnUse(m_pPlayer, nullptr);
 			// Remove consumable after using

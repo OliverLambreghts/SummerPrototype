@@ -16,7 +16,7 @@ public:
 		up
 	};
 	
-	SpriteRenderComponent(const std::string& fileName, int nrCols, int nrRows, float frameSec, int colToRender);
+	SpriteRenderComponent(const std::string& fileName, int nrCols, int nrRows, float frameSec, int rowToRender);
 	virtual ~SpriteRenderComponent() override = default;
 	SpriteRenderComponent(const SpriteRenderComponent& other) = delete;
 	SpriteRenderComponent(SpriteRenderComponent&& other) = delete;
@@ -29,12 +29,15 @@ public:
 	void ChangeRenderDirection(Direction direction);
 	void Idle();
 	void Move();
-	const Sprite& GetSprite() const;
+	Sprite& GetSprite() const;
 	Direction GetDirection() const;
+	void ToggleMirror();
+	bool IsMirrored() const;
 private:
 	std::vector<Direction> m_ActiveDirections;
 	std::shared_ptr<Sprite> m_pSprite;
 	Point2f m_RenderPos;
 	int m_RowToRender;
 	bool m_IsIdle;
+	bool m_IsMirrored;
 };

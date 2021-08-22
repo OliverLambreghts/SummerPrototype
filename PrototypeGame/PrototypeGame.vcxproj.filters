@@ -139,6 +139,12 @@
     <Filter Include="Header Files\Components\Obstacles">
       <UniqueIdentifier>{36ad4130-4e60-4b7d-8726-ce5db5138816}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Components\Particles">
+      <UniqueIdentifier>{6230585d-4a1e-43be-b8ab-18b066cac4c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Components\Particles">
+      <UniqueIdentifier>{c429d349-9bd1-4a96-a060-68070e94f8a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -299,6 +305,9 @@
     </ClCompile>
     <ClCompile Include="CoinComponent.cpp">
       <Filter>Source Files\Components\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerParticleEffectsComponent.cpp">
+      <Filter>Source Files\Components\Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -535,6 +544,9 @@
     </ClInclude>
     <ClInclude Include="CoinComponent.h">
       <Filter>Header Files\Components\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerParticleEffectsComponent.h">
+      <Filter>Header Files\Components\Particles</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -63,7 +63,7 @@ Game::~Game()
 void Game::Initialize()
 {
 	auto testScene = SceneManager::GetInstance().CreateScene("Test");
-
+	
 	auto testPlayer = std::make_shared<GameObject>();
 	auto world = std::make_shared<GameObject>();
 	auto map = std::make_shared<GameObject>();
@@ -79,6 +79,7 @@ void Game::Initialize()
 	testPlayer->AddComponent(std::make_shared<HealthComponent>(100));
 	std::function<void()> initFcn = std::bind(&Game::Initialize, this);
 	testPlayer->AddComponent(std::make_shared<GameResetComponent>(initFcn));
+	testPlayer->AddComponent(std::make_shared<PlayerParticleEffectsComponent>());
 	testScene->Add(testPlayer);
 
 	// Player movement input

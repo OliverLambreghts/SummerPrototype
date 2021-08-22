@@ -115,16 +115,16 @@ float Sprite::GetFrameHeight() const
 	return  m_pTexture->GetHeight() / m_Rows;
 }
 
-int Sprite::GetActFrame()
+int Sprite::GetActFrame() const
 {
 	return m_ActFrame;
 }
 
-int Sprite::GetRows()
+int Sprite::GetRows() const
 {
 	return m_Rows;
 }
-int Sprite::GetCols()
+int Sprite::GetCols() const
 {
 	return m_Cols;
 }

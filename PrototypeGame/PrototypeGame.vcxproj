@@ -199,6 +199,7 @@
     </ClCompile>
     <ClCompile Include="PickUpItemCommand.cpp" />
     <ClCompile Include="PlayerMovementComponent.cpp" />
+    <ClCompile Include="PlayerParticleEffectsComponent.cpp" />
     <ClCompile Include="ProjectileComponent.cpp" />
     <ClCompile Include="ProjectileMovementComponent.cpp" />
     <ClCompile Include="RangedKeyComponent.cpp" />
@@ -268,6 +269,7 @@
     <ClInclude Include="PlayerMovementComponent.h" />
     <ClInclude Include="PlayerMoveRightCommand.h" />
     <ClInclude Include="PlayerMoveUpCommand.h" />
+    <ClInclude Include="PlayerParticleEffectsComponent.h" />
     <ClInclude Include="ProjectileComponent.h" />
     <ClInclude Include="ProjectileMovementComponent.h" />
     <ClInclude Include="RangedKeyComponent.h" />

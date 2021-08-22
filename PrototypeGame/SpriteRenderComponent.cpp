@@ -1,16 +1,18 @@
 #include "pch.h"
 #include "SpriteRenderComponent.h"
 #include <iostream>
+#include "EnemyMovementComponent.h"
 #include "GameObject.h"
 #include "MovementComponent.h"
 #include "Sprite.h"
 #include "utils.h"
 
-SpriteRenderComponent::SpriteRenderComponent(const std::string& fileName, int nrCols, int nrRows, float frameSec, int colToRender)
+SpriteRenderComponent::SpriteRenderComponent(const std::string& fileName, int nrCols, int nrRows, float frameSec, int rowToRender)
 	: m_pSprite{ std::make_shared<Sprite>(fileName, nrCols, nrRows, frameSec) },
 	m_RenderPos{},
-	m_RowToRender{ colToRender },
-	m_IsIdle{ true }
+	m_RowToRender{ rowToRender },
+	m_IsIdle{ true },
+	m_IsMirrored{ false }
 {
 
 }
@@ -41,14 +43,22 @@ void SpriteRenderComponent::Render() const
 	else
 		srcRect.left = 0.f;
 
-	m_pSprite->Draw(Rectf{ m_RenderPos.x, m_RenderPos.y, m_pSprite->GetFrameWidth(),m_pSprite->GetFrameWidth() },
-		srcRect);
+	glPushMatrix();
+	glTranslatef(m_RenderPos.x, m_RenderPos.y, 0.f);
+	// Check for horizontal mirroring
+	if(m_IsMirrored)
+		glScalef(-1.f, 1.f, 1.f);
+	m_pSprite->Draw(Rectf{ 0.f, 0.f, m_pSprite->GetFrameWidth(), m_pSprite->GetFrameHeight() }, srcRect);
+	glPopMatrix();
 
-	// --- DEBUG RENDER HITBOX ---
-	/*const float width = GetSprite().GetFrameWidth();
-	const float height = GetSprite().GetFrameHeight();
-	utils::DrawRect(m_RenderPos, width, height);*/
-	// --- DEBUG RENDER HITBOX ---
+	/*m_pSprite->Draw(Rectf{ m_RenderPos.x, m_RenderPos.y, m_pSprite->GetFrameWidth(),m_pSprite->GetFrameWidth() },
+		srcRect);*/
+
+		// --- DEBUG RENDER HITBOX ---
+		/*const float width = GetSprite().GetFrameWidth();
+		const float height = GetSprite().GetFrameHeight();
+		utils::DrawRect(m_RenderPos, width, height);*/
+		// --- DEBUG RENDER HITBOX ---
 }
 
 void SpriteRenderComponent::Idle()
@@ -61,7 +71,7 @@ void SpriteRenderComponent::Move()
 	m_IsIdle = false;
 }
 
-const Sprite& SpriteRenderComponent::GetSprite() const
+Sprite& SpriteRenderComponent::GetSprite() const
 {
 	return *m_pSprite;
 }
@@ -70,6 +80,16 @@ SpriteRenderComponent::Direction SpriteRenderComponent::GetDirection() const
 {
 	if (m_ActiveDirections.empty())
 		return Direction::down;
-	
+
 	return m_ActiveDirections.back();
+}
+
+void SpriteRenderComponent::ToggleMirror()
+{
+	m_IsMirrored = !m_IsMirrored;
+}
+
+bool SpriteRenderComponent::IsMirrored() const
+{
+	return m_IsMirrored;
 }

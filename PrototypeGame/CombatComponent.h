@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "Component.h"
 
 class CombatComponent final : public Component
@@ -15,8 +16,11 @@ public:
 private:
 	bool CheckCollision(GameObject& obj) const;
 	void Attack(GameObject& obj);
+	void CheckSlashEffect() const;
 
 	const float m_Cooldown = 1.f;
 	float m_Timer;
 	bool m_IsCDActive;
+
+	std::shared_ptr<GameObject> m_pSlashEffect;
 };
