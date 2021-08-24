@@ -210,6 +210,7 @@
     <ClCompile Include="SpeedEffect.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteRenderComponent.cpp" />
+    <ClCompile Include="StatManager.cpp" />
     <ClCompile Include="structs.cpp" />
     <ClCompile Include="SVGParser.cpp" />
     <ClCompile Include="Texture.cpp" />
@@ -287,6 +288,7 @@
     <ClInclude Include="SpeedEffect.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteRenderComponent.h" />
+    <ClInclude Include="StatManager.h" />
     <ClInclude Include="structs.h" />
     <ClInclude Include="SVGParser.h" />
     <ClInclude Include="SwitchItemDownCommand.h" />

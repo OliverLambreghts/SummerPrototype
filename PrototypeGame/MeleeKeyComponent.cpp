@@ -7,6 +7,7 @@
 #include "HealthComponent.h"
 #include "InventoryComponent.h"
 #include "PlayerMovementComponent.h"
+#include "PlayerParticleEffectsComponent.h"
 #include "SpriteRenderComponent.h"
 #include "TransformComponent.h"
 
@@ -57,6 +58,10 @@ void MeleeKeyComponent::OnUse(std::shared_ptr<GameObject> player, std::shared_pt
 	if (m_IsCDActive)
 		return;
 
+	// Activate particle effect
+	player->GetComponent<PlayerParticleEffectsComponent>()->
+		SetParticleEffect("../Data/Sprites/Slash.png", 5, 2, 1.f / 20.f, 1);
+	
 	std::cout << "Attacking with " << m_pWeaponQuality->GetName() << ' ' << m_Name << '\n';
 	if (m_pProc && m_pProc->IsProcActive())
 	{

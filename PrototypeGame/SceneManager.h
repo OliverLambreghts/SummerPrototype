@@ -1,6 +1,5 @@
 #pragma once
 #include <functional>
-
 #include "Singleton.h"
 #include <string>
 #include <map>

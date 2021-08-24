@@ -496,3 +496,33 @@ atan2(velocity.y, velocity.x) < -0.78) => Links of rechts gaan
 }
 
 - Misschien een soort van evade toevoegen? Zodat als een enemy een obstacle ziet, dat die errond beweegt.
+
+24/08:
+- Vandaag wil ik stats toevoegen. Alles dat dus bijdraagt tot de progressie van het spel als roguelike moet opgeslagen worden. Dingen zoals: hoeveelheid enemies killed, hoeveelheid coins in totaal verzameld, hoeveel items opgepakt, kamers ontdekt..
+
+- Waar wil ik deze StatManager steken? In het world game object?
+
+- De StatManager gaat globaal toegankelijk moeten zijn, want die moet getriggered kunnen worden door verschillende soorten events, zoals een enemy killen, een coin oppakken, een nieuwe room ontdekken,.. Dus van de StatManager een Singleton maken?
+
+- Wil ik van de StatManager een component maken die vasthangt aan de world? Of wil ik van de StatManager een standalone class maken die geen component is en niet vasthangt aan de world? Het laatste lijkt me misschien logischer omdat het niet per see MOET vasthangen aan het world GameObject omdat de world een momentopname is. World is de huidige wereld en ik wil net dat de StatManager ook data bevat van de player's beste run en dus diens high score/beste stats.
+
+- Dus mss een aggregate struct maken in de StatManager file die alle data over stats bevat zoals:
+
+struct Stats
+{
+	int itemsFound{};
+	int enemiesKilled{};
+	int roomsDiscovered{};
+	float timeSurvived{};
+}
+
+class StatManager final : public Singleton<StatManager>
+{
+	...
+private:
+	Stats m_CurrentRun;
+	Stats m_BestRun;
+	Stats m_TotalStats;
+}
+
+- Welke methods moet de StatManager voorzien? Er moet globaal data aangepast kunnen worden aan de StatManager. 

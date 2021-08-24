@@ -30,6 +30,7 @@
 #include "SetPlayerSpriteRightCommand.h"
 #include "SetPlayerSpriteUpCommand.h"
 #include "SpriteRenderComponent.h"
+#include "StatManager.h"
 #include "SwitchItemDownCommand.h"
 #include "SwitchItemUpCommand.h"
 #include "TransformComponent.h"
@@ -150,6 +151,7 @@ void Game::Update(float elapsedSec)
 	//{
 	//	std::cout << "Left and up arrow keys are down\n";
 	//}
+	StatManager::GetInstance().GetCurrentStats().timeSurvived += elapsedSec;
 	SceneManager::GetInstance().Update(elapsedSec);
 }
 

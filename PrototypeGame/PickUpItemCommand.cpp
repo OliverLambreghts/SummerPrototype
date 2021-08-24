@@ -7,6 +7,7 @@
 #include "CoinComponent.h"
 #include "InventoryComponent.h"
 #include "ItemManagerComponent.h"
+#include "StatManager.h"
 
 PickUpItemCommand::PickUpItemCommand(std::shared_ptr<GameObject> player, std::shared_ptr<GameObject> world)
 	: m_pPlayer{ player },
@@ -28,7 +29,7 @@ void PickUpItemCommand::Execute()
 
 		auto item = m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetClosestItemInCurrentRoom();
 		std::cout << "Item costs " << item->GetComponent<ItemComponent>()->GetPrice() << " coins\n";
-		
+
 		// If player can't afford an item
 		if (m_pPlayer.lock()->GetComponent<InventoryComponent>()->GetBalance() < item->GetComponent<ItemComponent>()->GetPrice())
 		{
@@ -40,11 +41,19 @@ void PickUpItemCommand::Execute()
 		m_pPlayer.lock()->GetComponent<InventoryComponent>()->AddItem(item);
 		m_pPlayer.lock()->GetComponent<InventoryComponent>()->AddCoinAmount(-item->GetComponent<ItemComponent>()->GetPrice());
 		item->GetComponent<ActivityComponent>()->Deactivate();
+		++StatManager::GetInstance().GetCurrentStats().itemsFound;
 		return;
 	}
 
-	if (!m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetClosestItemInCurrentRoom() ||
-		!m_pPlayer.lock()->GetComponent<InventoryComponent>()->CanPickUpItem())
+	auto item = m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetClosestItemInCurrentRoom();
+
+	if (!m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetClosestItemInCurrentRoom())
+	{
+		std::cout << "Can't pick up item\n";
+		return;
+	}
+
+	if (!item->GetComponent<CoinComponent>() && !m_pPlayer.lock()->GetComponent<InventoryComponent>()->CanPickUpItem())
 	{
 		std::cout << "Can't pick up item\n";
 		return;
@@ -52,12 +61,14 @@ void PickUpItemCommand::Execute()
 
 	std::cout << "Can pick up item\n";
 
-	auto item = m_pWorld.lock()->GetComponent<ItemManagerComponent>()->GetClosestItemInCurrentRoom();
 	m_pWorld.lock()->GetComponent<ItemManagerComponent>()->RemoveItem(item);
 
 	if (!item->GetComponent<CoinComponent>())
+	{
 		m_pPlayer.lock()->GetComponent<InventoryComponent>()->AddItem(
 			item);
+		++StatManager::GetInstance().GetCurrentStats().itemsFound;
+	}
 	else
 		m_pPlayer.lock()->GetComponent<InventoryComponent>()->AddCoin();
 

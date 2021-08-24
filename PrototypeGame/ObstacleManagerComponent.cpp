@@ -129,14 +129,15 @@ void ObstacleManagerComponent::AddObstacles(GameObject& obj)
 	CheckNeighbors();
 	SpawnTreasureObstacles(obj);
 
-	if (m_pCurrentRoom->isBeginRoom || m_pCurrentRoom->type == RoomType::treasure)
+	if (m_pCurrentRoom->isBeginRoom || m_pCurrentRoom->type == RoomType::treasure || m_pCurrentRoom->type == RoomType::vendor)
 		return;
 
 	if (m_HasSpawnedRandomObstacle)
 		return;
 	
 	const auto randNr = rand() % 101;
-	if (randNr <= 20)
+	constexpr int spawnPercentage = 20;
+	if (randNr <= spawnPercentage)
 		SpawnRandomObstacle(obj);
 
 	m_HasSpawnedRandomObstacle = true;

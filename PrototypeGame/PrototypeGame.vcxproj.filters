@@ -309,6 +309,9 @@
     <ClCompile Include="PlayerParticleEffectsComponent.cpp">
       <Filter>Source Files\Components\Particles</Filter>
     </ClCompile>
+    <ClCompile Include="StatManager.cpp">
+      <Filter>Source Files\Singletons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -547,6 +550,9 @@
     </ClInclude>
     <ClInclude Include="PlayerParticleEffectsComponent.h">
       <Filter>Header Files\Components\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="StatManager.h">
+      <Filter>Header Files\Singletons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

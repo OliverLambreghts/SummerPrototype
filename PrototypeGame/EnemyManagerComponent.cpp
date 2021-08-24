@@ -12,6 +12,7 @@
 #include "LootComponent.h"
 #include "PlayerMovementComponent.h"
 #include "SpriteRenderComponent.h"
+#include "StatManager.h"
 
 EnemyManagerComponent::EnemyManagerComponent(std::shared_ptr<GameObject> player)
 	: m_pCurrentRoom{ nullptr },
@@ -115,6 +116,7 @@ void EnemyManagerComponent::RemoveDeadEnemies()
 			{
 				obj->GetComponent<ActivityComponent>()->Deactivate();
 				std::cout << "Enemy killed!\n";
+				++StatManager::GetInstance().GetCurrentStats().enemiesKilled;
 				return true;
 			}
 			return false;

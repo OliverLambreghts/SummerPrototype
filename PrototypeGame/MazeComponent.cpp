@@ -5,6 +5,8 @@
 #include <iostream>
 #include <vector>
 
+#include "StatManager.h"
+
 MazeComponent::MazeComponent()
 	: m_HasFinishedGenerating{ false }
 {
@@ -191,7 +193,12 @@ void MazeComponent::ChangeCurrentRoom(Direction direction)
 
 	assert(m_pCurrentRoom);
 
-	m_pCurrentRoom->isVisitedByPlayer = true;
+	if (!m_pCurrentRoom->isVisitedByPlayer)
+	{
+		m_pCurrentRoom->isVisitedByPlayer = true;
+		++StatManager::GetInstance().GetCurrentStats().roomsDiscovered;
+	}
+	
 	m_pCurrentRoom->isCurrentlyActive = true;
 }
 

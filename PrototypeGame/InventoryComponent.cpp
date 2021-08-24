@@ -8,6 +8,7 @@
 #include "MeleeKeyComponent.h"
 #include "ProjectileComponent.h"
 #include "RangedKeyComponent.h"
+#include "StatManager.h"
 
 InventoryComponent::InventoryComponent(std::shared_ptr<GameObject> world)
 	: m_pWorld{ std::move(world) },
@@ -157,6 +158,7 @@ void InventoryComponent::AddCoin()
 {
 	++m_Coins;
 	std::cout << "You now have " << m_Coins << " coins\n";
+	++StatManager::GetInstance().GetCurrentStats().coinsCollected;
 }
 
 int InventoryComponent::GetBalance() const

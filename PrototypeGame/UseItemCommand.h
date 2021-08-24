@@ -32,10 +32,6 @@ public:
 			auto enemy = m_pWorld->GetComponent<EnemyManagerComponent>()->GetClosestEnemyInFront();
 			auto obstacle = m_pWorld->GetComponent<ObstacleManagerComponent>()->GetClosestObstacleInFront();
 
-			// Activate particle effect
-			m_pPlayer->GetComponent<PlayerParticleEffectsComponent>()->
-				SetParticleEffect("../Data/Sprites/Slash.png", 5, 2, 1.f / 20.f, 1);
-
 			if (obstacle)
 			{
 				const auto playerPos = m_pPlayer->GetComponent<PlayerMovementComponent>()->GetPosition();
