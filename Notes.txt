@@ -526,3 +526,14 @@ private:
 }
 
 - Welke methods moet de StatManager voorzien? Er moet globaal data aangepast kunnen worden aan de StatManager. 
+
+25/08:
+- Vandaag wil ik wat art toevoegen voor de kamers. Dus gewoon een tileable texture voor de vloer en aan elke kant een muur met een doorgang op de plaats waar de deuren normaal staan.
+
+- Hoe doe ik dit best? Een RoomRenderComponent maken? En dan een roomRenderer GameObject maken? 
+
+- Eigenlijk kan ik gewoon de rooms renderen in de MazeRenderComponent van het world GameObject want dit is hiervoor gemaakt.
+
+- Dus in deze component moeten de vloer en de deuren textures gerendered worden.
+
+- BUG: Als een enemy doodgaat net op de moment dat die attacked, dan ontstaat er een visual bug waarbij het slash effect van die enemy blijft bestaan en blijft gerendered worden.

@@ -1,6 +1,57 @@
 #include "pch.h"
 #include "StatManager.h"
 #include <iostream>
+#include <fstream>
+
+StatManager::StatManager()
+{
+	ParseTotalStats();
+	ParseBestStats();
+}
+
+void StatManager::ParseTotalStats()
+{
+	// Parse saved data
+	std::ifstream file{ "../Data/Stats/TotalStats.txt" };
+	std::string line{};
+	std::getline(file, line, ':');
+	file >> line;
+	m_TotalStats.itemsFound = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_TotalStats.coinsCollected = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_TotalStats.enemiesKilled = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_TotalStats.roomsDiscovered = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_TotalStats.timeSurvived = std::stof(line);
+}
+
+void StatManager::ParseBestStats()
+{
+	// Parse saved data
+	std::ifstream file{ "../Data/Stats/BestStats.txt" };
+	std::string line{};
+	std::getline(file, line, ':');
+	file >> line;
+	m_BestStats.itemsFound = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_BestStats.coinsCollected = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_BestStats.enemiesKilled = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_BestStats.roomsDiscovered = std::stoi(line);
+	std::getline(file, line, ':');
+	file >> line;
+	m_BestStats.timeSurvived = std::stof(line);
+}
 
 Stats& StatManager::GetCurrentStats()
 {

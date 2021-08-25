@@ -1,0 +1,5 @@
+itemsFound:30
+coinsCollected:22
+enemiesKilled:108
+roomsDiscovered:52
+timeSurvived:1136.78

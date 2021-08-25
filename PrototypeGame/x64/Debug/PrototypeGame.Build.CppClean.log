@@ -23,7 +23,6 @@ d:\dae\c++\games\summerprototype\prototypegame\x64\debug\combatcomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\coincomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\activitycomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\scenemanager.obj
-d:\dae\c++\games\summerprototype\prototypegame\x64\debug\scene.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\rangedkeycomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\projectilemovementcomponent.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\projectilecomponent.obj
@@ -56,12 +55,6 @@ d:\dae\c++\games\summerprototype\prototypegame\x64\debug\sprite.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\speedeffect.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\soundstream.obj
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\soundeffect.obj
-d:\dae\c++\games\summerprototype\x64\debug\prototypegame.exe
-d:\dae\c++\games\summerprototype\x64\debug\prototypegame.ilk
-d:\dae\c++\games\summerprototype\x64\debug\prototypegame.pdb
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\cl.command.1.tlog
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\cl.read.1.tlog
 d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\cl.write.1.tlog
-d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\link.command.1.tlog
-d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\link.read.1.tlog
-d:\dae\c++\games\summerprototype\prototypegame\x64\debug\prototypegame.tlog\link.write.1.tlog

@@ -3,6 +3,7 @@
 #include <vector>
 #include "BaseRenderComponent.h"
 #include "MazeComponent.h"
+#include "Texture.h"
 
 class MazeRenderComponent final : public BaseRenderComponent
 {
@@ -25,4 +26,10 @@ private:
 	Rectf m_Doors[4];
 	float m_WindowDimension;
 	Room* m_pCurrentRoom;
+
+	// Textures
+	Texture m_FloorTexture, m_WallTexture, m_OpenDoorTexture, m_ClosedDoorTexture;
+	int m_WorldSize;
+
+	bool m_AreAllEnemiesDead;
 };

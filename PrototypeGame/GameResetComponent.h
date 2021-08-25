@@ -16,6 +16,10 @@ public:
 	virtual void Update(float elapsedSec, GameObject & obj) override;
 private:
 	void Reset() const;
+	void UpdateBestStats() const;
+	void UpdateTotalStats() const;
+	void PrintAllStats() const;
+	void ResetEverything() const;
 	
 	std::function<void()> m_pInitialize;
 };

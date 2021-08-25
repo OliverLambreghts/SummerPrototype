@@ -5,6 +5,7 @@
 #include "ActivityComponent.h"
 #include "GameObject.h"
 #include "ItemComponent.h"
+#include "MazeRenderComponent.h"
 #include "MovementComponent.h"
 #include "SpriteRenderComponent.h"
 
@@ -60,6 +61,15 @@ void Scene::Update(float elapsedSec)
 		
 			return lhs->GetComponent<MovementComponent>()->GetPosition().y > rhs->GetComponent<MovementComponent>()->GetPosition().y;
 		});
+
+	// Put the maze renderer at the beginning of the container so that the ground and wall textures are rendered first
+	if (m_Objects[0]->GetComponent<MazeRenderComponent>())
+		return;
+	
+	std::iter_swap(m_Objects.begin(), std::find_if(m_Objects.begin(), m_Objects.end(), [](std::shared_ptr<GameObject> obj)
+		{
+			return obj->GetComponent<MazeRenderComponent>();
+		}));
 }
 
 void Scene::Render() const

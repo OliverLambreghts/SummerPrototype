@@ -28,8 +28,11 @@ public:
 	void ResetCurrentStats();
 private:
 	friend class Singleton<StatManager>;
-	StatManager() = default;
+	StatManager();
 	~StatManager() = default;
+
+	void ParseTotalStats();
+	void ParseBestStats();
 
 	Stats m_CurrentStats, m_BestStats, m_TotalStats;
 };
