@@ -1,5 +1,5 @@
-itemsFound:46
-coinsCollected:34
-enemiesKilled:165
-roomsDiscovered:83
-timeSurvived:1821.3
+itemsFound:60
+coinsCollected:36
+enemiesKilled:186
+roomsDiscovered:102
+timeSurvived:2241.09
